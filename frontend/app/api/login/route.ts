@@ -5,7 +5,13 @@ export async function POST(request: NextRequest) {
 	const { email, password } = body;
 
 	if (typeof email === "string" && typeof password === "string") {
-		return NextResponse.json({ message: "OK" }, { status: 200 });
+		return NextResponse.json(
+			{
+				message: "OK",
+				data: { id: 1, name: "John Doe", theme: "light" },
+			},
+			{ status: 200 }
+		);
 	} else {
 		return NextResponse.json({ error: "Invalid data" }, { status: 400 });
 	}
