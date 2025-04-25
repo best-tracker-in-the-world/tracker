@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface User {
 	id: number | null;
@@ -8,10 +9,17 @@ interface User {
 	setTheme: (theme: "light" | "dark") => void;
 }
 
-export const useUserStore = create<User>((set) => ({
-	id: null,
-	name: "",
-	email: "",
-	theme: "light",
-	setTheme: (theme: "light" | "dark") => set({ theme }),
-}));
+export const useUserStore = create<User>()(
+	persist(
+		(set) => ({
+			id: null,
+			name: "",
+			email: "",
+			theme: "light",
+			setTheme: (theme: "light" | "dark") => set({ theme }),
+		}),
+		{
+			name: "user-store", // Key for localStorage
+		}
+	)
+);
