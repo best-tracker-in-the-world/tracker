@@ -23,7 +23,7 @@ export default function Login() {
 	}
 	return (
 		<AuthLayout>
-			<AuthForm handleSubmit={handleSubmit} type="login" />
+			<AuthForm handleSubmit={handleSubmit} type="register" />
 		</AuthLayout>
 	);
 }
