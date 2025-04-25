@@ -8,7 +8,12 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json(
 			{
 				message: "OK",
-				data: { id: 1, name: "John Doe", theme: "light" },
+				data: {
+					id: 1,
+					name: "John Doe",
+					theme: "light",
+					email: "example@domain.com",
+				},
 			},
 			{ status: 200 }
 		);
