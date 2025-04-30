@@ -57,6 +57,10 @@ export default function AuthForm({ type, handleSubmit }: AuthFormProps) {
 				placeholder="Password"
 				feedback={false}
 			/>
+			<Button
+				label={type === "login" ? "Login" : "Register"}
+				disabled={!isValid}
+			/>
 			<small className="pl-2">
 				<span>
 					{type === "login"
@@ -72,10 +76,6 @@ export default function AuthForm({ type, handleSubmit }: AuthFormProps) {
 					{type === "login" ? "Register" : "Login"}
 				</Link>
 			</small>
-			<Button
-				label={type === "login" ? "Login" : "Register"}
-				disabled={!isValid}
-			/>
 		</form>
 	);
 }

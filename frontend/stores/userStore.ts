@@ -3,8 +3,8 @@ import { persist } from "zustand/middleware";
 
 interface User {
 	id: number | null;
-	name: string;
-	email: string;
+	name: string | null;
+	email: string | null;
 	theme: "light" | "dark";
 	setTheme: (theme: "light" | "dark") => void;
 }
