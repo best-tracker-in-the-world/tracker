@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  remote_phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: srv22.radiushost.ru
+      PMA_PORT: 3306
+    ports:
+      - "7777:80"
