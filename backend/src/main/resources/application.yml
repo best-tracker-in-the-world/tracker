@@ -1,4 +1,6 @@
 spring:
+  main:
+    banner-mode: off
   application:
     name: tracker-backend
   datasource:
@@ -9,9 +11,10 @@ spring:
   liquibase:
     enabled: false
     drop-first: false
-  logging:
-    level:
-      org.springframework: DEBUG
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
 app:
   verification:
     token-expiration-minutes: 60

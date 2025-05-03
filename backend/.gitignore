@@ -1,0 +1,4 @@
+.gradle
+.env
+.idea
+mysql_data

@@ -4,10 +4,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import ru.rogzy.tracker_backend.repository.UserAuthorizationRepository;
 
 import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
@@ -17,11 +20,13 @@ import java.util.List;
 import java.util.function.Function;
 
 @Component
-public class JwtComponent {
+public class JwtService {
     @Value("${app.jwt.secret}")
     private String secret;
     @Value("${app.jwt.expiration-ms}")
     private long expirationMs;
+    @Autowired
+    private UserAuthorizationRepository userAuthorizationRepository;
 
     private Key key;
 
@@ -46,7 +51,7 @@ public class JwtComponent {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = Jwts.parserBuilder()
+        var claims = Jwts.parserBuilder()
                 .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
                 .build()
                 .parseClaimsJws(token)
@@ -60,7 +65,11 @@ public class JwtComponent {
     }
 
     public UserDetails loadUserByUsername(String username) {
-        // Здесь ты можешь загружать пользователя из БД
-        return new User(username, "", List.of()); // Или через UserDetailsService
+        var userDOOpt = userAuthorizationRepository.findByEmail(username);
+        if (userDOOpt.isEmpty()) {
+            throw new UsernameNotFoundException("User was not found");
+        }
+        var userDO = userDOOpt.get();
+        return new User(userDO.getEmail(), userDO.getPasswordHash(), List.of()); // Или через UserDetailsService
     }
 }

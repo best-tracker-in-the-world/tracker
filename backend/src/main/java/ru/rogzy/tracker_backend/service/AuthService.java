@@ -10,7 +10,7 @@ import ru.rogzy.tracker_backend.repository.UserAuthorizationRepository;
 import ru.rogzy.tracker_backend.repository.VerificationTokenRepository;
 import ru.rogzy.tracker_backend.repository.models.UserDO;
 import ru.rogzy.tracker_backend.repository.models.VerificationTokenDO;
-import ru.rogzy.tracker_backend.security.JwtComponent;
+import ru.rogzy.tracker_backend.security.JwtService;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -22,7 +22,7 @@ public class AuthService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-    private final JwtComponent jwtComponent;
+    private final JwtService jwtService;
 
     @Value("${app.verification.token-expiration-minutes}")
     private Long tokenExpirationMinutes;
@@ -83,7 +83,7 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new IllegalArgumentException("Неверный email или пароль");
         }
-        var jwt = jwtComponent.generateToken(user.getEmail());
+        var jwt = jwtService.generateToken(user.getEmail());
         return LoginResponseDTO.builder()
                 .accessToken(jwt)
                 .build();
