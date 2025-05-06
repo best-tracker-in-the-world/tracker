@@ -1,0 +1,30 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: tracker-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/tracker
+    username: rogzy
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  liquibase:
+    change-log: classpath:/db/db.changelog-master.yaml
+    enabled: false
+    drop-first: false
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
+app:
+  verification:
+    token-expiration-minutes: 60
+  where-am-i:
+      url: localhost:8080
+  jwt:
+    secret: ваш_достаточно_длинный_секрет
+    expiration-ms: 900000      # 15 минут
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
