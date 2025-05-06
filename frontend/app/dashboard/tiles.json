@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "title": "Weight",
+        "description": "This tile shows the weight of the user.",
+        "icon": "gear",
+        "component": "TileWeight",
+        "color": "#FF5733"
+    },
+    {
+        "id": "2",
+        "title": "Goal",
+        "description": "See how close you are to your calorie goal.",
+        "icon": "target",
+        "component": "TileGoal",
+        "color": "#33FF57"
+    },
+    {
+        "id": "3",
+        "title": "Foods",
+        "description": "This tile shows list of foods consumed by the user.",
+        "icon": "heart",
+        "component": "TileFoods",
+        "color": "#3357FF"
+    }
+]
