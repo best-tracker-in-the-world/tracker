@@ -1,6 +1,10 @@
 spring:
-  liquibase:
-    enabled: true
+  datasource:
+    url: jdbc:mysql://${SPRING_DATABASE_URL:localhost}:3306/tracker
+    username: rogzy
+    password: root
+#  liquibase:
+#    enabled: true
 
 logging:
   level:
