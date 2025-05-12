@@ -43,6 +43,9 @@ dependencies {
 	implementation("org.mindrot:jbcrypt:0.4")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 	implementation("javax.annotation:javax.annotation-api:1.3.2")
+
+	//testing
+	testImplementation("com.h2database:h2")
 }
 
 tasks.withType<Test> {
