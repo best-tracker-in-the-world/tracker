@@ -1,1 +1,5 @@
-{ "login": "login" }
+{
+	"login": "Loginn",
+	"email": "Email",
+	"password": "Password"
+}

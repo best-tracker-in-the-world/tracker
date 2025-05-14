@@ -1,5 +1,6 @@
 <template>
 	<AuthLoginWrap>
+		<span>{{ $t("login") }}</span>
 		<div>
 			<USelect
 				v-model="locale"
@@ -27,8 +28,9 @@ definePageMeta({
 	middleware: "auth",
 });
 
-const { token, isLogged, useLogin } = useAuthStore();
+const { useLogin } = useAuthStore();
 const router = useRouter();
+
 // move to component
 const { locales, locale } = useI18n();
 
@@ -36,9 +38,12 @@ const selectedLocale = ref(locale.value);
 
 const localeCodes = computed(() => locales.value.map((l: any) => l.code));
 
-watch(locales, () => {
+console.log("Locale Codes", locales.value);
+
+watch(selectedLocale, () => {
 	console.log("Locales:", locales.value);
-	console.log("Locale Options:", localeOptions.value);
+	console.log("Locale Options:", localeCodes.value);
+	console.log("Currenct locale:", selectedLocale.value);
 });
 
 watch(locale, (newLocale) => {
@@ -46,8 +51,8 @@ watch(locale, (newLocale) => {
 });
 
 const formData = reactive({
-	email: "njiah@njiah.ru",
-	password: "15965400Uf",
+	email: "example@email.com",
+	password: "12345678",
 });
 
 //
@@ -62,9 +67,10 @@ const isLoading = ref(false);
 async function onSubmit() {
 	isLoading.value = true;
 	try {
-		const result = await login(formData);
+		const result: any = await login(formData);
 		console.log("Login result:", result);
-		if (result) {
+		console.log("Login result:", result.accessToken);
+		if (result.accessToken) {
 			useLogin(result.accessToken);
 			router.push("/dashboard");
 		}

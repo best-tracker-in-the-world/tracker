@@ -20,11 +20,13 @@ export default defineNuxtConfig({
 		compatibilityVersion: 4,
 	},
 	i18n: {
-		defaultLocale: "en",
+		defaultLocale: "ru",
 		locales: [
 			{ code: "en", name: "English", file: "en.json" },
-			{ code: "ru", name: "Russian", file: "ru.json" },
+			{ code: "ru", name: "Русский", file: "ru.json" },
 		],
+		lazy: true,
+		langDir: "locales/",
 	},
 
 	compatibilityDate: "2024-11-27",

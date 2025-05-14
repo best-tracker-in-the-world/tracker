@@ -10,6 +10,6 @@
 // REMOVE ON PROD(OR NOT)
 import { useAuthStore } from "@/stores/auth";
 const { isMobile } = useIsMobile();
-const { token } = useAuthStore();
-console.log("isMobile", isMobile);
+const { isLogged } = useAuthStore();
+console.log("is user logged in? ", isLogged);
 </script>
