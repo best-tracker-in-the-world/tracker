@@ -14,8 +14,6 @@ export const login = (payload: AuthPayload) => {
 
 export const register = (payload: AuthPayload) => {
 	const apiUrl = useNuxtApp().$apiUrl;
-	console.log("Using API URL:", apiUrl);
-
 	return $fetch(`${apiUrl}/auth/register`, {
 		method: "POST",
 		body: payload,

@@ -1,6 +1,6 @@
 <template>
 	<div class="flex">
-		<LayoutsSidebar v-if="!isMobile" />
+		<LazyLayoutsMenu />
 		<slot />
 	</div>
 </template>
@@ -9,12 +9,9 @@
 // STORE IMPORT IS HERE TO MAKE PINIA VISIBLE IN NUXT DEVTOOLS
 // REMOVE ON PROD(OR NOT)
 import { useAuthStore } from "@/stores/auth";
-
-const { isMobile } = useIsMobile();
 const auth = useAuthStore();
 
 onMounted(async () => {
 	auth.initFromLocalStorage();
-	console.log(auth.isLogged);
 });
 </script>

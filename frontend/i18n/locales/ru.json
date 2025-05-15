@@ -1,5 +1,9 @@
 {
 	"login": "Вход",
 	"email": "Электронная почта",
-	"password": "Пароль"
+	"password": "Пароль",
+	"menu.logout": "Выход",
+	"menu.dashboard": "Панель управления",
+	"menu.settings": "Настройки",
+	"menu.stats": "Статистика"
 }

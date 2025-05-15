@@ -3,8 +3,6 @@ import { ref, computed } from "vue";
 
 export const useAuthStore = defineStore("auth", () => {
 	const token = ref<string | null>(null);
-	const user = ref<any>(null);
-
 	const isLogged = computed(() => !!token.value);
 
 	function initFromLocalStorage() {
@@ -21,13 +19,11 @@ export const useAuthStore = defineStore("auth", () => {
 
 	function useLogout() {
 		token.value = null;
-		user.value = null;
 		localStorage.removeItem("token");
 	}
 
 	return {
 		token,
-		user,
 		isLogged,
 		useLogin,
 		useLogout,

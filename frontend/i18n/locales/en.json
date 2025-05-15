@@ -1,5 +1,9 @@
 {
 	"login": "Loginn",
 	"email": "Email",
-	"password": "Password"
+	"password": "Password",
+	"menu.logout": "Logout",
+	"menu.dashboard": "Dashboard",
+	"menu.settings": "Settings",
+	"menu.stats": "Statistics"
 }
