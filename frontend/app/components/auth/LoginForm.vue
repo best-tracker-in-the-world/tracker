@@ -39,7 +39,7 @@ interface FormData {
 const props = defineProps<{
 	formData: FormData;
 	title: "login" | "register";
-	error: string | null;
+	error: string | undefined;
 	isLoading: boolean;
 }>();
 

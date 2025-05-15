@@ -9,7 +9,9 @@ export const useAuthStore = defineStore("auth", () => {
 
 	function initFromLocalStorage() {
 		const saved = localStorage.getItem("token");
-		if (saved) token.value = saved;
+		if (saved) {
+			token.value = saved;
+		}
 	}
 
 	function useLogin(newToken: string) {
