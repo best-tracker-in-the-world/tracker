@@ -4,6 +4,7 @@
 			:title="$t('login.login')"
 			:form-data="formData"
 			:is-loading="isLoading"
+			:submit-text="$t('login.submit')"
 			@update:form-data="onUpdateFormData"
 			@submit="onSubmit"
 		/>
@@ -25,21 +26,21 @@ const error = ref<Error | null>(null);
 const isLoading = ref(false);
 const toast = useToast();
 
+const formData = reactive({
+	email: "",
+	password: "",
+});
+
+function onUpdateFormData(updated: typeof formData) {
+	Object.assign(formData, updated);
+}
+
 function onError(err: string | Error) {
 	toast.add({
 		title: String(t("error")),
 		description: String(err),
 		color: "error",
 	});
-}
-
-const formData = reactive({
-	email: "example@email.com",
-	password: "12345678",
-});
-
-function onUpdateFormData(updated: typeof formData) {
-	Object.assign(formData, updated);
 }
 
 async function onSubmit() {
@@ -51,10 +52,10 @@ async function onSubmit() {
 			useLogin(result.accessToken);
 			router.push("/dashboard");
 		}
-	} catch (err: Error | unknown) {
-		console.log(err);
+	} catch (err: any) {
+		console.log(err?.data);
 		error.value = err as Error;
-		onError(error.value);
+		onError(err?.data.replace(/^\w+:\s*/, ""));
 	} finally {
 		isLoading.value = false;
 	}
