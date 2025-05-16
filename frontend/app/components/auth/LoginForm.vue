@@ -19,7 +19,7 @@
 			class="w-full text-center"
 			:disabled="isLoading"
 			@click="handleClickSubmit"
-			>Login</UButton
+			>{{ submitText }}</UButton
 		>
 	</div>
 </template>
@@ -33,6 +33,7 @@ interface FormData {
 const props = defineProps<{
 	formData: FormData;
 	title: string;
+	submitText: string;
 	isLoading: boolean;
 }>();
 
