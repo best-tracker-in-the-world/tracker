@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: db
+    image: mysql:8.0.29
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tracker
+      MYSQL_USER: rogzy
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8888:80"
+
+  backend:
+    container_name: backend
+    image: ghcr.io/best-tracker-in-the-world/backend:latest
+    # build:
+      # context: .
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      SPRING_DATABASE_URL: db

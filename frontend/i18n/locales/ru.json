@@ -1,7 +1,9 @@
 {
-	"login": "Вход",
-	"email": "Электронная почта",
-	"password": "Пароль",
+	"login.login": "Вход",
+	"login.email": "Электронная почта",
+	"login.password": "Пароль",
+	"login.error": "Ошибка входа",
+
 	"menu.logout": "Выход",
 	"menu.dashboard": "Панель управления",
 	"menu.settings": "Настройки",

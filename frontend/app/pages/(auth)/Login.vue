@@ -1,9 +1,8 @@
 <template>
 	<AuthLoginWrap>
 		<AuthLoginForm
-			:title="$t('login')"
+			:title="$t('login.login')"
 			:form-data="formData"
-			:error="error"
 			:is-loading="isLoading"
 			@update:form-data="onUpdateFormData"
 			@submit="onSubmit"
@@ -14,6 +13,7 @@
 <script setup lang="ts">
 import { login } from "@/services/authService";
 import { useAuthStore } from "@/stores/auth";
+const { t } = useI18n();
 
 definePageMeta({
 	middleware: "auth",
@@ -21,8 +21,17 @@ definePageMeta({
 
 const { useLogin } = useAuthStore();
 const router = useRouter();
-const error = ref(null);
+const error = ref<Error | null>(null);
 const isLoading = ref(false);
+const toast = useToast();
+
+function onError(err: string | Error) {
+	toast.add({
+		title: String(t("error")),
+		description: String(err),
+		color: "error",
+	});
+}
 
 const formData = reactive({
 	email: "example@email.com",
@@ -36,15 +45,16 @@ function onUpdateFormData(updated: typeof formData) {
 async function onSubmit() {
 	isLoading.value = true;
 	try {
-		const result: any = await login(formData);
+		const result = (await login(formData)) as { accessToken: string };
 		console.log("Login result:", result.accessToken);
 		if (result.accessToken) {
 			useLogin(result.accessToken);
 			router.push("/dashboard");
 		}
-	} catch (err: any) {
-		console.log(err.status, err.data);
-		error.value = err.data;
+	} catch (err: Error | unknown) {
+		console.log(err);
+		error.value = err as Error;
+		onError(error.value);
 	} finally {
 		isLoading.value = false;
 	}

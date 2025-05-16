@@ -1,7 +1,9 @@
 {
-	"login": "Loginn",
-	"email": "Email",
-	"password": "Password",
+	"login.login": "Loginn",
+	"login.email": "Email",
+	"login.password": "Password",
+	"login.error": "Login error",
+
 	"menu.logout": "Logout",
 	"menu.dashboard": "Dashboard",
 	"menu.settings": "Settings",

@@ -21,12 +21,6 @@
 			@click="handleClickSubmit"
 			>Login</UButton
 		>
-		<p
-			class="text-red-500 text-sm mt-2"
-			:class="error ? 'opacity-100' : 'opacity-0'"
-		>
-			{{ error || "error placeholder" }}
-		</p>
 	</div>
 </template>
 
@@ -38,8 +32,7 @@ interface FormData {
 
 const props = defineProps<{
 	formData: FormData;
-	title: "login" | "register";
-	error: string | undefined;
+	title: string;
 	isLoading: boolean;
 }>();
 
