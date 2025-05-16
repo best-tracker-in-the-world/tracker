@@ -39,3 +39,4 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: local
       SPRING_DATABASE_URL: db
+      TEST_USER_PASSWORD_HASH: $2a$10$1Aih0f2ubxF66Z9xG2e.nucGEghCxb.fATi6fyfLKiPnJbl9cpkAS
