@@ -3,6 +3,12 @@
 	"login.email": "Электронная почта",
 	"login.password": "Пароль",
 	"login.error": "Ошибка входа",
+	"login.register": "Регистрация",
+	"login.submit": "Войти",
+
+	"register.success": "Регистрация успешна",
+	"register.error": "Ошибка регистрации",
+	"register.submit": "Зарегистрироваться",
 
 	"menu.logout": "Выход",
 	"menu.dashboard": "Панель управления",

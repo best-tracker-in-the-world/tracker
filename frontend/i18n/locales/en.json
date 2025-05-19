@@ -1,8 +1,14 @@
 {
-	"login.login": "Loginn",
+	"login.login": "Login",
 	"login.email": "Email",
 	"login.password": "Password",
 	"login.error": "Login error",
+	"login.register": "Registration",
+	"login.submit": "Log in",
+
+	"register.success": "Registration successful",
+	"register.error": "Registration error",
+	"register.submit": "Register",
 
 	"menu.logout": "Logout",
 	"menu.dashboard": "Dashboard",
