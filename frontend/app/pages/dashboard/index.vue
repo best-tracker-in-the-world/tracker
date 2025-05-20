@@ -1,7 +1,9 @@
 <template>
 	<ClientOnly>
-		<div class="flex flex-col gap-4 bg-slate-50/50 w-screen h-screen p-2">
-			<DashboardCalendar v-model="selectedDate" />
+		<div
+			class="flex flex-col gap-4 bg-slate-50/50 w-screen h-screen p-2 mb-[100px]"
+		>
+			<DashboardCalendar v-model="selectedDate as any" />
 			<!-- dashboard body wrap -->
 			<div class="grid grid-cols-2 gap-4">
 				<!-- 1. WEIGHT -->
@@ -17,10 +19,13 @@
 					:span="1"
 					:is-loaded="loadedStatus.goal"
 				/>
+				<!-- 3. FOOD -->
+				<DashboardFoodList
+					:items="selectedDayData?.foodLogs ?? []"
+					:span="2"
+					:is-loaded="loadedStatus.foods"
+				/>
 			</div>
-
-			<!-- <span>{{ selectedDayData }}</span> -->
-			<!-- <span>{{ selectedDate }}</span> -->
 		</div>
 	</ClientOnly>
 </template>
@@ -28,8 +33,6 @@
 <script setup lang="ts">
 import mockData from "~/data/dashboardData.json";
 import { CalendarDate } from "@internationalized/date";
-
-const { t } = useI18n();
 
 const today = new Date();
 
@@ -42,11 +45,21 @@ const selectedDate = ref(
 	)
 );
 
-// mock data
-// replace with data from API
-// probably in Pinia
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const dashboardData = mockData as any;
+interface DashboardData {
+	date: string;
+	weight: number;
+	caloricGoal: number;
+	foodLogs: {
+		caloricContent: number;
+		weight: number;
+		food: string;
+		protein: number;
+		carbs: number;
+		fat: number;
+	}[];
+}
+
+const dashboardData = mockData as DashboardData[];
 
 // get the data for the selected day
 const selectedDayData = computed(() => {
@@ -54,7 +67,9 @@ const selectedDayData = computed(() => {
 	const month = String(selectedDate.value.month).padStart(2, "0");
 	const day = String(selectedDate.value.day).padStart(2, "0");
 	const formattedDate = `${year}-${month}-${day}`;
-	return dashboardData.find((data) => data.date === formattedDate);
+	return dashboardData.find(
+		(data: DashboardData) => data.date === formattedDate
+	);
 });
 
 // todays current calories for Goal component
@@ -73,11 +88,12 @@ const loadedStatus = reactive({
 	foods: false,
 });
 
-// to test loading to loaded transition
+// test skeletons
 onMounted(() => {
 	setTimeout(() => {
 		loadedStatus.weight = true;
 		loadedStatus.goal = true;
+		loadedStatus.foods = true;
 	}, 1500);
 });
 
