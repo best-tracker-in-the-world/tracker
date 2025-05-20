@@ -44,3 +44,16 @@
 		opacity: 1;
 	}
 }
+
+.increased-click-area {
+	position: relative;
+	&:before {
+		content: "";
+		position: absolute;
+		width: 115%;
+		height: 135%;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

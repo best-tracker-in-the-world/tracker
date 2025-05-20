@@ -13,5 +13,33 @@
 	"menu.logout": "Выход",
 	"menu.dashboard": "Панель управления",
 	"menu.settings": "Настройки",
-	"menu.stats": "Статистика"
+	"menu.stats": "Статистика",
+
+	"dashboard.weight.add": "Ввести вес",
+	"dashboard.weight.title": "Вес",
+	"dashboard.goal.title": "Цель",
+	"dashboard.foodList.title": "Список продуктов",
+
+	"dimensions.kg": "кг",
+
+	"calendar.monday": "пн",
+	"calendar.tuesday": "вт",
+	"calendar.wednesday": "ср",
+	"calendar.thursday": "чт",
+	"calendar.friday": "пт",
+	"calendar.saturday": "сб",
+	"calendar.sunday": "вс",
+
+	"calendar.january": "янв",
+	"calendar.february": "фев",
+	"calendar.march": "мар",
+	"calendar.april": "апр",
+	"calendar.may": "мая",
+	"calendar.june": "июня",
+	"calendar.july": "июля",
+	"calendar.august": "авг",
+	"calendar.september": "сен",
+	"calendar.october": "окт",
+	"calendar.november": "ноя",
+	"calendar.december": "дек"
 }
