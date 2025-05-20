@@ -18,9 +18,15 @@
 	"dashboard.weight.add": "Ввести вес",
 	"dashboard.weight.title": "Вес",
 	"dashboard.goal.title": "Цель",
-	"dashboard.foodList.title": "Список продуктов",
+	"dashboard.foodList.title": "Приемы пищи",
 
 	"dimensions.kg": "кг",
+	"dimensions.kcal": "ккал",
+	"dimensions.g": "г",
+
+	"foodList.protein": "Белки",
+	"foodList.carbs": "Углеводы",
+	"foodList.fat": "Жиры",
 
 	"calendar.monday": "пн",
 	"calendar.tuesday": "вт",

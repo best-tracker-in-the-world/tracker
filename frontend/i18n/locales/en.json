@@ -21,6 +21,12 @@
 	"dashboard.foodList.title": "Food List",
 
 	"dimensions.kg": "kg",
+	"dimensions.kcal": "kcal",
+	"dimensions.g": "g",
+
+	"foodList.protein": "Proteins",
+	"foodList.carbs": "Carbs",
+	"foodList.fat": "Fat",
 
 	"calendar.monday": "mon",
 	"calendar.tuesday": "tue",

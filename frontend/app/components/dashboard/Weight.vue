@@ -25,7 +25,7 @@
 		<UButton
 			v-if="!value && isLoaded"
 			:label="$t('dashboard.weight.add')"
-			class="increased-click-area w-full rounded-xl text-center mt-auto block bg-violet-500 hover:bg-violet-600"
+			class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900"
 		/>
 	</DashboardTileWrapper>
 </template>
@@ -36,7 +36,7 @@ const { t } = useI18n();
 interface Props {
 	isLoaded?: boolean;
 	span?: number;
-	value: number | null;
+	value?: number | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
