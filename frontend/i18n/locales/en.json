@@ -13,5 +13,33 @@
 	"menu.logout": "Logout",
 	"menu.dashboard": "Dashboard",
 	"menu.settings": "Settings",
-	"menu.stats": "Statistics"
+	"menu.stats": "Statistics",
+
+	"dashboard.weight.add": "Add",
+	"dashboard.weight.title": "Weight",
+	"dashboard.goal.title": "Goal",
+	"dashboard.foodList.title": "Food List",
+
+	"dimensions.kg": "kg",
+
+	"calendar.monday": "mon",
+	"calendar.tuesday": "tue",
+	"calendar.wednesday": "wed",
+	"calendar.thursday": "thu",
+	"calendar.friday": "fri",
+	"calendar.saturday": "sat",
+	"calendar.sunday": "sun",
+
+	"calendar.january": "Jan",
+	"calendar.february": "Feb",
+	"calendar.march": "Mar",
+	"calendar.april": "Apr",
+	"calendar.may": "May",
+	"calendar.june": "Jun",
+	"calendar.july": "Jul",
+	"calendar.august": "Aug",
+	"calendar.september": "Sep",
+	"calendar.october": "Oct",
+	"calendar.november": "Nov",
+	"calendar.december": "Dec"
 }
