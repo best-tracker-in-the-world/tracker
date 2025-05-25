@@ -1,18 +1,20 @@
-package ru.rogzy.tracker_backend.service;
+package ru.rogzy.tracker_backend.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.rogzy.tracker_backend.controller.models.FavoriteFoodDTO;
 import ru.rogzy.tracker_backend.repository.FavoriteFoodRepository;
 import ru.rogzy.tracker_backend.repository.models.FavoriteFoodDO;
+import ru.rogzy.tracker_backend.service.FavoriteFoodService;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-class FavoriteFoodServiceImpl implements FavoriteFoodService {
+public class FavoriteFoodServiceImpl implements FavoriteFoodService {
     private final FavoriteFoodRepository repository;
 
     @Override
@@ -37,7 +39,9 @@ class FavoriteFoodServiceImpl implements FavoriteFoodService {
 
     @Override
     public List<FavoriteFoodDO> findAll() {
-        return repository.findAll();
+        var list = new ArrayList<FavoriteFoodDO>();
+        repository.findAll().forEach(list::add);
+        return list;
     }
 
     @Override

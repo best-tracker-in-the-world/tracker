@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FoodLogService {
-    FoodLogDO create(FoodLogDTO dto);
+    FoodLogDTO create(FoodLogDTO dto);
     Optional<FoodLogDO> findById(Long id);
     List<FoodLogDO> findAll();
     FoodLogDO update(Long id, FoodLogDTO dto);

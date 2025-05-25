@@ -1,24 +1,25 @@
-package ru.rogzy.tracker_backend.service;
+package ru.rogzy.tracker_backend.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rogzy.tracker_backend.controller.models.FoodDTO;
+import ru.rogzy.tracker_backend.controller.models.FoodRequestDTO;
 import ru.rogzy.tracker_backend.repository.FoodRepository;
 import ru.rogzy.tracker_backend.repository.models.FoodDO;
+import ru.rogzy.tracker_backend.service.FoodService;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
 @AllArgsConstructor
-class FoodServiceImpl implements FoodService {
+public class FoodServiceImpl implements FoodService {
     private final FoodRepository repository;
 
     @Override
-    public FoodDO create(FoodDTO dto) {
+    public FoodDO create(FoodRequestDTO dto) {
         FoodDO food = new FoodDO();
         food.setCreatedAt(Instant.now());
         food.setUpdatedAt(Instant.now());
@@ -38,11 +39,13 @@ class FoodServiceImpl implements FoodService {
 
     @Override
     public List<FoodDO> findAll() {
-        return repository.findAll();
+        var list = new ArrayList<FoodDO>();
+        repository.findAll().forEach(list::add);
+        return list;
     }
 
     @Override
-    public FoodDO update(Long id, FoodDTO dto) {
+    public FoodDO update(Long id, FoodRequestDTO dto) {
         FoodDO existing = repository.findById(id).orElseThrow();
         existing.setUpdatedAt(Instant.now());
         existing.setName(dto.getName());

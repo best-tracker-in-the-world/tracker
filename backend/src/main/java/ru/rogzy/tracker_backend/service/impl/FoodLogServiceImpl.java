@@ -1,23 +1,27 @@
-package ru.rogzy.tracker_backend.service;
+package ru.rogzy.tracker_backend.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.rogzy.tracker_backend.controller.models.FoodLogDTO;
+import ru.rogzy.tracker_backend.converters.FoodLogMapper;
 import ru.rogzy.tracker_backend.repository.FoodLogRepository;
 import ru.rogzy.tracker_backend.repository.models.FoodLogDO;
+import ru.rogzy.tracker_backend.service.FoodLogService;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-class FoodLogServiceImpl implements FoodLogService {
+public class FoodLogServiceImpl implements FoodLogService {
     private final FoodLogRepository repository;
+    private FoodLogMapper foodLogMapper;
 
     @Override
-    public FoodLogDO create(FoodLogDTO dto) {
-        FoodLogDO log = new FoodLogDO();
+    public FoodLogDTO create(FoodLogDTO dto) {
+        var log = new FoodLogDO();
         log.setCreatedAt(Instant.now());
         log.setUpdatedAt(Instant.now());
         log.setUserId(dto.getUserId());
@@ -26,10 +30,8 @@ class FoodLogServiceImpl implements FoodLogService {
         log.setCarb(dto.getCarb());
         log.setFat(dto.getFat());
         log.setCalorage(dto.getCalorage());
-        log.setWeight(dto.getWeight());
-        log.setFoodId(dto.getFoodId());
-        log.setFavoriteFoodId(dto.getFavoriteFoodId());
-        return repository.save(log);
+        var save = repository.save(log);
+        return foodLogMapper.doTODto(save);
     }
 
     @Override
@@ -39,7 +41,9 @@ class FoodLogServiceImpl implements FoodLogService {
 
     @Override
     public List<FoodLogDO> findAll() {
-        return repository.findAll();
+        var list = new ArrayList<FoodLogDO>();
+        repository.findAll().forEach(list::add);
+        return list;
     }
 
     @Override
@@ -52,9 +56,6 @@ class FoodLogServiceImpl implements FoodLogService {
         log.setCarb(dto.getCarb());
         log.setFat(dto.getFat());
         log.setCalorage(dto.getCalorage());
-        log.setWeight(dto.getWeight());
-        log.setFoodId(dto.getFoodId());
-        log.setFavoriteFoodId(dto.getFavoriteFoodId());
         return repository.save(log);
     }
 
