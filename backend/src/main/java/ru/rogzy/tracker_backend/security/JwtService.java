@@ -2,7 +2,6 @@ package ru.rogzy.tracker_backend.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import ru.rogzy.tracker_backend.repository.UserAuthorizationRepository;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -39,10 +38,10 @@ public class JwtService {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
         return Jwts.builder()
-                .setSubject(subject)
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .subject(subject)
+                .issuedAt(now)
+                .expiration(expiry)
+                .signWith(key)
                 .compact();
     }
 
@@ -51,11 +50,11 @@ public class JwtService {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        var claims = Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+        var claims = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
         return claimsResolver.apply(claims);
     }
 
