@@ -6,10 +6,12 @@
 import { useAuthStore } from "@/stores/auth";
 
 const { useLogout } = useAuthStore();
+const dashboardStore = useDashboardStore();
 const router = useRouter();
 
 onMounted(() => {
 	console.log("Logout page mounted");
+	dashboardStore.clear();
 	useLogout();
 	setTimeout(() => {
 		router.push("/");

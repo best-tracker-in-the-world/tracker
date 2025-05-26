@@ -77,6 +77,8 @@
 const { isMobile } = useIsMobile();
 const { t } = useI18n();
 
+const { clear } = useDashboardStore();
+
 const isMenuOpen = ref(false);
 const isMounted = ref(false);
 onMounted(() => {

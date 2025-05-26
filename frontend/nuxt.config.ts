@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
-	plugins: ["~/plugins/v-tap-hold"],
-
 	modules: [
 		"@nuxt/ui",
 		"@nuxt/eslint",
@@ -10,7 +8,6 @@ export default defineNuxtConfig({
 		"@nuxt/icon",
 		"@nuxt/image",
 		"@nuxt/scripts",
-		"@nuxt/test-utils",
 		"@pinia/nuxt",
 		"@nuxtjs/i18n",
 		"@formkit/auto-animate",
@@ -31,6 +28,7 @@ export default defineNuxtConfig({
 			],
 		},
 		workbox: {
+			navigateFallbackDenylist: [/^\/__nuxt_devtools__/],
 			navigateFallback: "/dashboard",
 		},
 		devOptions: {
