@@ -51,5 +51,17 @@
 	"calendar.september": "сен",
 	"calendar.october": "окт",
 	"calendar.november": "ноя",
-	"calendar.december": "дек"
+	"calendar.december": "дек",
+
+	"settings.goal.title": "Цель",
+	"settings.weight.title": "Вес",
+	"settings.height.title": "Рост",
+	"settings.age.title": "Возраст",
+	"settings.gender.title": "Пол",
+	"settings.gender.male": "Мужской",
+	"settings.gender.female": "Женский",
+	"settings.goal.submit": "Сохранить",
+	"settings.theme.title": "Тема",
+	"settings.theme.light": "Светлая",
+	"settings.theme.dark": "Тёмная"
 }

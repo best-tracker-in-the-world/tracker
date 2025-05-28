@@ -1,6 +1,6 @@
 <template>
-	<div class="flex">
-		<LazyLayoutsMenu />
+	<div class="flex w-screen h-screen">
+		<header class="fixed outline-red outline-2">123</header>
 		<slot />
 	</div>
 </template>

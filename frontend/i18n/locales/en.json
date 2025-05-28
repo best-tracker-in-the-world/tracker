@@ -51,5 +51,17 @@
 	"calendar.september": "Sep",
 	"calendar.october": "Oct",
 	"calendar.november": "Nov",
-	"calendar.december": "Dec"
+	"calendar.december": "Dec",
+
+	"settings.goal.title": "Goal",
+	"settings.weight.title": "Weight",
+	"settings.height.title": "Height",
+	"settings.age.title": "Age",
+	"settings.gender.title": "Gender",
+	"settings.gender.male": "Male",
+	"settings.gender.female": "Female",
+	"settings.goal.submit": "Save",
+	"settings.theme.title": "Theme",
+	"settings.theme.light": "Light",
+	"settings.theme.dark": "Dark"
 }

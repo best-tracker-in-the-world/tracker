@@ -37,7 +37,7 @@ import { CalendarDate } from "@internationalized/date";
 import { useDashboardStore } from "@/stores/dashboard";
 
 definePageMeta({
-	layout: "app",
+	layout: "app-main",
 });
 
 const dashboardStore = useDashboardStore();
