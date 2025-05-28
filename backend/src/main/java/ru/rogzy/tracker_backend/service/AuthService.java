@@ -8,4 +8,5 @@ public interface AuthService {
     void register(RegistrationRequestDTO requestDTO);
     void confirmToken(String token);
     LoginResponseDTO login(LoginRequestDTO request);
+    Long getUserByEmail(String email);
 }

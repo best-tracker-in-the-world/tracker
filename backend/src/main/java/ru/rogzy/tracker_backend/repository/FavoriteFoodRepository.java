@@ -1,7 +1,8 @@
 package ru.rogzy.tracker_backend.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import ru.rogzy.tracker_backend.repository.models.FavoriteFoodDO;
 
-public interface FavoriteFoodRepository extends CrudRepository<FavoriteFoodDO, Long> {
+public interface FavoriteFoodRepository extends CrudRepository<FavoriteFoodDO, Long>, PagingAndSortingRepository<FavoriteFoodDO, Long> {
 }

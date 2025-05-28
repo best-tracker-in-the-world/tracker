@@ -2,7 +2,7 @@ package ru.rogzy.tracker_backend.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.rogzy.tracker_backend.controller.models.FoodRequestDTO;
+import ru.rogzy.tracker_backend.controller.models.FoodDTO;
 import ru.rogzy.tracker_backend.repository.FoodRepository;
 import ru.rogzy.tracker_backend.repository.models.FoodDO;
 import ru.rogzy.tracker_backend.service.FoodService;
@@ -19,7 +19,7 @@ public class FoodServiceImpl implements FoodService {
     private final FoodRepository repository;
 
     @Override
-    public FoodDO create(FoodRequestDTO dto) {
+    public FoodDO create(FoodDTO dto) {
         FoodDO food = new FoodDO();
         food.setCreatedAt(Instant.now());
         food.setUpdatedAt(Instant.now());
@@ -45,7 +45,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public FoodDO update(Long id, FoodRequestDTO dto) {
+    public FoodDO update(Long id, FoodDTO dto) {
         FoodDO existing = repository.findById(id).orElseThrow();
         existing.setUpdatedAt(Instant.now());
         existing.setName(dto.getName());

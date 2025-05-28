@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rogzy.tracker_backend.controller.models.*;
+import ru.rogzy.tracker_backend.exception.UserNotFoundException;
 import ru.rogzy.tracker_backend.repository.UserAuthorizationRepository;
 import ru.rogzy.tracker_backend.repository.VerificationTokenRepository;
 import ru.rogzy.tracker_backend.repository.models.UserDO;
@@ -93,4 +94,12 @@ public class AuthServiceImpl implements AuthService {
 //    public LogoutResponseDTO logout(LogoutRequestDTO requestDTO) {
 //
 //    }
+
+    public Long getUserByEmail(String email) {
+        var userDOOpt = authorizationRepository.findByEmail(email);
+        if (userDOOpt.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        return userDOOpt.get().getId();
+    }
 }

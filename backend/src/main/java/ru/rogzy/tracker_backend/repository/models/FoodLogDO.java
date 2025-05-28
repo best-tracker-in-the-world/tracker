@@ -1,6 +1,8 @@
 package ru.rogzy.tracker_backend.repository.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -9,6 +11,8 @@ import java.time.Instant;
 
 @Data
 @Table("food_log")
+@NoArgsConstructor
+@AllArgsConstructor
 public class FoodLogDO {
     @Id
     private Long id;
