@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface FoodLogService {
     FoodLogDTO createOrUpdate(Long userId, FoodLogDTO dto);
     Optional<FoodLogDO> findByUserIdAndId(Long userId, Long id);
-    List<FoodLogDTO> findAllByPeriod(Long userId, Instant from, Instant requestDTOTo);
+    List<FoodLogDTO> findAllByPeriod(Long userId, Instant from, Instant to);
     void deleteByUserIdAndId(Long userId, Long id);
 }
