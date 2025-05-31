@@ -1,4 +1,3 @@
-\
 <template>
 	<ClientOnly>
 		<div
@@ -17,7 +16,7 @@
 				<!-- 2. GOAL -->
 				<DashboardGoal
 					:current="selectedDayCalories ?? 0"
-					:max="selectedDayData?.caloricGoal ?? 2500"
+					:max="selectedDayData?.caloricGoal ?? currentGoal"
 					:span="1"
 					:is-loaded="loadedStatus.goal"
 				/>
@@ -26,6 +25,7 @@
 					:items="selectedDayData?.foodLogs ?? []"
 					:span="2"
 					:is-loaded="loadedStatus.foods"
+					@food-submit="handleFoodSubmit"
 				/>
 			</div>
 		</div>
@@ -35,6 +35,13 @@
 <script setup lang="ts">
 import { CalendarDate } from "@internationalized/date";
 import { useDashboardStore } from "@/stores/dashboard";
+import type { dashboardItem } from "@/types/dashboard";
+import { useUserStore } from "~/stores/user";
+import auth from "~/middleware/auth";
+
+const isGuest = useAuthStore().isLoggedAsGuest;
+
+const currentGoal = useUserStore().currentGoal;
 
 definePageMeta({
 	layout: "app-main",
@@ -50,6 +57,8 @@ const selectedDate = ref(
 		today.getDate()
 	)
 );
+// save initial value to store
+dashboardStore.selectedDate = selectedDate.value.toString();
 
 const loadedStatus = reactive({
 	weight: false,
@@ -100,11 +109,28 @@ async function handleWeightSubmit(weight: number) {
 		day = {
 			date,
 			weight: 0,
-			caloricGoal: 2500,
+			caloricGoal: currentGoal,
 			foodLogs: [],
 		};
 	}
 	day.weight = weight;
+	await dashboardStore.saveDay(day);
+}
+
+// food
+
+async function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
+	const date = dashboardStore.selectedDate;
+	let day = dashboardStore.getDay(date);
+	if (!day) {
+		day = {
+			date,
+			weight: 0,
+			caloricGoal: currentGoal,
+			foodLogs: [],
+		};
+	}
+	day.foodLogs.push(data);
 	await dashboardStore.saveDay(day);
 }
 </script>

@@ -23,6 +23,8 @@
 	"dashboard.weight.title": "Weight",
 	"dashboard.goal.title": "Goal",
 	"dashboard.foodList.title": "Food List",
+	"dashboard.foodList.add": "Add food",
+	"dashboard.foodList.empty": "The list of food products for this day is empty",
 
 	"dimensions.kg": "kg",
 	"dimensions.kcal": "kcal",

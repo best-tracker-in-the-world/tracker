@@ -2,7 +2,7 @@
 	<Teleport v-if="modelValue" to="body">
 		<div
 			ref="modal"
-			class="modal fixed z-[100] w-screen bg-white"
+			class="modal fixed z-1 w-screen bg-white"
 			:class="computedClass"
 		>
 			<slot name="header">
@@ -23,7 +23,7 @@
 			<slot />
 		</div>
 		<div
-			class="backdrop fixed inset-0 bg-black/50 z-[99]"
+			class="backdrop fixed inset-0 bg-black/50"
 			@click="emit('update:modelValue', false)"
 		/>
 	</Teleport>

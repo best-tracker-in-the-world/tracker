@@ -23,6 +23,12 @@
 	"dashboard.weight.title": "Вес",
 	"dashboard.goal.title": "Цель",
 	"dashboard.foodList.title": "Приемы пищи",
+	"dashboard.foodList.add": "Добавить продукт",
+	"dashboard.foodList.empty": "Список продуктов на этот день пуст",
+	"dashboard.foodList.favorite": "Добавить в избранное.",
+	"dashboard.foodList.favoriteInfo": "Добавить продукт в избранное. В списке продуктов он будет появляться в начале.",
+	"dashboard.foodList.addToCurrentDay": "Добавить в текущий день.",
+	"dashboard.foodList.addToCurrentDayInfo": "Добавить в текущий день. Инфа про то, что продукт добавляется в список изначально а с этим чекбоксом можно сразу добавить в сегодняшний день.",
 
 	"dimensions.kg": "кг",
 	"dimensions.kcal": "ккал",

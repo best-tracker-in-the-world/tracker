@@ -1,6 +1,7 @@
 // persistence.ts
 import * as localForage from "localforage";
 import type { dashboardItem } from "@/types/dashboard";
+import type { FoodItem } from "@/types/food";
 
 export class PersistenceAdapter {
 	private isGuest: boolean;
@@ -31,6 +32,23 @@ export class PersistenceAdapter {
 		} else {
 			// server save
 			console.log("Saving to server:", day);
+		}
+	}
+
+	async loadFoodItems(): Promise<FoodItem[]> {
+		if (this.isGuest) {
+			const items =
+				(await localForage.getItem<FoodItem[]>("food-items")) || [];
+			return items;
+		}
+		return [];
+	}
+
+	async saveFoodItem(item: FoodItem): Promise<void> {
+		if (this.isGuest) {
+			const items = await this.loadFoodItems();
+			items.push(item);
+			await localForage.setItem("food-items", items);
 		}
 	}
 }

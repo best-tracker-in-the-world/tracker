@@ -2,9 +2,11 @@
 import { defineStore } from "pinia";
 import type { dashboardItem } from "@/types/dashboard";
 import { PersistenceAdapter } from "@/utils/persistence";
+import { useAuthStore } from "~/stores/auth";
 
 export const useDashboardStore = defineStore("dashboard", () => {
-	const isGuest = true; // set dynamically in your app
+	const isGuest = useAuthStore().isLoggedAsGuest;
+	// const isGuest = true;
 	const adapter = new PersistenceAdapter(isGuest);
 
 	// Store all days as a Map keyed by date string
@@ -21,8 +23,10 @@ export const useDashboardStore = defineStore("dashboard", () => {
 	}
 
 	async function saveDay(day: dashboardItem) {
-		days.value.set(day.date, day);
-		await adapter.saveDay(day);
+		console.log("saveDay", day);
+		const plainDay = JSON.parse(JSON.stringify(day));
+		days.value.set(day.date, plainDay);
+		await adapter.saveDay(plainDay);
 	}
 	function clear() {
 		days.value.clear();

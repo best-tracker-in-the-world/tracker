@@ -31,16 +31,18 @@
 
 		<UiModal v-model="isModalOpen" :title="$t('dashboard.weight.add')">
 			<div class="flex flex-col gap-4">
-				<UInputNumber
+				<UInput
 					ref="inputRef"
 					v-model="formData.weight"
 					size="xl"
 					type="number"
+					color="neutral"
 					:step="0.1"
 				/>
 				<UButton
 					size="xl"
-					class="grid"
+					class=""
+					color="neutral"
 					:label="$t('dashboard.weight.add')"
 					@click="
 						$emit('weightSubmit', formData.weight);

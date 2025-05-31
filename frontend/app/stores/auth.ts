@@ -7,7 +7,9 @@ export const useAuthStore = defineStore("auth", () => {
 
 	const isLogged = computed(() => !!token.value);
 
-	const isLoggedAsGuest = computed(() => token.value === "guest");
+	const isLoggedAsGuest = computed(
+		() => localStorage.getItem("token") === "guest"
+	);
 
 	function logAsGuest() {
 		token.value = "guest";
@@ -18,6 +20,9 @@ export const useAuthStore = defineStore("auth", () => {
 		const saved = localStorage.getItem("token");
 		if (saved) {
 			token.value = saved;
+			console.log(
+				'token init from localstorage with value of "' + saved + '"'
+			);
 		}
 	}
 

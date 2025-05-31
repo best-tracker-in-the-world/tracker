@@ -55,7 +55,7 @@
 					<li
 						v-for="link in sidebarLinks"
 						:key="link.name"
-						class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto"
+						class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto bg-white"
 					>
 						<ULink
 							:href="link.href"
@@ -112,6 +112,11 @@ const sidebarLinks = [
 	{
 		name: t("menu.stats"),
 		href: "/stats",
+		icon: "i-heroicons-chart-bar",
+	},
+	{
+		name: t("menu.food"),
+		href: "/food",
 		icon: "i-heroicons-chart-bar",
 	},
 	{

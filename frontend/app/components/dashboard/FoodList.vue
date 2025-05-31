@@ -10,6 +10,7 @@
 		@dblclick="isEditing = true"
 	>
 		<!-- controls -->
+
 		<template #header>
 			<div v-if="isEditing">
 				<UButton
@@ -23,6 +24,7 @@
 			</div>
 		</template>
 		<div v-auto-animate>
+			<!-- list of food -->
 			<ul
 				v-if="isLoaded"
 				v-auto-animate
@@ -40,7 +42,7 @@
 						class="flex justify-between text-gray-600 px-4 gap-2"
 					>
 						<div class="overflow-clip max-w-[50vw]">
-							<span class="truncate">{{ item.food }}</span>
+							<span class="truncate">{{ item.name }}</span>
 						</div>
 						<span>
 							<span class="font-bold text-gray-800 mr-1"
@@ -66,7 +68,7 @@
 									<p
 										class="truncate text-xl font-semibold text-gray-700"
 									>
-										{{ item.food }}
+										{{ item.name }}
 									</p>
 								</div>
 								<div
@@ -119,7 +121,7 @@
 					</div>
 				</li>
 			</ul>
-			<!-- skeleton -->
+			<!-- skeleton till loaded -->
 			<ul v-else class="flex flex-col gap-2 p-4">
 				<li v-for="i in 4" :key="i">
 					<div class="food-skele-grid">
@@ -128,17 +130,40 @@
 					</div>
 				</li>
 			</ul>
+			<!-- loaded but no data -->
+			<div
+				v-if="!items?.length && isLoaded"
+				class="w-full h-32 p-4 flex flex-col items-center gap-2"
+			>
+				<p class="opacity-50">
+					{{ $t("dashboard.foodList.empty") }}
+				</p>
+				<UButton
+					color="neutral"
+					size="xl"
+					:label="$t('dashboard.foodList.add')"
+					@click="isModalOpen = true"
+				/>
+			</div>
 		</div>
+
+		<UiModal v-model="isModalOpen" :title="$t('dashboard.weight.add')">
+			<div class="flex flex-col gap-4">
+				<DashboardFoodListForm @submit="handleFoodSubmit" />
+			</div>
+		</UiModal>
 	</DashboardTileWrapper>
 </template>
 
 <script setup lang="ts">
+import type { dashboardItem } from "@/types/dashboard";
 const { t } = useI18n();
+
 interface Props {
 	isLoaded?: boolean;
 	span?: number;
 	items?: Array<{
-		food: string;
+		name: string;
 		caloricContent: number;
 		weight: number;
 		protein: number | null;
@@ -161,7 +186,7 @@ const props = withDefaults(defineProps<Props>(), {
 	span: 2,
 	items: () => [
 		{
-			food: "Food Name",
+			name: "Food Name",
 			caloricContent: 0,
 			weight: 0,
 			protein: null,
@@ -176,6 +201,15 @@ const wrapperProps = {
 	color: "gray",
 	icon: "i-heroicons-bars-3-center-left",
 };
+
+// submitting
+
+const isModalOpen = ref(true);
+const $emit = defineEmits(["food-submit"]);
+
+function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
+	$emit("food-submit", data);
+}
 </script>
 
 <style scoped>
