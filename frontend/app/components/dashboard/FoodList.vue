@@ -12,17 +12,25 @@
 		<!-- controls -->
 
 		<template #header>
-			<div v-if="isEditing">
+			<div>
 				<UButton
-					class="pointer-events-auto"
-					icon="i-heroicons-check"
-					@click="
-						console.log('click');
-						isEditing = false;
-					"
+					v-if="!isEditing && items.length"
+					icon="i-heroicons-plus"
+					@click="isModalOpen = true"
 				/>
+				<div v-if="isEditing">
+					<UButton
+						class="pointer-events-auto"
+						icon="i-heroicons-check"
+						@click="
+							console.log('click');
+							isEditing = false;
+						"
+					/>
+				</div>
 			</div>
 		</template>
+
 		<div v-auto-animate>
 			<!-- list of food -->
 			<ul
@@ -204,11 +212,12 @@ const wrapperProps = {
 
 // submitting
 
-const isModalOpen = ref(true);
+const isModalOpen = ref(false);
 const $emit = defineEmits(["food-submit"]);
 
 function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
 	$emit("food-submit", data);
+	isModalOpen.value = false;
 }
 </script>
 

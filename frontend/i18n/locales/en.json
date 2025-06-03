@@ -22,6 +22,8 @@
 	"dashboard.weight.add": "Add",
 	"dashboard.weight.title": "Weight",
 	"dashboard.goal.title": "Goal",
+	"dashboard.caloricContent": "Caloric content",
+	"dashboard.foodlist.name": "Food name",
 	"dashboard.foodList.title": "Food List",
 	"dashboard.foodList.add": "Add food",
 	"dashboard.foodList.empty": "The list of food products for this day is empty",
@@ -33,6 +35,7 @@
 	"foodList.protein": "Proteins",
 	"foodList.carbs": "Carbs",
 	"foodList.fat": "Fat",
+	"foodList.additionalInfo": "Nutrition info",
 
 	"calendar.monday": "mon",
 	"calendar.tuesday": "tue",

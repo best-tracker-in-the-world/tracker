@@ -1,9 +1,10 @@
 <template>
-	<Teleport v-if="modelValue" to="body">
+	<Teleport v-if="showModal" to="body">
 		<div
 			ref="modal"
 			class="modal fixed z-1 w-screen bg-white"
 			:class="computedClass"
+			:style="{ transform: isClosing ? 'translateY(100%)' : 0 }"
 		>
 			<slot name="header">
 				<div class="flex items-center justify-between mb-4">
@@ -16,7 +17,7 @@
 					<UIcon
 						name="i-heroicons-x-mark"
 						size="32"
-						@click="emit('update:modelValue', false)"
+						@click="closeModal"
 					/>
 				</div>
 			</slot>
@@ -24,7 +25,8 @@
 		</div>
 		<div
 			class="backdrop fixed inset-0 bg-black/50"
-			@click="emit('update:modelValue', false)"
+			:style="{ opacity: isClosing ? 0 : 0.5 }"
+			@click="closeModal"
 		/>
 	</Teleport>
 </template>
@@ -47,15 +49,43 @@ const props = withDefaults(defineProps<Props>(), {
 const modal = ref<HTMLElement | null>(null);
 const isMobile = useIsMobile();
 const emit = defineEmits(["update:modelValue"]);
-const isOpen = toRef(props, "modelValue");
+
+// Proxy values for smooth transition
+const showModal = ref(false);
+const isClosing = ref(false);
+let closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+watch(
+	() => props.modelValue,
+	(newVal) => {
+		if (newVal) {
+			isClosing.value = false;
+			showModal.value = true;
+		} else {
+			// smooth closing
+			isClosing.value = true;
+			if (closeTimeout) clearTimeout(closeTimeout);
+			closeTimeout = setTimeout(() => {
+				showModal.value = false;
+				isClosing.value = false;
+				closeTimeout = null;
+			}, 300);
+		}
+	},
+	{ immediate: true }
+);
+
+const closeModal = () => {
+	emit("update:modelValue", false);
+};
 
 onClickOutside(modal, () => {
 	if (props.modelValue) {
-		emit("update:modelValue", false);
+		closeModal();
 	}
 });
 
-useScrollLock(isOpen);
+useScrollLock(computed(() => props.modelValue));
 
 const computedClass = computed(() => {
 	return {
@@ -96,10 +126,14 @@ const getPosClasses = (position: string) => {
 
 <style scoped>
 .modal {
-	transition: transform 0.15s ease-in-out, opacity 0.15s linear;
+	transition: transform 0.3s ease-in-out, opacity 0.3s linear;
 	@starting-style {
 		transform: translateY(100%);
 		opacity: 0;
 	}
+}
+
+.backdrop {
+	transition: opacity 0.3s linear;
 }
 </style>

@@ -46,9 +46,13 @@ export class PersistenceAdapter {
 
 	async saveFoodItem(item: FoodItem): Promise<void> {
 		if (this.isGuest) {
+			console.log("trting to save item", item);
 			const items = await this.loadFoodItems();
 			items.push(item);
-			await localForage.setItem("food-items", items);
+			await localForage.setItem(
+				"food-items",
+				JSON.parse(JSON.stringify(items))
+			);
 		}
 	}
 }
