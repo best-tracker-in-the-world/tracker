@@ -24,5 +24,5 @@ public class GoalLogDO {
     private Instant updatedAt;
     @Column("user_id")
     private Long userId;
-    private Float goal;
+    private Float value;
 }

@@ -23,7 +23,7 @@ public class GoalLogServiceImpl implements GoalLogService {
         log.setCreatedAt(Instant.now());
         log.setUpdatedAt(Instant.now());
         log.setUserId(userId);
-        log.setGoal(dto.getValue());
+        log.setValue(dto.getValue());
         var save = repository.save(log);
         return weightLogMapper.doTODto(save);
     }
@@ -34,12 +34,12 @@ public class GoalLogServiceImpl implements GoalLogService {
 
         if (logs.size() >= 2) {
             var last = logs.getLast();
-            return new GoalLogForDayResponseDTO(last.getId(), last.getGoal());
+            return new GoalLogForDayResponseDTO(last.getId(), last.getValue());
         }
 
         if (logs.size() == 1) {
             var last = logs.getFirst();
-            return new GoalLogForDayResponseDTO(last.getId(), last.getGoal());
+            return new GoalLogForDayResponseDTO(last.getId(), last.getValue());
         }
 
         return new GoalLogForDayResponseDTO(null, null);
