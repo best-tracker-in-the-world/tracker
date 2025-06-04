@@ -7,14 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.rogzy.tracker_backend.controller.models.*;
-import ru.rogzy.tracker_backend.service.AuthService;
+import ru.rogzy.tracker_backend.service.impl.AuthServiceImpl;
 
 @RestController
 @RequestMapping("/v1/api/auth")
 @Validated
 @AllArgsConstructor
 public class AuthController {
-    private AuthService authService;
+    private AuthServiceImpl authService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody RegistrationRequestDTO requestDTO) {

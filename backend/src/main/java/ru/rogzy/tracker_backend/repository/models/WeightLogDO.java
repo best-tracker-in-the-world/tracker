@@ -1,6 +1,7 @@
 package ru.rogzy.tracker_backend.repository.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -10,10 +11,11 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.time.Instant;
 
 @Data
-@Table("food_log")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodLogDO {
+@Table("weight_log")
+public class WeightLogDO {
     @Id
     private Long id;
     @Column("created_at")
@@ -22,12 +24,5 @@ public class FoodLogDO {
     private Instant updatedAt;
     @Column("user_id")
     private Long userId;
-    private String name;
-    private Float prot;
-    private Float carb;
-    private Float fat;
-    private Float calorage;
     private Float weight;
-    private Long foodId;
-    private Long favoriteFoodId;
 }
