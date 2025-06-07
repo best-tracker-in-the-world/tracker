@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class FavoriteFoodDTO {
-    private Long userId;
+    private Long id;
     private Long foodId;
     private String name;
     private Float overrideProt;

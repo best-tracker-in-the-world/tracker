@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FavoriteFoodService {
-    FavoriteFoodDO create(FavoriteFoodDTO dto);
-    Optional<FavoriteFoodDO> findById(Long id);
-    List<FavoriteFoodDO> findAll();
-    FavoriteFoodDO update(Long id, FavoriteFoodDTO dto);
-    void delete(Long id);
+    FavoriteFoodDTO createOrUpdate(Long userId, FavoriteFoodDTO dto);
+    Optional<FavoriteFoodDTO> findByUserIdAndId(Long userId, Long id);
+    List<FavoriteFoodDTO> findAll();
+    void deleteByUserIdAndId(Long userId, Long id);
 }
