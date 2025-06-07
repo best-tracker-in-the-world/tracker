@@ -5,9 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import ru.rogzy.tracker_backend.repository.UserAuthorizationRepository;
 
@@ -15,7 +13,7 @@ import jakarta.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -34,11 +32,12 @@ public class JwtService {
         key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(String subject) {
+    public String generateToken(String subject, Long userId) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
         return Jwts.builder()
                 .subject(subject)
+                .claims(Map.of("userId", userId))
                 .issuedAt(now)
                 .expiration(expiry)
                 .signWith(key)
@@ -47,6 +46,10 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public Long extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId", Long.class));
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -63,12 +66,4 @@ public class JwtService {
         return username.equals(userDetails.getUsername());
     }
 
-    public UserDetails loadUserByUsername(String username) {
-        var userDOOpt = userAuthorizationRepository.findByEmail(username);
-        if (userDOOpt.isEmpty()) {
-            throw new UsernameNotFoundException("User was not found");
-        }
-        var userDO = userDOOpt.get();
-        return new User(userDO.getEmail(), userDO.getPasswordHash(), List.of()); // Или через UserDetailsService
-    }
 }

@@ -85,7 +85,7 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new IllegalArgumentException("Неверный email или пароль");
         }
-        var jwt = jwtService.generateToken(user.getEmail());
+        var jwt = jwtService.generateToken(user.getEmail(), user.getId());
         return LoginResponseDTO.builder()
                 .accessToken(jwt)
                 .build();

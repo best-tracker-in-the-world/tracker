@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.rogzy.tracker_backend.controller.models.BaseError;
@@ -11,6 +12,7 @@ import ru.rogzy.tracker_backend.controller.models.BaseResponse;
 import ru.rogzy.tracker_backend.controller.models.FoodLogDTO;
 import ru.rogzy.tracker_backend.controller.models.FoodLogForDayRequestDTO;
 import ru.rogzy.tracker_backend.repository.models.FoodLogDO;
+import ru.rogzy.tracker_backend.security.UserPrincipal;
 import ru.rogzy.tracker_backend.service.AuthService;
 import ru.rogzy.tracker_backend.service.FoodLogService;
 
@@ -30,10 +32,9 @@ public class FoodLogController {
     @PostMapping
     public ResponseEntity<BaseResponse<FoodLogDTO>> create(
             @RequestBody FoodLogDTO requestDTO,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         var foodLog = foodLogService.createOrUpdate(userId, requestDTO);
         return ResponseEntity.ok(BaseResponse.<FoodLogDTO>builder().data(foodLog).build());
     }
@@ -41,10 +42,9 @@ public class FoodLogController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<FoodLogDO>> getById(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         var log = foodLogService.findByUserIdAndId(userId, id);
         return log.map(foodLogDO -> ResponseEntity.ok(new BaseResponse<>(foodLogDO)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -55,10 +55,9 @@ public class FoodLogController {
     @PostMapping("/day")
     public ResponseEntity<BaseResponse<List<FoodLogDTO>>> getDay(
             @RequestBody FoodLogForDayRequestDTO requestDTO,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         try {
             var date = ZonedDateTime.parse(requestDTO.getDate());
             var from = date.toInstant().truncatedTo(ChronoUnit.DAYS);
@@ -79,10 +78,9 @@ public class FoodLogController {
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<String>> removeById(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         try {
             foodLogService.deleteByUserIdAndId(userId, id);
             return ResponseEntity.ok(BaseResponse.<String>builder().data("OK").build());

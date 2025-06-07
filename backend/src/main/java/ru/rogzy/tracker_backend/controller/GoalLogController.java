@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.rogzy.tracker_backend.controller.models.*;
+import ru.rogzy.tracker_backend.security.UserPrincipal;
 import ru.rogzy.tracker_backend.service.AuthService;
 import ru.rogzy.tracker_backend.service.GoalLogService;
 
@@ -24,10 +26,9 @@ public class GoalLogController {
     @PostMapping
     public ResponseEntity<BaseResponse<GoalLogDTO>> create(
             @RequestBody GoalLogDTO requestDTO,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         var goalLog = goalLogService.create(userId, requestDTO);
         return ResponseEntity.ok(BaseResponse.<GoalLogDTO>builder().data(goalLog).build());
     }
@@ -35,10 +36,9 @@ public class GoalLogController {
     @PostMapping("/day")
     public ResponseEntity<BaseResponse<GoalLogForDayResponseDTO>> getDay(
             @RequestBody GoalLogForDayRequestDTO requestDTO,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         try {
             var date = ZonedDateTime.parse(requestDTO.getDate());
             var from = date.toInstant().truncatedTo(ChronoUnit.DAYS);
@@ -59,10 +59,9 @@ public class GoalLogController {
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<String>> deleteById(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         try {
             goalLogService.deleteByUserIdAndId(userId, id);
             return ResponseEntity.ok(BaseResponse.<String>builder().data("OK").build());

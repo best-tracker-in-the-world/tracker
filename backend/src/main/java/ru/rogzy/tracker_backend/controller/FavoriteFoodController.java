@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.rogzy.tracker_backend.controller.models.BaseError;
 import ru.rogzy.tracker_backend.controller.models.BaseResponse;
 import ru.rogzy.tracker_backend.controller.models.FavoriteFoodDTO;
+import ru.rogzy.tracker_backend.security.UserPrincipal;
 import ru.rogzy.tracker_backend.service.AuthService;
 import ru.rogzy.tracker_backend.service.FavoriteFoodService;
 
@@ -23,10 +25,9 @@ public class FavoriteFoodController {
     @PostMapping
     public ResponseEntity<BaseResponse<FavoriteFoodDTO>> create(
             @RequestBody FavoriteFoodDTO requestDTO,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         var foodLog = favoriteFoodService.createOrUpdate(userId, requestDTO);
         return ResponseEntity.ok(BaseResponse.<FavoriteFoodDTO>builder().data(foodLog).build());
     }
@@ -34,10 +35,9 @@ public class FavoriteFoodController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<FavoriteFoodDTO>> getById(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         var fav = favoriteFoodService.findByUserIdAndId(userId, id);
         return fav.map(foodLogDO -> ResponseEntity.ok(new BaseResponse<>(foodLogDO)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -48,10 +48,9 @@ public class FavoriteFoodController {
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<String>> removeById(
             @PathVariable Long id,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         try {
             favoriteFoodService.deleteByUserIdAndId(userId, id);
             return ResponseEntity.ok(BaseResponse.<String>builder().data("OK").build());

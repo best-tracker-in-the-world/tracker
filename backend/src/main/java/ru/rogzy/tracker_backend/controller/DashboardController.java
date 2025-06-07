@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.rogzy.tracker_backend.controller.models.*;
+import ru.rogzy.tracker_backend.security.UserPrincipal;
 import ru.rogzy.tracker_backend.service.AuthService;
 import ru.rogzy.tracker_backend.service.FoodLogService;
 import ru.rogzy.tracker_backend.service.GoalLogService;
@@ -28,10 +30,9 @@ public class DashboardController {
     @PostMapping("/day")
     public ResponseEntity<BaseResponse<DashboardForDayResponseDTO>> day(
             @RequestBody DashboardForDayRequestDTO requestDTO,
-            Authentication authentication
+            @AuthenticationPrincipal UserPrincipal user
     ) {
-        var name = authentication.getName();
-        var userId = authService.getUserByEmail(name);
+        var userId = user.getUserId();
         try {
             var date = ZonedDateTime.parse(requestDTO.getDate());
             var from = date.toInstant().truncatedTo(ChronoUnit.DAYS);
