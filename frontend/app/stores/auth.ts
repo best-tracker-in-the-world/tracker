@@ -1,14 +1,28 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
+// import * as localForage from "localforage";
 
 export const useAuthStore = defineStore("auth", () => {
 	const token = ref<string | null>(null);
+
 	const isLogged = computed(() => !!token.value);
+
+	const isLoggedAsGuest = computed(
+		() => localStorage.getItem("token") === "guest"
+	);
+
+	function logAsGuest() {
+		token.value = "guest";
+		localStorage.setItem("token", "guest");
+	}
 
 	function initFromLocalStorage() {
 		const saved = localStorage.getItem("token");
 		if (saved) {
 			token.value = saved;
+			console.log(
+				'token init from localstorage with value of "' + saved + '"'
+			);
 		}
 	}
 
@@ -25,6 +39,8 @@ export const useAuthStore = defineStore("auth", () => {
 	return {
 		token,
 		isLogged,
+		logAsGuest,
+		isLoggedAsGuest,
 		useLogin,
 		useLogout,
 		initFromLocalStorage,

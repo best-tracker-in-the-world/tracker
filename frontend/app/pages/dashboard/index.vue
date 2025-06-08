@@ -11,11 +11,12 @@
 					:value="selectedDayData?.weight ?? 0"
 					:is-loaded="loadedStatus.weight"
 					:span="1"
+					@weight-submit="handleWeightSubmit"
 				/>
 				<!-- 2. GOAL -->
 				<DashboardGoal
 					:current="selectedDayCalories ?? 0"
-					:max="selectedDayData?.caloricGoal ?? 2500"
+					:max="selectedDayData?.caloricGoal ?? currentGoal"
 					:span="1"
 					:is-loaded="loadedStatus.goal"
 				/>
@@ -24,6 +25,7 @@
 					:items="selectedDayData?.foodLogs ?? []"
 					:span="2"
 					:is-loaded="loadedStatus.foods"
+					@food-submit="handleFoodSubmit"
 				/>
 			</div>
 		</div>
@@ -31,12 +33,23 @@
 </template>
 
 <script setup lang="ts">
-import mockData from "~/data/dashboardData.json";
 import { CalendarDate } from "@internationalized/date";
+import { useDashboardStore } from "@/stores/dashboard";
+import type { dashboardItem } from "@/types/dashboard";
+import { useUserStore } from "~/stores/user";
+import auth from "~/middleware/auth";
+
+const isGuest = useAuthStore().isLoggedAsGuest;
+
+const currentGoal = useUserStore().currentGoal;
+
+definePageMeta({
+	layout: "app-main",
+});
+
+const dashboardStore = useDashboardStore();
 
 const today = new Date();
-
-// v-model for calendar
 const selectedDate = ref(
 	new CalendarDate(
 		today.getFullYear(),
@@ -44,43 +57,8 @@ const selectedDate = ref(
 		today.getDate()
 	)
 );
-
-interface DashboardData {
-	date: string;
-	weight: number;
-	caloricGoal: number;
-	foodLogs: {
-		caloricContent: number;
-		weight: number;
-		food: string;
-		protein: number;
-		carbs: number;
-		fat: number;
-	}[];
-}
-
-const dashboardData = mockData as DashboardData[];
-
-// get the data for the selected day
-const selectedDayData = computed(() => {
-	const year = selectedDate.value.year;
-	const month = String(selectedDate.value.month).padStart(2, "0");
-	const day = String(selectedDate.value.day).padStart(2, "0");
-	const formattedDate = `${year}-${month}-${day}`;
-	return dashboardData.find(
-		(data: DashboardData) => data.date === formattedDate
-	);
-});
-
-// todays current calories for Goal component
-const selectedDayCalories = computed(() => {
-	if (!selectedDayData.value) return 0;
-	return selectedDayData.value.foodLogs.reduce(
-		(acc: number, cur: { caloricContent: number; weight: number }) =>
-			acc + cur.caloricContent * (cur.weight / 100),
-		0
-	);
-});
+// save initial value to store
+dashboardStore.selectedDate = selectedDate.value.toString();
 
 const loadedStatus = reactive({
 	weight: false,
@@ -88,16 +66,71 @@ const loadedStatus = reactive({
 	foods: false,
 });
 
-// test skeletons
-onMounted(() => {
+onMounted(async () => {
+	await dashboardStore.loadAllDays();
+	// skeleton test
 	setTimeout(() => {
 		loadedStatus.weight = true;
 		loadedStatus.goal = true;
 		loadedStatus.foods = true;
-	}, 1500);
+	}, 1000);
 });
 
-definePageMeta({
-	layout: "app",
+// sync store's and component's date
+watch(selectedDate, (newDate) => {
+	const dateStr = `${newDate.year}-${String(newDate.month).padStart(
+		2,
+		"0"
+	)}-${String(newDate.day).padStart(2, "0")}`;
+	dashboardStore.selectedDate = dateStr;
 });
+
+// computed selected day data
+const selectedDayData = computed(() => {
+	return dashboardStore.getDay(dashboardStore.selectedDate) ?? null;
+});
+
+// get calories based on selected day
+const selectedDayCalories = computed(() => {
+	if (!selectedDayData.value) return 0;
+	return selectedDayData.value.foodLogs.reduce(
+		(acc, cur) => acc + cur.caloricContent * (cur.weight / 100),
+		0
+	);
+});
+
+// SUBMITS
+
+// weight
+async function handleWeightSubmit(weight: number) {
+	const date = dashboardStore.selectedDate;
+	let day = dashboardStore.getDay(date);
+	if (!day) {
+		day = {
+			date,
+			weight: 0,
+			caloricGoal: currentGoal,
+			foodLogs: [],
+		};
+	}
+	day.weight = weight;
+	await dashboardStore.saveDay(day);
+}
+
+// food
+
+async function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
+	const date = dashboardStore.selectedDate;
+	let day = dashboardStore.getDay(date);
+	if (!day) {
+		day = {
+			date,
+			weight: 0,
+			caloricGoal: currentGoal,
+			foodLogs: [],
+		};
+	}
+	day.foodLogs.push(data);
+	await dashboardStore.saveDay(day);
+}
 </script>

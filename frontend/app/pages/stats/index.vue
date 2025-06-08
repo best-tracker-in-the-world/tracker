@@ -2,6 +2,6 @@
 
 <script setup lang="ts">
 definePageMeta({
-	layout: "app",
+	layout: "returnable",
 });
 </script>

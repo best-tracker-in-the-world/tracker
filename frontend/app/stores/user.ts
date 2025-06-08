@@ -6,6 +6,8 @@ export const useUserStore = defineStore("user", () => {
 
 	const isDark = computed(() => theme.value === "dark");
 
+	const currentGoal = ref(2500);
+
 	function setTheme(newTheme: string) {
 		theme.value = newTheme;
 	}
@@ -18,5 +20,6 @@ export const useUserStore = defineStore("user", () => {
 		isDark,
 		setTheme,
 		toggleTheme,
+		currentGoal,
 	};
 });

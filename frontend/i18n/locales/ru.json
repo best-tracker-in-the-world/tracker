@@ -1,10 +1,14 @@
 {
+	"error": "Ошибка",
+
 	"login.login": "Вход",
 	"login.email": "Электронная почта",
 	"login.password": "Пароль",
 	"login.error": "Ошибка входа",
 	"login.register": "Регистрация",
 	"login.submit": "Войти",
+	"login.useGuest": "Гостевой аккаунт",
+	"login.guestInfo": "При использовании гостевого аккаунта данные будут сохранятся на устройстве и не будут отправлены на сервер. В данном режиме недоступна чать функций. Вы сможете продолжить регистрацию позднее с сохранением введенных данных.",
 
 	"register.success": "Регистрация успешна",
 	"register.error": "Ошибка регистрации",
@@ -14,19 +18,33 @@
 	"menu.dashboard": "Панель управления",
 	"menu.settings": "Настройки",
 	"menu.stats": "Статистика",
+	"menu.food": "Моя еда",
 
 	"dashboard.weight.add": "Ввести вес",
 	"dashboard.weight.title": "Вес",
 	"dashboard.goal.title": "Цель",
+	"dashboard.caloricContent": "Калорийность",
+	"dashboard.foodlist.name": "Название",
 	"dashboard.foodList.title": "Приемы пищи",
+	"dashboard.foodList.add": "Добавить продукт",
+	"dashboard.foodList.empty": "Список продуктов на этот день пуст",
+	"dashboard.foodList.favorite": "Добавить в избранное.",
+	"dashboard.foodList.favoriteInfo": "Добавить продукт в избранное. В списке продуктов он будет появляться в начале.",
+	"dashboard.foodList.addToCurrentDay": "Добавить в текущий день.",
+	"dashboard.foodList.addToCurrentDayInfo": "Добавить в текущий день. Инфа про то, что продукт добавляется в список изначально а с этим чекбоксом можно сразу добавить в сегодняшний день.",
 
 	"dimensions.kg": "кг",
 	"dimensions.kcal": "ккал",
 	"dimensions.g": "г",
 
+	"foodlist.addFoodAt": "Добавить еду за",
 	"foodList.protein": "Белки",
 	"foodList.carbs": "Углеводы",
 	"foodList.fat": "Жиры",
+	"foodList.additionalInfo": "Дополнительно (БЖУ)",
+	"foodList.error.nameTooShort": "Не может быть пустым",
+	"foodList.error.weightWrong": "от 1 до 5000",
+	"foodList.error.caloricContentWrong": "от 0 до 1000",
 
 	"calendar.monday": "пн",
 	"calendar.tuesday": "вт",
@@ -47,5 +65,21 @@
 	"calendar.september": "сен",
 	"calendar.october": "окт",
 	"calendar.november": "ноя",
-	"calendar.december": "дек"
+	"calendar.december": "дек",
+
+	"settings.goal.title": "Цель",
+	"settings.weight.title": "Вес",
+	"settings.height.title": "Рост",
+	"settings.age.title": "Возраст",
+	"settings.gender.title": "Пол",
+	"settings.gender.male": "Мужской",
+	"settings.gender.female": "Женский",
+	"settings.goal.submit": "Сохранить",
+	"settings.theme.title": "Тема",
+	"settings.theme.light": "Светлая",
+	"settings.theme.dark": "Тёмная",
+
+	"routes.food": "Моя еда",
+	"routes.settings": "Настройки",
+	"routes.stats": "Статистика"
 }

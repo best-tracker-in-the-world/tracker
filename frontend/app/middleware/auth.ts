@@ -8,6 +8,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 	auth.initFromLocalStorage();
 
 	if (auth.token) {
+		console.log("you just came through auth middleware");
 		return navigateTo("/dashboard");
 	}
 });

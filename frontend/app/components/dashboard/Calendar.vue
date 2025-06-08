@@ -22,10 +22,10 @@
 						:key="index"
 						class="flex flex-col items-center outline-2 outline-gray-200 flex-1 rounded-xl py-2"
 						:class="{
-							'bg-gray-900 text-white': day.isToday,
-							'bg-gray-100 text-gray-900': !day.isToday,
 							'outline-dashed outline-gray-500':
-								day.isSelected,
+								day.isToday,
+							'bg-gray-100 text-gray-900': !day.isToday,
+							'bg-gray-900 text-white': day.isSelected,
 						}"
 						@click="modelValueComputed = day.date"
 					>

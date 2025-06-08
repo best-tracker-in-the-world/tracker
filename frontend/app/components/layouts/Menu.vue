@@ -55,7 +55,7 @@
 					<li
 						v-for="link in sidebarLinks"
 						:key="link.name"
-						class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto"
+						class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto bg-white"
 					>
 						<ULink
 							:href="link.href"
@@ -76,6 +76,8 @@
 <script setup lang="ts">
 const { isMobile } = useIsMobile();
 const { t } = useI18n();
+
+const { clear } = useDashboardStore();
 
 const isMenuOpen = ref(false);
 const isMounted = ref(false);
@@ -110,6 +112,11 @@ const sidebarLinks = [
 	{
 		name: t("menu.stats"),
 		href: "/stats",
+		icon: "i-heroicons-chart-bar",
+	},
+	{
+		name: t("menu.food"),
+		href: "/food",
 		icon: "i-heroicons-chart-bar",
 	},
 	{

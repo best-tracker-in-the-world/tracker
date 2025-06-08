@@ -1,5 +1,5 @@
 <template>
-	<div class="flex">
+	<div class="flex w-screen h-screen">
 		<LazyLayoutsMenu />
 		<slot />
 	</div>
@@ -9,6 +9,7 @@
 // STORE IMPORT IS HERE TO MAKE PINIA VISIBLE IN NUXT DEVTOOLS
 // REMOVE ON PROD(OR NOT)
 import { useAuthStore } from "@/stores/auth";
+
 const auth = useAuthStore();
 
 onMounted(async () => {

@@ -1,10 +1,14 @@
 {
+	"error": "Error",
+
 	"login.login": "Login",
 	"login.email": "Email",
 	"login.password": "Password",
 	"login.error": "Login error",
 	"login.register": "Registration",
 	"login.submit": "Log in",
+	"login.useGuest": "Use guest account",
+	"login.guestInfo": "Use app without registration, data will be stored locally and will not be sent to the server. In this mode, some features are not available. You can continue the registration later with the saved data.",
 
 	"register.success": "Registration successful",
 	"register.error": "Registration error",
@@ -18,7 +22,11 @@
 	"dashboard.weight.add": "Add",
 	"dashboard.weight.title": "Weight",
 	"dashboard.goal.title": "Goal",
+	"dashboard.caloricContent": "Caloric content",
+	"dashboard.foodlist.name": "Food name",
 	"dashboard.foodList.title": "Food List",
+	"dashboard.foodList.add": "Add food",
+	"dashboard.foodList.empty": "The list of food products for this day is empty",
 
 	"dimensions.kg": "kg",
 	"dimensions.kcal": "kcal",
@@ -27,6 +35,7 @@
 	"foodList.protein": "Proteins",
 	"foodList.carbs": "Carbs",
 	"foodList.fat": "Fat",
+	"foodList.additionalInfo": "Nutrition info",
 
 	"calendar.monday": "mon",
 	"calendar.tuesday": "tue",
@@ -47,5 +56,17 @@
 	"calendar.september": "Sep",
 	"calendar.october": "Oct",
 	"calendar.november": "Nov",
-	"calendar.december": "Dec"
+	"calendar.december": "Dec",
+
+	"settings.goal.title": "Goal",
+	"settings.weight.title": "Weight",
+	"settings.height.title": "Height",
+	"settings.age.title": "Age",
+	"settings.gender.title": "Gender",
+	"settings.gender.male": "Male",
+	"settings.gender.female": "Female",
+	"settings.goal.submit": "Save",
+	"settings.theme.title": "Theme",
+	"settings.theme.light": "Light",
+	"settings.theme.dark": "Dark"
 }
