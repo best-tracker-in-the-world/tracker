@@ -1,5 +1,5 @@
 <template>
-	<div class="w-screen h-screen flex flex-col">
+	<div class="flex flex-col">
 		<header
 			class="shadow-lg bottom-0 w-full p-4 flex justify-between items-center"
 		>
@@ -25,6 +25,8 @@
 import { useAuthStore } from "@/stores/auth";
 
 const route = useRoute();
+const colorMode = useColorMode();
+const settings = useSettingsStore();
 
 console.log('route', route.fullPath)
 
@@ -32,5 +34,8 @@ const auth = useAuthStore();
 
 onMounted(async () => {
 	auth.initFromLocalStorage();
+	await settings.loadSettings();
+	colorMode.value = settings.settings?.theme ?? "light";
+	console.log('theme applied globally - ', colorMode.value);
 });
 </script>

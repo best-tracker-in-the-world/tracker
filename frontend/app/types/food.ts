@@ -1,4 +1,3 @@
-// types/food.ts
 export interface FoodItem {
 	id: number;
 	name: string;
