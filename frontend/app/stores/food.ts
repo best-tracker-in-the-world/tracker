@@ -62,8 +62,8 @@ export const useFoodStore = defineStore("food", () => {
 
 		day.foodLogs.push({
 			id: Date.now(),
-			food: item.name,
-			caloricContent: item.calories,
+			name: item.name,
+			caloricContent: item.caloricContent,
 			weight: weight,
 			protein: item.protein,
 			carbs: item.carbs,

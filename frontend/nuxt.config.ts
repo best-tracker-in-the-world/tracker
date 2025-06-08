@@ -36,7 +36,6 @@ export default defineNuxtConfig({
 			type: "module",
 		},
 	},
-
 	css: ["~/assets/css/main.css"],
 
 	future: {

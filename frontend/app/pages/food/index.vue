@@ -1,68 +1,107 @@
 <!-- pages/food.vue -->
 <template>
 	<ClientOnly>
-		<div
-			class="p-4 outline-1 flex-auto flex flex-col bg-red-500 flex-auto"
-		>
+		<div class="p-4 px-2 flex-auto flex flex-col flex-auto">
 			<!-- Food list -->
 
 			<div v-if="!foodItems.length" class="grid items-center">
 				<p class="text-center">
-					{{ $t("Your food list is empty") }} <br >
+					{{ $t("Your food list is empty") }} <br />
 					{{ $t("Start by adding some food") }}
 				</p>
 			</div>
-			<div v-else class="">
-				{{ foodItems }}
+
+			<div v-else class="flex flex-col">
+				<ul class="decoration-none flex flex-col gap-2">
+					<li
+						v-for="(item, index) in foodItems"
+						:key="item.name + '-' + index"
+					>
+						<div
+							class="flex justify-between gap-3 p-2 py-4 ring-1 ring-gray-200 pl-4 shadow-sm rounded-2xl items-center"
+						>
+							<p class="block w-1/2 truncate h-fit">
+								{{ item.name.charAt(0).toUpperCase() + item.name.slice(1) }}
+							</p>
+							<span
+								class="mr-auto h-fit text-xs opacity-50"
+							>
+								{{ item.caloricContent }}
+								{{ $t("dimensions.kcal") }}
+							</span>
+							<UIcon
+								name="i-heroicons-heart"
+								:class="[ item.isFavorite ? 'fill-red-500' : 'opacity-25' ]"
+								class="w-7 h-7"
+							/>
+							<UButton
+								class="rounded-xl mr-2"
+								icon="i-heroicons-plus"
+								@click="openLogDialog(item)"
+							/>
+						</div>
+					</li>
+				</ul>
 			</div>
 
-			<!-- Log dialog -->
-			<div
-				v-if="showLogDialog"
-				class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-			>
-				<div class="bg-white p-6 rounded-lg max-w-md w-full">
-					<h3 class="text-lg font-semibold mb-4">
-						Log {{ selectedFood?.name }}
-					</h3>
-					<div class="mb-4">
-						<label class="block text-sm font-medium mb-1"
-							>Weight (grams)</label
-						>
-						<input
-							v-model="logWeight"
-							type="number"
-							class="w-full p-2 border rounded"
-							min="1"
-							required
-						>
-					</div>
-					<div class="flex justify-end space-x-3">
-						<button
-							class="px-4 py-2 border rounded hover:bg-gray-100"
-							@click="showLogDialog = false"
-						>
-							Cancel
-						</button>
-						<button
-							class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-							@click="logFood"
-						>
-							Log Food
-						</button>
-					</div>
-				</div>
-			</div>
-
-			<!-- add new food modal -->
-			<UiModal v-model="isFoodFormModalOpen">
-				<DashboardFoodListForm @submit="addNewFood" />
-			</UiModal>
-
-			<UButton @click="isFoodFormModalOpen = true"
-				>Add New Food</UButton
+			<UButton class="mt-auto grid items-center" size="xl" @click="isFoodFormModalOpen = true"
+				>{{ $t("dashboard.foodList.add") }}</UButton
 			>
 		</div>
+
+		<!-- add new food modal -->
+		<UiModal v-model="isFoodFormModalOpen">
+			<DashboardFoodListForm @submit="addNewFood" />
+		</UiModal>
+		<!-- add new food modal -->
+		<UiModal
+			v-model="showLogDialog"
+			:title="$t('foodlist.addFoodAt') + ' ' + selectedDate"
+		>
+			<div class="bg-white rounded-lg w-full">
+				<h3 class="text-2xl w-full text-center font-semibold mb-4">
+					{{ selectedFood?.name }}
+				</h3>
+				<div class="mb-4">
+					<UFormField
+						:error="
+							logWeight < 1 || logWeight > 5000
+								? $t('foodList.error.weightWrong')
+								: ''
+						"
+						:label="$t('dashboard.weight.title')"
+					>
+						<UInput
+							class="w-full"
+							v-model="logWeight"
+							type="number"
+							min="1"
+							required
+							size="xl"
+						/>
+					</UFormField>
+				</div>
+				<div class="flex justify-between *:w-1/2 space-x-3">
+					<UButton
+						color="neutral"
+						class="grid items-center"
+						size="xl"
+						variant="outline"
+						@click="showLogDialog = false"
+					>
+						Cancel
+					</UButton>
+					<UButton
+						class="grid items-center"
+						color="neutral"
+						size="xl"
+						@click="logFood"
+					>
+						Log Food
+					</UButton>
+				</div>
+			</div>
+		</UiModal>
 	</ClientOnly>
 </template>
 
@@ -72,14 +111,19 @@ import { ref, onMounted } from "vue";
 import type { FoodItem } from "@/types/food";
 
 const foodStore = useFoodStore();
-
-const foodItems = ref([]);
-const favorites = ref([]);
+const dashboardStore = useDashboardStore();
+const foodItems = ref<FoodItem[]>([]);
+const favorites = ref<FoodItem[]>([]);
 const showLogDialog = ref(false);
+const isFoodFormModalOpen = ref(false);
 const selectedFood = ref(null);
 const logWeight = ref(100);
 
-const isFoodFormModalOpen = ref(false);
+const selectedDate = computed(() => {
+	let str = dashboardStore.selectedDate.substring(8);
+	str += "." + dashboardStore.selectedDate.substring(5, 7);
+	return str;
+});
 
 onMounted(async () => {
 	await foodStore.loadFoodItems();
@@ -105,6 +149,8 @@ function openLogDialog(food) {
 
 async function logFood() {
 	if (selectedFood.value && logWeight.value > 0) {
+		// console.log("food", selectedFood.value);
+		// console.log("weight", logWeight.value);
 		await foodStore.logFoodToCurrentDay(
 			selectedFood.value,
 			logWeight.value

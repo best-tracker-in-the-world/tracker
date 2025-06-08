@@ -4,7 +4,7 @@ export interface dashboardItem {
 	caloricGoal: number;
 	foodLogs: {
 		id: number;
-		food: string;
+		name: string;
 		caloricContent: number;
 		weight: number;
 		protein: number;
