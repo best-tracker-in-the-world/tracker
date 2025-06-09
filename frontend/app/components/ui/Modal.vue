@@ -24,6 +24,7 @@
 			<slot />
 		</div>
 		<div
+			v-if="props.type !== 'confirm'"
 			class="backdrop fixed inset-0 bg-black/50"
 			:style="{ opacity: isClosing ? 0 : 0.5 }"
 			@click="closeModal"
@@ -38,12 +39,14 @@ interface Props {
 	modelValue?: boolean;
 	title?: string;
 	position?: "left" | "right" | "top" | "bottom" | "center";
+	type?: "default" | "confirm";
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	modelValue: false,
 	title: "",
 	position: "center",
+	type: "default",
 });
 
 const modal = ref<HTMLElement | null>(null);
@@ -80,12 +83,12 @@ const closeModal = () => {
 };
 
 onClickOutside(modal, () => {
-	if (props.modelValue) {
+	if (props.modelValue && props.type !== "confirm") {
 		closeModal();
 	}
 });
 
-useScrollLock(computed(() => props.modelValue));
+useScrollLock(props.type !== "confirm" ? computed(() => props.modelValue) : false);
 
 const computedClass = computed(() => {
 	return {
@@ -137,3 +140,4 @@ const getPosClasses = (position: string) => {
 	transition: opacity 0.3s linear;
 }
 </style>
+

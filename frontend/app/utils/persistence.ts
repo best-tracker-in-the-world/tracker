@@ -2,6 +2,7 @@
 import * as localForage from "localforage";
 import type { dashboardItem } from "@/types/dashboard";
 import type { FoodItem } from "@/types/food";
+import type { userSettings } from "@/types/settings";
 
 export class PersistenceAdapter {
 	private isGuest: boolean;
@@ -54,5 +55,40 @@ export class PersistenceAdapter {
 				JSON.parse(JSON.stringify(items))
 			);
 		}
+	}
+	async saveUserSettings(settings: userSettings): Promise<void> {
+		if (this.isGuest) {
+			await localForage.setItem("user-settings", settings);
+			console.log('settings saved successfully', settings)
+		}
+	}
+	async loadUserSettings(): Promise<userSettings | null> {
+		if (this.isGuest) {
+			const settings = await localForage.getItem<userSettings>(
+				"user-settings"
+			);
+			console.log('settings loaded successfully', settings)
+			if (!settings) {
+				const defaultSettings: userSettings = {
+					name: "Guest",
+					email: "example@email.com",
+					password: "**********",
+					theme: "light",
+					language: "ru",
+					currentGoal: 2000,
+					weight: null,
+					height: null,
+					age: null,
+					gender: null,
+				};
+				await this.saveUserSettings(defaultSettings);
+				console.log('no settings found, usingdefault settings', defaultSettings)
+				return defaultSettings;
+			}
+			return settings;
+		} else {
+			// get from server
+		}
+		return null;
 	}
 }

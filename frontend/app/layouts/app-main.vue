@@ -15,4 +15,5 @@ const auth = useAuthStore();
 onMounted(async () => {
 	auth.initFromLocalStorage();
 });
+
 </script>

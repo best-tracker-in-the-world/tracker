@@ -68,5 +68,24 @@
 	"settings.goal.submit": "Save",
 	"settings.theme.title": "Theme",
 	"settings.theme.light": "Light",
-	"settings.theme.dark": "Dark"
+	"settings.theme.dark": "Dark",
+	
+	"dashboard.foodList.calories": "Calories",
+	"dashboard.foodList.proteins": "Proteins",
+	"dashboard.foodList.carbs": "Carbs",
+	"dashboard.foodList.fat": "Fat",
+	"dashboard.userSettings.name": "Name",
+	"dashboard.userSettings.email": "Email",
+	"dashboard.userSettings.password": "Password",
+	"dashboard.userSettings.theme": "Theme",
+	"dashboard.userSettings.language": "Language",
+	"dashboard.userSettings.currentGoal": "Current goal",
+	"dashboard.userSettings.weight": "Weight",
+	"dashboard.userSettings.height": "Height",
+	"dashboard.userSettings.age": "Age",
+	"dashboard.userSettings.gender": "Gender",
+	"dashboard.userSettings.primary": "Primary settings",
+	"dashboard.userSettings.app": "App settings",
+	"dashboard.userSettings.stats": "For Statistics"
 }
+

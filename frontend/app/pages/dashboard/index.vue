@@ -36,12 +36,12 @@
 import { CalendarDate } from "@internationalized/date";
 import { useDashboardStore } from "@/stores/dashboard";
 import type { dashboardItem } from "@/types/dashboard";
-import { useUserStore } from "~/stores/user";
+import { useSettingsStore } from "~/stores/settings";
 import auth from "~/middleware/auth";
 
 const isGuest = useAuthStore().isLoggedAsGuest;
 
-const currentGoal = useUserStore().currentGoal;
+const currentGoal = useSettingsStore().currentGoal;
 
 definePageMeta({
 	layout: "app-main",

@@ -53,7 +53,6 @@
 	"calendar.friday": "пт",
 	"calendar.saturday": "сб",
 	"calendar.sunday": "вс",
-
 	"calendar.january": "янв",
 	"calendar.february": "фев",
 	"calendar.march": "мар",
@@ -81,5 +80,34 @@
 
 	"routes.food": "Моя еда",
 	"routes.settings": "Настройки",
-	"routes.stats": "Статистика"
+	"routes.stats": "Статистика",
+
+	"dashboard.userSettings.name": "Имя",
+	"dashboard.userSettings.email": "Электронная почта",
+	"dashboard.userSettings.password": "Пароль",
+	"dashboard.userSettings.theme": "Тема",
+	"dashboard.userSettings.language": "Язык",
+	"dashboard.userSettings.currentGoal": "Текущая цель",
+	"dashboard.userSettings.weight": "Вес",
+	"dashboard.userSettings.height": "Рост",
+	"dashboard.userSettings.age": "Возраст",
+	"dashboard.userSettings.gender": "Пол",
+	"dashboard.userSettings.primary": "Основное",
+	"dashboard.userSettings.app": "Приложение",
+	"dashboard.userSettings.stats": "Для статистики",
+
+	"settings.saveChanges": "Сохранить изменения",
+	"settings.cancel": "Отменить",
+	"settings.save": "Сохранить",
+
+	
+	"themes.light": "Светлая",
+	"themes.dark": "Тёмная",
+
+	"languages.en": "English",
+	"languages.ru": "Русский",
+
+	"gender.male": "Мужской",
+	"gender.female": "Женский"
+
 }

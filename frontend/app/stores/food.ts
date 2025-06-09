@@ -11,7 +11,7 @@ export const useFoodStore = defineStore("food", () => {
 
 	const foodItems = ref<FoodItem[]>([]);
 	const favorites = ref<FoodItem[]>([]);
-	const currentGoal = useUserStore().currentGoal;
+	const currentGoal = useSettingsStore().currentGoal;
 
 	async function loadFoodItems() {
 		if (isGuest) {
