@@ -227,15 +227,9 @@ function handleSettingsSave() {
 		...state,
 		gender: state.gender as "male" | "female" | null,
 	};
-	if (
-		settings.gender !== "male" &&
-		settings.gender !== "female" &&
-		settings.gender !== null
-	) {
-		throw new Error("Invalid gender value");
-	}
 	user.saveSettings(settings);
 	isUnsaved.value = false;
+	window.location.reload();
 }
 
 async function handleCancelSave() {
