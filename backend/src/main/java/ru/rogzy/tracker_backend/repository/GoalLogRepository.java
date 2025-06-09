@@ -14,4 +14,6 @@ public interface GoalLogRepository extends CrudRepository<GoalLogDO, Long> {
     List<GoalLogDO> findAllByPeriod(Long userId, Instant from, Instant to);
     @Query("SELECT * FROM goal_log WHERE user_id = :userId AND created_at < :before ORDER BY created_at DESC LIMIT 1")
     List<GoalLogDO> findLatestBefore(Long userId, Instant before);
+    @Query("DELETE FROM goal_log WHERE user_id in :userIds")
+    void deleteAllByUserIds(List<Long> userIds);
 }

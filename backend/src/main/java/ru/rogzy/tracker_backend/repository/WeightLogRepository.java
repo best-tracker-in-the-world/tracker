@@ -19,4 +19,6 @@ public interface WeightLogRepository extends CrudRepository<WeightLogDO, Long> {
     @Modifying
     @Query("DELETE FROM weight_log WHERE user_id = :userId and id = :id")
     void deleteByUserIdAndId(Long userId, Long id);
+    @Query("DELETE FROM weight_log WHERE user_id in :userIds")
+    void deleteAllByUserIds(List<Long> userIds);
 }

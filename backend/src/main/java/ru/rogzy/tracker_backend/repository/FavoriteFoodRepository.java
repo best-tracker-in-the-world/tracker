@@ -16,4 +16,6 @@ public interface FavoriteFoodRepository extends CrudRepository<FavoriteFoodDO, L
     void deleteByUserIdAndId(Long userId, Long id);
     @Override
     List<FavoriteFoodDO> findAll();
+    @Query("DELETE FROM favorite_foods WHERE user_id in :userIds")
+    void deleteAllByUserIds(List<Long> userIds);
 }

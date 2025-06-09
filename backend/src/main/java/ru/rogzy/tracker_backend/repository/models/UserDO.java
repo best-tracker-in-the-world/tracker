@@ -30,4 +30,6 @@ public class UserDO {
     private String passwordHash;
     @Column
     private Boolean verified;
+    @Column
+    private Instant deletedAt;
 }
