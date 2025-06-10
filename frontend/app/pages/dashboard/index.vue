@@ -37,9 +37,6 @@ import { CalendarDate } from "@internationalized/date";
 import { useDashboardStore } from "@/stores/dashboard";
 import type { dashboardItem } from "@/types/dashboard";
 import { useSettingsStore } from "~/stores/settings";
-import auth from "~/middleware/auth";
-
-const isGuest = useAuthStore().isLoggedAsGuest;
 
 const currentGoal = useSettingsStore().currentGoal;
 

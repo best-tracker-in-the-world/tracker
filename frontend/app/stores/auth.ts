@@ -7,9 +7,12 @@ export const useAuthStore = defineStore("auth", () => {
 
 	const isLogged = computed(() => !!token.value);
 
-	const isLoggedAsGuest = computed(
-		() => localStorage.getItem("token") === "guest"
-	);
+	const isLoggedAsGuest = computed(() => {
+		if (import.meta.client) {
+			return localStorage.getItem("token") === "guest";
+		}
+		return false;
+	});
 
 	function logAsGuest() {
 		token.value = "guest";

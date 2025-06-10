@@ -14,13 +14,13 @@ const settings = useSettingsStore();
 watch(
 	() => settings.settings?.theme,
 	(val) => {
-		if(!val) return
+		if (!val) return;
 		colorMode.value = val;
 	}
 );
 
 onMounted(async () => {
 	await settings.loadSettings();
+	colorMode.value = settings.settings?.theme;
 });
-
 </script>

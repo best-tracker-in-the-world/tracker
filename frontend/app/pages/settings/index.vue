@@ -75,6 +75,10 @@
 						"
 						class="w-full"
 						size="xl"
+						@change="
+							console.log('cock');
+							$switchLocalePath(state.language);
+						"
 					/>
 				</UFormField>
 			</div>
@@ -173,6 +177,7 @@
 <script setup lang="ts">
 import { useSettingsStore } from "~/stores/settings";
 
+const switchLocalePath = useSwitchLocalePath();
 const auth = useAuthStore();
 const saveChanges = ref<HTMLElement | null>(null);
 
@@ -229,7 +234,6 @@ function handleSettingsSave() {
 	};
 	user.saveSettings(settings);
 	isUnsaved.value = false;
-	window.location.reload();
 }
 
 async function handleCancelSave() {
