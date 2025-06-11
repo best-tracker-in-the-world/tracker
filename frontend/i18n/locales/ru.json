@@ -5,6 +5,8 @@
 	"login.email": "Электронная почта",
 	"login.password": "Пароль",
 	"login.error": "Ошибка входа",
+	"login.alreadyHaveAccount": "Уже зарегистрированы?",
+	"login.dontHaveAccount": "Нет аккаунта?",
 	"login.register": "Регистрация",
 	"login.submit": "Войти",
 	"login.useGuest": "Гостевой аккаунт",
@@ -100,7 +102,6 @@
 	"settings.cancel": "Отменить",
 	"settings.save": "Сохранить",
 
-	
 	"themes.light": "Светлая",
 	"themes.dark": "Тёмная",
 
@@ -109,5 +110,4 @@
 
 	"gender.male": "Мужской",
 	"gender.female": "Женский"
-
 }

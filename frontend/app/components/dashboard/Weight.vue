@@ -7,16 +7,16 @@
 	>
 		<USkeleton
 			v-if="!isLoaded"
-			class="h-[75%] w-[75%] mx-auto rounded-xl bg-gray-900/10"
+			class="h-[75%] w-[75%] mx-auto rounded-xl bg-gray-900/10 dark:bg-gray-100/10"
 		/>
 		<span
 			v-else
 			class="text-[15vw] font-bold text-center flex flex-col justify-center h-full justify-end"
 		>
 			<!-- weight value -->
-			<span :class="value ? 'h-fit my-auto' : 'opacity-10'">
+			<span class="dark:text-gray-100" :class="value ? 'h-fit my-auto' : 'opacity-10'">
 				<span>
-					{{ value ?? "XX" }}
+					{{ value ?? "??" }}
 				</span>
 				<span class="text-[6vw]">{{ $t("dimensions.kg") }}</span>
 			</span>
@@ -25,7 +25,9 @@
 		<UButton
 			v-if="!value && isLoaded"
 			:label="$t('dashboard.weight.add')"
-			class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900"
+			size="xl"
+			class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
+			:class="value === 0 ? 'animate-pulse' : '' "
 			@click="handleClick"
 		/>
 
@@ -41,8 +43,9 @@
 				/>
 				<UButton
 					size="xl"
-					class=""
+					class="dark:bg-gray-900 dark:text-gray-300 grid items-center"
 					color="neutral"
+					
 					:label="$t('dashboard.weight.add')"
 					@click="
 						$emit('weightSubmit', formData.weight);
@@ -71,7 +74,7 @@ withDefaults(defineProps<Props>(), {
 });
 
 const formData = reactive({
-	weight: 5 as dashboardItem["weight"],
+	weight: 90 as dashboardItem["weight"],
 });
 
 const isModalOpen = ref(false);

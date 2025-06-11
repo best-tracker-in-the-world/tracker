@@ -75,10 +75,7 @@
 						"
 						class="w-full"
 						size="xl"
-						@change="
-							console.log('cock');
-							$switchLocalePath(state.language);
-						"
+						@change="handleLanguageChange"
 					/>
 				</UFormField>
 			</div>
@@ -202,8 +199,10 @@ const i18n = useI18n();
 const availableLanguages = ["en", "ru"];
 const availableThemes = ["light", "dark"];
 const avaliableGenders = ["male", "female"];
-
+const colorMode = useColorMode();
 const isInitialized = ref(false);
+
+
 
 watch(
 	() => state,
@@ -243,7 +242,7 @@ async function handleCancelSave() {
 		state.name = user.settings?.name ?? "";
 		state.email = user.settings?.email ?? "";
 		state.password = user.settings?.password ?? "";
-		state.theme = user.settings?.theme ?? "light";
+		state.theme = user.settings?.theme ?? colorMode.preference;
 		state.language = user.settings?.language ?? "ru";
 		state.currentGoal = user.settings?.currentGoal ?? 2000;
 		state.weight = user.settings?.weight ?? null;
@@ -268,7 +267,7 @@ onMounted(() => {
 		state.name = user.settings?.name ?? "";
 		state.email = user.settings?.email ?? "";
 		state.password = user.settings?.password ?? "";
-		state.theme = user.settings?.theme ?? "light";
+		state.theme = user.settings?.theme ?? colorMode.value;
 		state.language = user.settings?.language ?? "ru";
 		state.currentGoal = user.settings?.currentGoal ?? 0;
 		state.weight = user.settings?.weight ?? null;
@@ -281,7 +280,6 @@ onMounted(() => {
 
 	nextTick(async () => {
 		await user.loadSettings();
-		colorMode.value = user.settings?.theme || "light";
 		i18n.locale.value = user.settings?.language || "ru";
 		setTimeout(() => {
 			isInitialized.value = true;
@@ -290,13 +288,12 @@ onMounted(() => {
 	});
 });
 
-const colorMode = useColorMode();
-watch(
-	() => state.theme,
-	() => {
-		colorMode.value = state.theme;
-	}
-);
+function handleLanguageChange() {
+	i18n.locale.value = state.language;
+	useRouter().push(switchLocalePath(state.language));
+}
+
+
 
 definePageMeta({
 	layout: "app-returnable",

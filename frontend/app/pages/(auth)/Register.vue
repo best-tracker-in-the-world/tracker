@@ -15,10 +15,6 @@
 import { register } from "@/services/authService";
 const { t } = useI18n();
 
-definePageMeta({
-	middleware: "auth",
-});
-
 const error = ref<Error | null>(null);
 const isLoading = ref(false);
 const toast = useToast();

@@ -1,23 +1,29 @@
 <template>
 	<div
-		class="flex flex-col items-center justify-center gap-2 ring-1 ring-gray-300 p-4 rounded-lg shadow-md"
+		class="flex flex-col items-center justify-center gap-2 ring-1 ring-gray-300 dark:ring-gray-600 p-4 rounded-lg shadow-md"
 	>
 		<p class="text-xl my-4">{{ title }}</p>
 		<UInput
 			v-model="localFormData.email"
 			type="email"
-			placeholder="Email"
+			variant="subtle"
+			:placeholder="$t('login.email')"
 			:disabled="isLoading"
+			size="xl"
 		/>
 		<UInput
 			v-model="localFormData.password"
 			type="password"
-			placeholder="Password"
+			variant="subtle"
+			:placeholder="$t('login.password')"
 			:disabled="isLoading"
+			size="xl"
 		/>
 		<UButton
-			class="w-full text-center"
+			class="w-full text-center cursor-pointer mt-4"
+			block
 			:disabled="isLoading"
+			size="xl"
 			@click="handleClickSubmit"
 			>{{ submitText }}</UButton
 		>

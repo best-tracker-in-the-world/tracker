@@ -14,28 +14,28 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@vite-pwa/nuxt",
 	],
-	pwa: {
-		manifest: {
-			name: "Tracker App",
-			short_name: "Tracker App",
-			description: "testing description cock ass",
-			icons: [
-				{
-					src: "icons/192.png",
-					sizes: "192x192",
-					type: "image/png",
-				},
-			],
-		},
-		workbox: {
-			navigateFallbackDenylist: [/^\/__nuxt_devtools__/],
-			navigateFallback: "/dashboard",
-		},
-		devOptions: {
-			enabled: true,
-			type: "module",
-		},
-	},
+	// pwa: {
+	// 	manifest: {
+	// 		name: "Tracker App",
+	// 		short_name: "Tracker App",
+	// 		description: "testing description cock ass",
+	// 		icons: [
+	// 			{
+	// 				src: "icons/192.png",
+	// 				sizes: "192x192",
+	// 				type: "image/png",
+	// 			},
+	// 		],
+	// 	},
+	// 	workbox: {
+	// 		navigateFallbackDenylist: [/^\/__nuxt_devtools__/],
+	// 		navigateFallback: "/dashboard",
+	// 	},
+	// 	devOptions: {
+	// 		enabled: true,
+	// 		type: "module",
+	// 	},
+	// },
 	css: ["~/assets/css/main.css"],
 
 	future: {
@@ -43,6 +43,7 @@ export default defineNuxtConfig({
 	},
 	i18n: {
 		defaultLocale: "ru",
+		strategy: "no_prefix",
 		locales: [
 			{ code: "en", name: "English", file: "en.json" },
 			{ code: "ru", name: "Русский", file: "ru.json" },

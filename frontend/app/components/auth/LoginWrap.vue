@@ -1,25 +1,48 @@
 <template>
 	<div class="absolute top-0 right-0 p-4 gap-2 flex">
-		<NuxtLink
+		<div
 			v-for="lang in locales"
 			:key="lang.name"
-			:to="$switchLocalePath(lang.code as 'en' | 'ru')"
-			class="rounded-full grid items-center transition-all"
+			class="rounded-full grid items-center transition-all cursor-pointer"
 			:class="{
-				'outline-2 outline-green-500': locale === lang.code,
+				'outline-3 outline-green-600': locale === lang.code,
 			}"
+			@click="setLocale(lang.code as 'ru' | 'en')"
 		>
-			<UIcon :name="lang.icon" class="size-6"
-		/></NuxtLink>
+			<UIcon :name="lang.icon" class="size-6" />
+		</div>
 	</div>
 
 	<div
-		class="w-screen h-screen flex flex-col gap-4 items-center justify-center bg-gray-100"
+		class="w-screen h-screen flex flex-col gap-4 items-center justify-center"
 	>
 		<slot />
+
+		<div class="flex items-center align-center justify-center mt-4">
+			<p
+				class="opacity-50"
+			>
+				{{
+					isOnLoginPage
+						? $t("login.alreadyHaveAccount")
+						: $t("login.dontHaveAccount")
+				}}
+
+			</p>
+							<ULink
+					class="underline decoration-dotted underline-offset-4 ml-1 opacity-50 hover:opacity-100"
+					:to="isOnLoginPage ? 'register' : 'login'"
+					>{{
+						isOnLoginPage
+							? $t("login.register")
+							: $t("login.login")
+					}}</ULink
+				>
+		</div>
+
 		<UPopover placement="bottom" mode="hover" arrow>
 			<ULink
-				class="opacity-25 hover:opacity-100 transition-all underline decoration-dotted underline-offset-4"
+				class="opacity-50 hover:opacity-100 transition-all underline decoration-dotted underline-offset-4 mt-2"
 				to="dashboard"
 				@click="handleGuestLogin"
 				>{{ $t("login.useGuest") }}</ULink
@@ -38,9 +61,11 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth";
 
-const { locale } = useI18n();
+const { locale, setLocale } = useI18n();
 const router = useRouter();
 const { logAsGuest } = useAuthStore();
+
+const isOnLoginPage = router.currentRoute.value.fullPath === "/login";
 
 const handleGuestLogin = (e: Event) => {
 	e.preventDefault();

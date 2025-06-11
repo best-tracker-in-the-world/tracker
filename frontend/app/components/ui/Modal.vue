@@ -2,7 +2,7 @@
 	<Teleport v-if="showModal" to="body">
 		<div
 			ref="modal"
-			class="modal fixed z-1 w-screen bg-white"
+			class="modal fixed z-1 w-screen bg-white dark:bg-gray-800"
 			:class="computedClass"
 			:style="{ transform: isClosing ? 'translateY(100%)' : 0 }"
 		>
@@ -15,6 +15,7 @@
 					/>
 					<p class="text-md">{{ title }}</p>
 					<UIcon
+						class="dark:text-gray-500"
 						name="i-heroicons-x-mark"
 						size="32"
 						@click="closeModal"

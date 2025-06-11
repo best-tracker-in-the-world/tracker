@@ -3,7 +3,7 @@ export interface userSettings {
 	email: string | null;
 	password: string | null;
 
-	theme: 'light' | 'dark';
+	theme: string;
 	language: 'ru' | 'en';
 
 	currentGoal: number;

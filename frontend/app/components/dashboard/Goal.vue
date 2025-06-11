@@ -10,7 +10,7 @@
 			v-if="!isLoaded"
 			class="h-[75%] w-[75%] mx-auto rounded-xl bg-gray-900/10"
 		/>
-		<div v-else class="">
+		<div v-else class="flex flex-col h-full pt-10">
 			<RadialProgress
 				class="rotate-180 mx-auto"
 				:diameter="wrapperWidth / 1.5"
@@ -19,18 +19,18 @@
 				:total-steps="max"
 				:stroke-width="!isMobile ? 18 : 12"
 				:inner-stroke-width="!isMobile ? 24 : 16"
-				:inner-stroke-color="'#e0e0e0'"
+				:inner-stroke-color="isDark ? 'oklch(20.8% 0.042 265.755)' : '#e0e0e0'"
 				:start-color="
 					isOverflowing ? 'orange' : 'oklch(69.6% 0.17 162.48)'
 				"
 				:stop-color="
 					isOverflowing ? 'orange' : 'oklch(69.6% 0.17 162.48)'
 				"
-			>
-				<span class="rotate-180 text-[2.5vw]">
-					<span>{{ current }} / {{ max }}</span>
-				</span>
-			</RadialProgress>
+			/>
+
+			<span class="mt-auto mb-1 flex justify-center gap-2 dark:text-gray-500 text-2xl font-bold">
+				<span>{{ current }} </span> / <span> {{ max }}</span>
+			</span>
 		</div>
 	</DashboardTileWrapper>
 </template>
@@ -40,6 +40,8 @@ import RadialProgress from "vue3-radial-progress";
 const { t } = useI18n();
 const { isMobile } = useIsMobile();
 const progressWrap = ref<HTMLElement | null>(null);
+const colorMode = useColorMode();
+const isDark = computed(() => colorMode.value === "dark");
 
 interface Props {
 	current?: number | undefined;

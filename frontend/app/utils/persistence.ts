@@ -62,6 +62,9 @@ export class PersistenceAdapter {
 			console.log('settings saved successfully', settings)
 		}
 	}
+
+
+
 	async loadUserSettings(): Promise<userSettings | null> {
 		if (this.isGuest) {
 			const settings = await localForage.getItem<userSettings>(
@@ -73,16 +76,16 @@ export class PersistenceAdapter {
 					name: "Guest",
 					email: "example@email.com",
 					password: "**********",
-					theme: "light",
 					language: "ru",
 					currentGoal: 2000,
 					weight: null,
 					height: null,
 					age: null,
 					gender: null,
+					theme: null,
 				};
 				await this.saveUserSettings(defaultSettings);
-				console.log('no settings found, usingdefault settings', defaultSettings)
+				console.log('no settings found, using default settings', defaultSettings)
 				return defaultSettings;
 			}
 			return settings;

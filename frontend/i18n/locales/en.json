@@ -1,11 +1,13 @@
 {
 	"error": "Error",
 
-	"login.login": "Login",
+	"login.login": "Sign in",
 	"login.email": "Email",
 	"login.password": "Password",
 	"login.error": "Login error",
-	"login.register": "Registration",
+	"login.alreadyHaveAccount": "Already have an account?",
+	"login.dontHaveAccount": "Don't have an account?",
+	"login.register": "Sign up",
 	"login.submit": "Log in",
 	"login.useGuest": "Use guest account",
 	"login.guestInfo": "Use app without registration, data will be stored locally and will not be sent to the server. In this mode, some features are not available. You can continue the registration later with the saved data.",

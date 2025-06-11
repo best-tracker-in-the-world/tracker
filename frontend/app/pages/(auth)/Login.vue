@@ -17,7 +17,7 @@ import { useAuthStore } from "@/stores/auth";
 const { t } = useI18n();
 
 definePageMeta({
-	middleware: "auth",
+	middleware: "login",
 });
 
 const { useLogin } = useAuthStore();

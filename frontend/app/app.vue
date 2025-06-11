@@ -1,9 +1,11 @@
 <template>
 	<UApp>
-		<VitePwaManifest />
-		<NuxtLayout>
-			<NuxtPage />
-		</NuxtLayout>
+		<ColorScheme>
+			<VitePwaManifest />
+			<NuxtLayout>
+				<NuxtPage />
+			</NuxtLayout>
+		</ColorScheme>
 	</UApp>
 </template>
 
@@ -21,6 +23,10 @@ watch(
 
 onMounted(async () => {
 	await settings.loadSettings();
-	colorMode.value = settings.settings?.theme;
+	if(settings.settings?.theme) {
+		console.log('saved theme preference loaded - ', settings.settings?.theme)
+		colorMode.value = settings.settings?.theme;
+	}
+	console.log("colorMode", colorMode.value);
 });
 </script>

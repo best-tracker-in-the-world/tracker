@@ -1,7 +1,7 @@
 <template>
 	<ClientOnly>
 		<div
-			class="flex flex-col gap-4 bg-slate-50/50 w-screen h-screen p-2 mb-[100px]"
+			class="flex flex-col gap-4 w-screen h-screen p-2 mb-[100px]"
 		>
 			<DashboardCalendar v-model="selectedDate as any" />
 			<!-- dashboard body wrap -->
@@ -37,6 +37,7 @@ import { CalendarDate } from "@internationalized/date";
 import { useDashboardStore } from "@/stores/dashboard";
 import type { dashboardItem } from "@/types/dashboard";
 import { useSettingsStore } from "~/stores/settings";
+
 
 const currentGoal = useSettingsStore().currentGoal;
 

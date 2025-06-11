@@ -12,6 +12,9 @@
 					<div>
 						<UButton
 							color="neutral"
+							variant="outline"
+							class="rounded-xl"
+							size="xl"
 							icon="i-heroicons-calendar"
 						/>
 					</div>
@@ -20,12 +23,12 @@
 					<li
 						v-for="(day, index) in selectedWeek"
 						:key="index"
-						class="flex flex-col items-center outline-2 outline-gray-200 flex-1 rounded-xl py-2"
+						class="flex flex-col items-center outline-2 outline-gray-200 dark:outline-gray-700 flex-1 rounded-xl py-2 transition-colors duration-150 cursor-pointer"
 						:class="{
-							'outline-dashed outline-gray-500':
+							'outline-dashed outline-gray-500 dark:outline-gray-400! dark:bg-gray-900':
 								day.isToday,
-							'bg-gray-100 text-gray-900': !day.isToday,
-							'bg-gray-900 text-white': day.isSelected,
+							'bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100': !day.isToday,
+							'bg-gray-900 text-white dark:text-gray-300 dark:bg-gray-700!': day.isSelected,
 						}"
 						@click="modelValueComputed = day.date"
 					>
