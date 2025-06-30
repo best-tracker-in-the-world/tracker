@@ -1,30 +1,24 @@
 import { defineStore } from "pinia";
-import type { userSettings } from "@/types/settings";
+import type { UserSettings } from "@/types/settings";
 import { PersistenceAdapter } from "@/utils/persistence";
 
-
-
 export const useSettingsStore = defineStore("settings", () => {
+	const isGuest = useAuthStore().isLoggedAsGuest;
+	const adapter = new PersistenceAdapter(isGuest);
 
-    const isGuest = useAuthStore().isLoggedAsGuest;
-    const adapter = new PersistenceAdapter(isGuest);
+	const settings = ref<UserSettings | null>(null);
 
-    const settings = ref<userSettings | null>(null);
+	async function loadSettings() {
+		settings.value = await adapter.loadUserSettings();
+	}
 
-    async function loadSettings() {
-        settings.value = await adapter.loadUserSettings();
-    }
+	function saveSettings(settings: UserSettings) {
+		return adapter.saveUserSettings(settings);
+	}
 
-    function saveSettings(settings: userSettings) {
-        return adapter.saveUserSettings(settings);
-    }
-
-    
-
-    return {
-        settings,
-        loadSettings,
-        saveSettings,        
-    }
-
+	return {
+		settings,
+		loadSettings,
+		saveSettings,
+	};
 });

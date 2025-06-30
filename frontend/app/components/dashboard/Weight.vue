@@ -4,6 +4,7 @@
 		:color="wrapperProps.color"
 		:span="span"
 		:icon="wrapperProps.icon"
+		class="h-full max-w-full"
 	>
 		<USkeleton
 			v-if="!isLoaded"
@@ -14,7 +15,10 @@
 			class="text-[15vw] font-bold text-center flex flex-col justify-center h-full justify-end"
 		>
 			<!-- weight value -->
-			<span class="dark:text-gray-100" :class="value ? 'h-fit my-auto' : 'opacity-10'">
+			<span
+				class="dark:text-gray-100"
+				:class="value ? 'h-fit my-auto' : 'opacity-10'"
+			>
 				<span>
 					{{ value ?? "??" }}
 				</span>
@@ -27,7 +31,7 @@
 			:label="$t('dashboard.weight.add')"
 			size="xl"
 			class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
-			:class="value === 0 ? 'animate-pulse' : '' "
+			:class="value === 0 ? 'animate-pulse' : ''"
 			@click="handleClick"
 		/>
 
@@ -45,7 +49,6 @@
 					size="xl"
 					class="dark:bg-gray-900 dark:text-gray-300 grid items-center"
 					color="neutral"
-					
 					:label="$t('dashboard.weight.add')"
 					@click="
 						$emit('weightSubmit', formData.weight);

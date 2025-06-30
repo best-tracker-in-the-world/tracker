@@ -1,8 +1,6 @@
 <template>
 	<div
-		class="tile-wrapper flex flex-col gap-2 p-4 rounded-[25px] shadow-lg 
-		bg-linear-45 to-gray-50 dark:to-gray-800 bg-slate-100 dark:bg-slate-800 transition-all 
-		dark:inset-shadow-xl dark:inset-shadow-red-500"
+		class="tile-wrapper flex flex-col gap-2 p-4 rounded-[25px] shadow-lg bg-linear-45 to-gray-50 dark:to-gray-800 bg-slate-100 dark:bg-slate-800 transition-all outlinedark:inset-shadow-xl dark:inset-shadow-red-500"
 		:class="`
 		from-${color}-200 
 		text-${color}-900 
@@ -14,7 +12,9 @@
 				<span class="w-fit grid items-center dark:text-gray-600">
 					<UIcon class="" size="20" :name="icon" />
 				</span>
-				<p class="whitespace-nowrap grid items-center dark:text-gray-500">
+				<p
+					class="whitespace-nowrap grid items-center dark:text-gray-500"
+				>
 					{{ title }}
 				</p>
 			</div>

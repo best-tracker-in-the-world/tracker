@@ -46,30 +46,35 @@
 				/>
 			</UButton>
 			<!-- menu -->
-			<nav
-				v-if="isMenuOpen"
-				ref="mobileMenu"
-				class="absolute -top-5 -translate-y-full right-0 slide-in-right"
-			>
-				<ul class="flex flex-col gap-2 items-end">
-					<li
-						v-for="link in sidebarLinks"
-						:key="link.name"
-						class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto bg-white"
-					>
-						<ULink
-							:href="link.href"
-							class="w-fit flex items-center gap-4 flex justify-end hover:bg-gray-900 p-2 rounded-md ring-1 shadow-md ring-gray-200"
+			<Transition>
+				<nav
+					v-if="isMenuOpen"
+					ref="mobileMenu"
+					class="absolute -top-5 -translate-y-full right-0 slide-in-right"
+				>
+					<ul class="flex flex-col gap-2 items-end">
+						<li
+							v-for="link in sidebarLinks"
+							:key="link.name"
+							class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto bg-white rounded-md"
 						>
-							<span
-								class="ml-2 no-wrap whitespace-nowrap"
-								>{{ link.name }}</span
+							<ULink
+								:href="link.href"
+								class="w-fit flex items-center gap-4 flex justify-end hover:bg-gray-900 dark:hover:bg-gray-800 dark:bg-gray-700 p-2 rounded-md ring-1 shadow-md ring-gray-200 dark:ring-gray-600"
 							>
-							<UIcon :name="link.icon" class="w-6 h-6" />
-						</ULink>
-					</li>
-				</ul>
-			</nav>
+								<span
+									class="ml-2 no-wrap whitespace-nowrap"
+									>{{ link.name }}</span
+								>
+								<UIcon
+									:name="link.icon"
+									class="w-6 h-6"
+								/>
+							</ULink>
+						</li>
+					</ul>
+				</nav>
+			</Transition>
 		</div>
 	</div>
 </template>
@@ -127,3 +132,18 @@ const sidebarLinks = [
 	},
 ];
 </script>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+	transition: transform 0.25s ease-out, opacity 0.25s ease,
+		rotate 0.25s ease-out;
+	transform-origin: bottom right;
+}
+
+.v-enter-from,
+.v-leave-to {
+	opacity: 0;
+	transform: translateX(30px) translateY(30px) rotate(90deg);
+}
+</style>

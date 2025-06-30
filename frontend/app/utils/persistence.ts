@@ -2,7 +2,7 @@
 import * as localForage from "localforage";
 import type { dashboardItem } from "@/types/dashboard";
 import type { FoodItem } from "@/types/food";
-import type { userSettings } from "@/types/settings";
+import type { UserSettings } from "@/types/settings";
 
 export class PersistenceAdapter {
 	private isGuest: boolean;
@@ -56,23 +56,22 @@ export class PersistenceAdapter {
 			);
 		}
 	}
-	async saveUserSettings(settings: userSettings): Promise<void> {
-		if (this.isGuest) {
-			await localForage.setItem("user-settings", settings);
-			console.log('settings saved successfully', settings)
-		}
+	async saveUserSettings(settings: UserSettings): Promise<void> {
+		console.log("saving settings...", settings);
+		await localForage.setItem("user-settings", settings);
+		console.log("settings saved successfully", settings);
 	}
 
-
-
-	async loadUserSettings(): Promise<userSettings | null> {
-		if (this.isGuest) {
-			const settings = await localForage.getItem<userSettings>(
+	async loadUserSettings(): Promise<UserSettings | null> {
+		try {
+			const settings = await localForage.getItem<UserSettings>(
 				"user-settings"
 			);
-			console.log('settings loaded successfully', settings)
+
 			if (!settings) {
-				const defaultSettings: userSettings = {
+				const date = new Date();
+				console.log(date);
+				const defaultSettings: UserSettings = {
 					name: "Guest",
 					email: "example@email.com",
 					password: "**********",
@@ -83,15 +82,22 @@ export class PersistenceAdapter {
 					age: null,
 					gender: null,
 					theme: null,
+					savedAt: date.toISOString(),
+					updatedAt: date.toISOString(),
 				};
 				await this.saveUserSettings(defaultSettings);
-				console.log('no settings found, using default settings', defaultSettings)
+				console.log(
+					"No settings found, using default settings",
+					defaultSettings
+				);
 				return defaultSettings;
 			}
+
+			console.log("Settings found, using them", settings);
 			return settings;
-		} else {
-			// get from server
+		} catch (error) {
+			console.error("Failed to load user settings", error);
+			return null;
 		}
-		return null;
 	}
 }

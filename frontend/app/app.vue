@@ -22,11 +22,19 @@ watch(
 );
 
 onMounted(async () => {
-	await settings.loadSettings();
-	if(settings.settings?.theme) {
-		console.log('saved theme preference loaded - ', settings.settings?.theme)
-		colorMode.value = settings.settings?.theme;
+	try {
+		await settings.loadSettings();
+		console.log(settings);
+		if (settings.settings?.theme) {
+			console.log(
+				"saved theme preference loaded - ",
+				settings.settings?.theme
+			);
+			colorMode.value = settings.settings?.theme;
+		}
+		console.log("colorMode", colorMode.value);
+	} catch (error) {
+		console.log(error);
 	}
-	console.log("colorMode", colorMode.value);
 });
 </script>

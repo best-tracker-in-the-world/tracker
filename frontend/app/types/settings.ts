@@ -1,14 +1,17 @@
-export interface userSettings {
+export interface UserSettings {
 	name: string | null;
 	email: string | null;
 	password: string | null;
 
-	theme: string;
-	language: 'ru' | 'en';
+	theme: string | null;
+	language: "ru" | "en";
 
-	currentGoal: number;
+	currentGoal: number | undefined;
 	weight: number | null;
 	height: number | null;
 	age: number | null;
-	gender: 'male' | 'female' | null;
+	gender: "male" | "female" | null;
+
+	savedAt: string;
+	updatedAt: string;
 }

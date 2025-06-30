@@ -1,11 +1,9 @@
 <template>
 	<ClientOnly>
-		<div
-			class="flex flex-col gap-4 w-screen h-screen p-2 mb-[100px]"
-		>
+		<div class="flex flex-col gap-2 w-screen h-screen p-2 mb-[100px]">
 			<DashboardCalendar v-model="selectedDate as any" />
 			<!-- dashboard body wrap -->
-			<div class="grid grid-cols-2 gap-4">
+			<div class="grid grid-cols-2 gap-2">
 				<!-- 1. WEIGHT -->
 				<DashboardWeight
 					:value="selectedDayData?.weight ?? 0"
@@ -38,8 +36,7 @@ import { useDashboardStore } from "@/stores/dashboard";
 import type { dashboardItem } from "@/types/dashboard";
 import { useSettingsStore } from "~/stores/settings";
 
-
-const currentGoal = useSettingsStore().currentGoal;
+const currentGoal = useSettingsStore().settings?.currentGoal;
 
 definePageMeta({
 	layout: "app-main",
