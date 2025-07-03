@@ -118,6 +118,7 @@ const showLogDialog = ref(false);
 const isFoodFormModalOpen = ref(false);
 const selectedFood = ref(null);
 const logWeight = ref(100);
+const isMobile = useIsMobile();
 
 const selectedDate = computed(() => {
 	let str = dashboardStore.selectedDate.substring(8);
@@ -149,8 +150,6 @@ function openLogDialog(food) {
 
 async function logFood() {
 	if (selectedFood.value && logWeight.value > 0) {
-		// console.log("food", selectedFood.value);
-		// console.log("weight", logWeight.value);
 		await foodStore.logFoodToCurrentDay(
 			selectedFood.value,
 			logWeight.value
@@ -160,6 +159,6 @@ async function logFood() {
 }
 
 definePageMeta({
-	layout: "app-returnable",
+	layout: isMobile? "app-main" : "app-returnable",
 });
 </script>

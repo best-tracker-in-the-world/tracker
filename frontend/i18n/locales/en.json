@@ -89,5 +89,18 @@
 	"dashboard.userSettings.gender": "Gender",
 	"dashboard.userSettings.primary": "Primary settings",
 	"dashboard.userSettings.app": "App settings",
-	"dashboard.userSettings.stats": "For Statistics"
+	"dashboard.userSettings.stats": "For Statistics",
+
+	"settings.saveChanges": "Save changes",
+	"settings.cancel": "Cancel",
+	"settings.save": "Save",
+
+	"themes.light": "Light",
+	"themes.dark": "Dark",
+
+	"languages.en": "English",
+	"languages.ru": "Russian",
+
+	"gender.male": "Male",
+	"gender.female": "Female"
 }

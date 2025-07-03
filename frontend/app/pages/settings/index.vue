@@ -195,13 +195,21 @@ const user = useSettingsStore();
 user.loadSettings();
 
 const isUnsaved = ref(false);
-const i18n = useI18n();
+const { locale, setLocale } = useI18n();
 const availableLanguages = ["en", "ru"];
 const availableThemes = ["light", "dark"];
 const avaliableGenders = ["male", "female"];
 const colorMode = useColorMode();
 const isInitialized = ref(false);
 const isMobile = useIsMobile();
+
+const originalLanguage = ref<"ru" | "en">("ru");
+
+watch(state, () => {
+	if (isInitialized.value) {
+		isUnsaved.value = true;
+	}
+}, { deep: true });
 
 function handleSettingsSave() {
 	console.log("saving settings...", { ...state });
@@ -211,26 +219,26 @@ function handleSettingsSave() {
 		gender: state.gender as "male" | "female" | null,
 	};
 	user.saveSettings(settings);
+	
+	originalLanguage.value = state.language;
 	isUnsaved.value = false;
 }
 
 async function handleCancelSave() {
+	const currentLanguage = state.language;
+	const shouldRevertLanguage = originalLanguage.value !== currentLanguage;
+	
 	await user.loadSettings();
-
-	if (auth.isLoggedAsGuest) {
-		state.name = user.settings?.name ?? "";
-		state.email = user.settings?.email ?? "";
-		state.password = user.settings?.password ?? "";
-		state.theme = user.settings?.theme ?? colorMode.preference;
-		state.language = user.settings?.language ?? "ru";
-		state.currentGoal = user.settings?.currentGoal ?? 2000;
-		state.weight = user.settings?.weight ?? null;
-		state.height = user.settings?.height ?? null;
-		state.age = user.settings?.age ?? null;
-		state.gender = user.settings?.gender ?? null;
-	} else {
-		// get from server
+	loadStateFromSettings();
+	
+	// revert language if switched language and then cancelled save in modal
+	if (shouldRevertLanguage) {
+		console.log("reverting language to", originalLanguage.value);
+		setLocale(originalLanguage.value);
+		locale.value = originalLanguage.value;
+		state.language = originalLanguage.value;
 	}
+	
 	nextTick(() => {
 		saveChanges.value?.classList.add("slide-out-top");
 		setTimeout(() => {
@@ -240,15 +248,14 @@ async function handleCancelSave() {
 	});
 }
 
-onMounted(() => {
-	// get user settings from indexedDB
+function loadStateFromSettings() {
 	if (auth.isLoggedAsGuest) {
 		state.name = user.settings?.name ?? "";
 		state.email = user.settings?.email ?? "";
 		state.password = user.settings?.password ?? "";
 		state.theme = user.settings?.theme ?? colorMode.value;
-		state.language = user.settings?.language;
-		state.currentGoal = user.settings?.currentGoal ?? 0;
+		state.language = user.settings?.language ?? "ru";
+		state.currentGoal = user.settings?.currentGoal ?? 2000;
 		state.weight = user.settings?.weight ?? null;
 		state.height = user.settings?.height ?? null;
 		state.age = user.settings?.age ?? null;
@@ -256,21 +263,32 @@ onMounted(() => {
 	} else {
 		// get from server
 	}
+}
+
+function handleLanguageChange() {
+	// emidiately switch locale	
+	setLocale(state.language);
+	locale.value = state.language;
+}
+
+onMounted(() => {
+	loadStateFromSettings();
 
 	nextTick(async () => {
 		await user.loadSettings();
-		i18n.locale.value = user.settings?.language || "ru";
+		const initialLanguage = user.settings?.language || "ru";
+		state.language = initialLanguage;
+		// store init language to revert if cancel in modal
+		originalLanguage.value = initialLanguage;
+		setLocale(initialLanguage);
+		locale.value = initialLanguage;
+		
 		setTimeout(() => {
 			isInitialized.value = true;
 			console.log("isInitialized", isInitialized.value);
 		}, 250);
 	});
 });
-
-function handleLanguageChange() {
-	i18n.locale.value = state.language;
-	useRouter().push(switchLocalePath(state.language));
-}
 
 definePageMeta({
 	layout: isMobile? "app-main" : "app-returnable",
