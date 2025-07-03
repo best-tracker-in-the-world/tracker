@@ -201,26 +201,7 @@ const availableThemes = ["light", "dark"];
 const avaliableGenders = ["male", "female"];
 const colorMode = useColorMode();
 const isInitialized = ref(false);
-
-// watch(
-// 	() => state,
-// 	(newSettings) => {
-// 		if (!isInitialized.value) return;
-// 		console.log("triggered");
-// 		isUnsaved.value = true;
-// 		state.name = newSettings?.name ?? "";
-// 		state.email = newSettings?.email ?? "";
-// 		state.password = newSettings?.password ?? "";
-// 		state.theme = newSettings?.theme ?? "light";
-// 		state.language = newSettings?.language ?? "ru";
-// 		state.currentGoal = newSettings?.currentGoal ?? 0;
-// 		state.weight = newSettings?.weight ?? null;
-// 		state.height = newSettings?.height ?? null;
-// 		state.age = newSettings?.age ?? null;
-// 		state.gender = newSettings?.gender ?? null;
-// 	},
-// 	{ deep: true }
-// );
+const isMobile = useIsMobile();
 
 function handleSettingsSave() {
 	console.log("saving settings...", { ...state });
@@ -292,7 +273,7 @@ function handleLanguageChange() {
 }
 
 definePageMeta({
-	layout: "app-returnable",
+	layout: isMobile? "app-main" : "app-returnable",
 });
 </script>
 

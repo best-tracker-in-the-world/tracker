@@ -3,14 +3,47 @@
 		<!-- desktop -->
 		<aside
 			v-if="!isMobile"
-			class="w-64 bg-gray-800 text-white h-screen flex flex-col"
+			class="transition-all bg-gray-800 text-white flex flex-col sticky top-0 h-screen outline-1 outline-gray-800"
+			:class="isDesktopMenuOpen ? 'w-64' : 'w-16'"
 		>
-			<div class="flex items-center justify-center h-16 bg-gray-900">
-				<UIcon :name="'i-heroicons-fire'" class="w-6 h-6" />
-				<h1 class="text-xl font-bold">LOGO</h1>
+			<div
+				class="flex items-center h-16 mx-6 transition-flex"
+				:class="
+					isDesktopMenuOpen
+						? 'justify-between'
+						: 'justify-center'
+				"
+			>
+				<Transition name="menu-items">
+					<div
+						v-if="isDesktopMenuOpen"
+						class="menu-logo | flex items-center justify-left h-16"
+					>
+						<h1
+							class="text-xl font-bold flex align-center gap-2"
+						>
+							<UIcon
+								:name="'i-heroicons-fire'"
+								class="w-6 h-6"
+							/>LOGO
+						</h1>
+					</div>
+				</Transition>
+				<div
+					class="transition-margin transition-500 h-fit p-1.5 pb-0 rounded-sm hover:bg-gray-900 cursor-pointer"
+					:class="isDesktopMenuOpen ? 'ml-auto' : 'ml-0'"
+				>
+					<UIcon
+						class="w-6 h-6 transition-all opacity-50 hover:opacity-100"
+						:class="isDesktopMenuOpen ? '' : 'rotate-180'"
+						:name="'i-heroicons-arrow-left-circle'"
+						@click="isDesktopMenuOpen = !isDesktopMenuOpen"
+					/>
+				</div>
 			</div>
+			<USeparator color="primary" class="w-4/5 mx-auto opacity-25" />
 			<nav class="flex flex-col p-4 flex-1">
-				<ul class="flex flex-col gap-2 flex-1 justify-start mb-6">
+				<ul class="flex flex-col gap-2 flex-1 justify-start">
 					<li
 						v-for="link in sidebarLinks"
 						:key="link.name"
@@ -19,9 +52,17 @@
 						<ULink
 							:href="link.href"
 							class="flex items-center hover:bg-gray-900 p-2 rounded-md"
+							:class="
+								isDesktopMenuOpen ? '': 'px-1'"
 						>
-							<UIcon :name="link.icon" class="w-6 h-6" />
-							<span class="ml-2">{{ link.name }}</span>
+							<UIcon :name="link.icon" class="min-w-6 min-h-6" />
+							<Transition name="menu-items">
+								<span
+									v-if="isDesktopMenuOpen"
+									class="menu-item | ml-2"
+									>{{ link.name }}</span
+								>
+							</Transition>
 						</ULink>
 					</li>
 				</ul>
@@ -86,6 +127,8 @@ const { clear } = useDashboardStore();
 
 const isMenuOpen = ref(false);
 const isMounted = ref(false);
+const isDesktopMenuOpen = ref(true);
+
 onMounted(() => {
 	isMounted.value = true;
 });
@@ -122,7 +165,7 @@ const sidebarLinks = [
 	{
 		name: t("menu.food"),
 		href: "/food",
-		icon: "i-heroicons-chart-bar",
+		icon: "i-fluent-food-apple-24-regular",
 	},
 	{
 		name: t("menu.logout"),
@@ -136,8 +179,8 @@ const sidebarLinks = [
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-	transition: transform 0.25s ease-out, opacity 0.25s ease,
-		rotate 0.25s ease-out;
+	transition: transform 0.25s ease-out, opacity 0.4s ease,
+		rotate 0.4s ease-out;
 	transform-origin: bottom right;
 }
 
@@ -145,5 +188,23 @@ const sidebarLinks = [
 .v-leave-to {
 	opacity: 0;
 	transform: translateX(30px) translateY(30px) rotate(90deg);
+}
+
+.menu-item,
+.menu-logo {
+	width: 120px;
+	display: flex;
+	overflow: clip;
+	white-space: nowrap;
+}
+
+.menu-items-enter-active,
+.menu-items-leave-active {
+	transition: width 0.125s linear;
+}
+
+.menu-items-enter-from,
+.menu-items-leave-to {
+	width: 0px;
 }
 </style>

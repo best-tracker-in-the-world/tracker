@@ -20,6 +20,7 @@
 	"menu.dashboard": "Dashboard",
 	"menu.settings": "Settings",
 	"menu.stats": "Statistics",
+	"menu.food": "My Food",
 
 	"dashboard.weight.add": "Add",
 	"dashboard.weight.title": "Weight",
@@ -71,7 +72,7 @@
 	"settings.theme.title": "Theme",
 	"settings.theme.light": "Light",
 	"settings.theme.dark": "Dark",
-	
+
 	"dashboard.foodList.calories": "Calories",
 	"dashboard.foodList.proteins": "Proteins",
 	"dashboard.foodList.carbs": "Carbs",
@@ -90,4 +91,3 @@
 	"dashboard.userSettings.app": "App settings",
 	"dashboard.userSettings.stats": "For Statistics"
 }
-

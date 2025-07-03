@@ -1,11 +1,15 @@
 <template>
 	<ClientOnly>
-		<div class="flex flex-col gap-2 w-screen h-screen p-2 mb-[100px]">
+		<div class="flex flex-col gap-2 w-screen h-fit p-2 mb-[100px] md:mb-0">
 			<DashboardCalendar v-model="selectedDate as any" />
 			<!-- dashboard body wrap -->
-			<div class="grid grid-cols-2 gap-2">
+			<div
+				class="grid grid-cols-2 md:desktop-grid gap-2"
+				:class="isMobile ? '' : 'grid-container'"
+			>
 				<!-- 1. WEIGHT -->
 				<DashboardWeight
+					:class="{ 'grid-item-1': !isMobile }"
 					:value="selectedDayData?.weight ?? 0"
 					:is-loaded="loadedStatus.weight"
 					:span="1"
@@ -13,6 +17,7 @@
 				/>
 				<!-- 2. GOAL -->
 				<DashboardGoal
+					:class="{ 'grid-item-2': !isMobile }"
 					:current="selectedDayCalories ?? 0"
 					:max="selectedDayData?.caloricGoal ?? currentGoal"
 					:span="1"
@@ -20,8 +25,9 @@
 				/>
 				<!-- 3. FOOD -->
 				<DashboardFoodList
+					:class="{ 'grid-item-3': !isMobile }"
 					:items="selectedDayData?.foodLogs ?? []"
-					:span="2"
+					:span="isMobile ? 2 : 3"
 					:is-loaded="loadedStatus.foods"
 					@food-submit="handleFoodSubmit"
 				/>
@@ -37,6 +43,7 @@ import type { dashboardItem } from "@/types/dashboard";
 import { useSettingsStore } from "~/stores/settings";
 
 const currentGoal = useSettingsStore().settings?.currentGoal;
+const { isMobile } = useIsMobile();
 
 definePageMeta({
 	layout: "app-main",
@@ -129,3 +136,22 @@ async function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
 	await dashboardStore.saveDay(day);
 }
 </script>
+
+<style scoped>
+.grid-container {
+	grid-template-columns: 250px 1fr;
+}
+.grid-item-1,
+.grid-item-2 {
+	max-width: 250px;
+}
+
+.grid-item-2 {
+	grid-column: 1/2;
+}
+
+.grid-item-3 {
+	grid-column: 2/3;
+	grid-row: 1/3;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
 	<ClientOnly>
 		<DashboardTileWrapper :span="2" :color="'white'">
-			<div class="flex flex-col gap-4">
+			<div class="flex flex-col gap-4" v-auto-animate>
 				<div
 					class="flex items-center gap-2 align-center justify-end"
 					@click="isDatePickerVisible = !isDatePickerVisible"
@@ -41,8 +41,9 @@
 				<UCalendar
 					v-show="isDatePickerVisible"
 					v-model="modelValueComputed"
-					class="p-2"
+					class=""
 					:locale="'ru'"
+					v-auto-animate
 				/>
 			</div>
 		</DashboardTileWrapper>
@@ -51,6 +52,8 @@
 
 <script setup lang="ts">
 import { CalendarDate } from "@internationalized/date";
+
+const vAutoAnimate = useAutoAnimate();
 
 const props = defineProps<{
 	modelValue: CalendarDate;

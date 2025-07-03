@@ -22,16 +22,13 @@
 					<UButton
 						class="pointer-events-auto"
 						icon="i-heroicons-check"
-						@click="
-							console.log('click');
-							isEditing = false;
-						"
+						@click="isEditing = false"
 					/>
 				</div>
 			</div>
 		</template>
 
-		<div v-auto-animate>
+		<div class="h-full flex justify-center" v-auto-animate >
 			<!-- list of food -->
 			<ul
 				v-if="isLoaded"
@@ -141,15 +138,17 @@
 			<!-- loaded but no data -->
 			<div
 				v-if="!items?.length && isLoaded"
-				class="w-full h-32 p-4 flex flex-col items-center gap-2"
+				class="h-32 p-4 flex flex-col items-center gap-2 mt-auto min-h-2/3"
 			>
-				<p class="opacity-50">
+				<p class="opacity-50 dark:text-gray-400 text-center">
 					{{ $t("dashboard.foodList.empty") }}
 				</p>
 				<UButton
 					color="neutral"
+					class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300 hover:animate-none cursor-pointer hover:ring-1 hover:ring-gray-700"
 					size="xl"
 					:label="$t('dashboard.foodList.add')"
+					:class="items.length === 0 ? 'animate-pulse' : ''"
 					@click="isModalOpen = true"
 				/>
 			</div>

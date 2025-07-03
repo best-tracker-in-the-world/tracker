@@ -1,5 +1,5 @@
 <template>
-	<div class="flex w-screen h-screen">
+	<div class="flex max-w-screen h-full outline-2 outline-red-500">
 		<LazyLayoutsMenu />
 		<slot />
 	</div>
@@ -15,5 +15,4 @@ const auth = useAuthStore();
 onMounted(async () => {
 	auth.initFromLocalStorage();
 });
-
 </script>

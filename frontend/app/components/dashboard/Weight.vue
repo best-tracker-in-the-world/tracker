@@ -12,7 +12,7 @@
 		/>
 		<span
 			v-else
-			class="text-[15vw] font-bold text-center flex flex-col justify-center h-full justify-end"
+			class="text-[15vw] md:text-[100px] font-bold text-center flex flex-col justify-center h-full justify-end"
 		>
 			<!-- weight value -->
 			<span
@@ -20,9 +20,12 @@
 				:class="value ? 'h-fit my-auto' : 'opacity-10'"
 			>
 				<span>
+					<!-- ?? -->
 					{{ value ?? "??" }}
 				</span>
-				<span class="text-[6vw]">{{ $t("dimensions.kg") }}</span>
+				<span class="text-[6vw] md:text-[20px]">{{
+					$t("dimensions.kg")
+				}}</span>
 			</span>
 			<!-- add button -->
 		</span>
@@ -30,7 +33,7 @@
 			v-if="!value && isLoaded"
 			:label="$t('dashboard.weight.add')"
 			size="xl"
-			class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
+			class="increased-click-area w-full hover:animate-none cursor-pointer dark:hover:ring-1 dark:hover:ring-gray-700 rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
 			:class="value === 0 ? 'animate-pulse' : ''"
 			@click="handleClick"
 		/>
@@ -86,7 +89,6 @@ const inputRef = ref<ComponentPublicInstance | null>(null);
 
 const handleClick = () => {
 	isModalOpen.value = true;
-	console.log("cock");
 	nextTick(() => {
 		if (!inputRef.value) return;
 		inputRef.value.$el.querySelector("input").focus();

@@ -1,35 +1,36 @@
 <template>
-	<Teleport v-if="showModal" to="body">
-		<div
-			ref="modal"
-			class="modal fixed z-1 w-screen bg-white dark:bg-gray-800"
-			:class="computedClass"
-			:style="{ transform: isClosing ? 'translateY(100%)' : 0 }"
-		>
-			<slot name="header">
-				<div class="flex items-center justify-between mb-4">
-					<UIcon
-						name="i-heroicons-x-mark"
-						class="opacity-0"
-						size="32"
-					/>
-					<p class="text-md">{{ title }}</p>
-					<UIcon
-						class="dark:text-gray-500"
-						name="i-heroicons-x-mark"
-						size="32"
-						@click="closeModal"
-					/>
-				</div>
-			</slot>
-			<slot />
-		</div>
-		<div
-			v-if="props.type !== 'confirm'"
-			class="backdrop fixed inset-0 bg-black/50"
-			:style="{ opacity: isClosing ? 0 : 0.5 }"
-			@click="closeModal"
-		/>
+	<Teleport to="body">
+		<Transition :name="isMobile ? 'slide-up' : 'fade'">
+			<div
+				v-if="showModal"
+				ref="modal"
+				class="modal fixed z-1 w-screen bg-white dark:bg-gray-800"
+				:class="computedClass"
+			>
+				<slot name="header">
+					<div class="flex items-center justify-between mb-4">
+						<UIcon
+							name="i-heroicons-x-mark"
+							class="opacity-0"
+							size="32"
+						/>
+						<p class="text-md">{{ title }}</p>
+						<UIcon
+							class="dark:text-gray-500"
+							name="i-heroicons-x-mark"
+							size="32"
+							@click="closeModal"
+						/>
+					</div>
+				</slot>
+				<slot />
+			</div>
+			<!-- <div
+				v-if="props.type !== 'confirm'"
+				class="backdrop fixed inset-0 bg-black/50"
+				@click="closeModal"
+			/> -->
+		</Transition>
 	</Teleport>
 </template>
 
@@ -44,7 +45,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-	modelValue: false,
+	modelValue: true,
 	title: "",
 	position: "center",
 	type: "default",
@@ -53,30 +54,14 @@ const props = withDefaults(defineProps<Props>(), {
 const modal = ref<HTMLElement | null>(null);
 const isMobile = useIsMobile();
 const emit = defineEmits(["update:modelValue"]);
-
-// Proxy values for smooth transition
 const showModal = ref(false);
-const isClosing = ref(false);
-let closeTimeout: ReturnType<typeof setTimeout> | null = null;
 
 watch(
 	() => props.modelValue,
-	(newVal) => {
-		if (newVal) {
-			isClosing.value = false;
-			showModal.value = true;
-		} else {
-			// smooth closing
-			isClosing.value = true;
-			if (closeTimeout) clearTimeout(closeTimeout);
-			closeTimeout = setTimeout(() => {
-				showModal.value = false;
-				isClosing.value = false;
-				closeTimeout = null;
-			}, 300);
-		}
-	},
-	{ immediate: true }
+	(val) => {
+		showModal.value = val;
+		console.log("showModal", showModal.value);
+	}
 );
 
 const closeModal = () => {
@@ -89,7 +74,9 @@ onClickOutside(modal, () => {
 	}
 });
 
-useScrollLock(props.type !== "confirm" ? computed(() => props.modelValue) : false);
+useScrollLock(
+	props.type !== "confirm" ? computed(() => props.modelValue) : false
+);
 
 const computedClass = computed(() => {
 	return {
@@ -129,16 +116,13 @@ const getPosClasses = (position: string) => {
 </script>
 
 <style scoped>
-.modal {
-	transition: transform 0.3s ease-in-out, opacity 0.3s linear;
-	@starting-style {
-		transform: translateY(100%);
-		opacity: 0;
-	}
+.slide-up-enter-active,
+.slide-up-leave-active {
+	transition: opacity 0.5s ease;
 }
 
-.backdrop {
-	transition: opacity 0.3s linear;
+.slide-up-enter-from,
+.slide-up-leave-to {
+	opacity: 0;
 }
 </style>
-
