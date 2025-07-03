@@ -9,7 +9,7 @@
 			<!-- NAME, EMAIL, PASSWORD -->
 
 			<div
-				class="ring-1 p-4 py-4 pb-6 ring-gray-100 rounded-2xl flex flex-col gap-4"
+				class="ring-1 p-4 py-4 pb-6 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.primary") }}:
@@ -46,7 +46,7 @@
 			<!-- LANGUAGE, THEME -->
 
 			<div
-				class="ring-1 p-4 py-4 pb-6 my-8 ring-gray-100 rounded-2xl flex flex-col gap-4"
+				class="ring-1 p-4 py-4 pb-6 my-8 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.app") }}:
@@ -62,6 +62,7 @@
 						"
 						class="w-full"
 						size="xl"
+						@change="handleThemeChange"
 					/>
 				</UFormField>
 				<UFormField :label="$t('dashboard.userSettings.language')">
@@ -84,7 +85,7 @@
 			<!-- CURRENT GOAL, WEIGHT, HEIGHT, AGE, GENDER -->
 
 			<div
-				class="ring-1 p-4 py-4 pb-6 ring-gray-100 rounded-2xl flex flex-col gap-4"
+				class="ring-1 p-4 py-4 pb-6 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.stats") }}:
@@ -147,9 +148,10 @@
 			<div
 				v-if="isUnsaved"
 				ref="saveChanges"
-				class="save-changes fixed top-0 left-0 right-0 mb-4 p-4 bg-red-500 rounded-b-xl shadow-xl bg-white dark:bg-gray-800"
+				class="save-changes left-0 right-0 mb-4 p-4 bg-red-500 rounded-b-xl shadow-xl bg-white dark:bg-gray-800"
+				:class="isMobile ? 'fixed top-0':'top-1/2 absolute'"
 			>
-				<h4>{{ $t("settings.saveChanges") }}</h4>
+				<h4 class="mb-4">{{ $t("settings.saveChanges") }}</h4>
 				<div class="flex gap-2">
 					<UButton
 						:label="$t('settings.cancel')"
@@ -174,7 +176,6 @@
 <script setup lang="ts">
 import { useSettingsStore } from "~/stores/settings";
 
-const switchLocalePath = useSwitchLocalePath();
 const auth = useAuthStore();
 const saveChanges = ref<HTMLElement | null>(null);
 
@@ -202,8 +203,8 @@ const avaliableGenders = ["male", "female"];
 const colorMode = useColorMode();
 const isInitialized = ref(false);
 const isMobile = useIsMobile();
-
 const originalLanguage = ref<"ru" | "en">("ru");
+const originalTheme = ref<"light" | "dark">("light");
 
 watch(state, () => {
 	if (isInitialized.value) {
@@ -221,22 +222,32 @@ function handleSettingsSave() {
 	user.saveSettings(settings);
 	
 	originalLanguage.value = state.language;
+	originalTheme.value = state.theme;
 	isUnsaved.value = false;
 }
 
 async function handleCancelSave() {
+	// get initial theme and language to check them after on cancel
 	const currentLanguage = state.language;
+	const currentTheme = state.theme;
 	const shouldRevertLanguage = originalLanguage.value !== currentLanguage;
+	const shouldRevertTheme = originalTheme.value !== currentTheme;
 	
 	await user.loadSettings();
 	loadStateFromSettings();
 	
-	// revert language if switched language and then cancelled save in modal
+	// revert language if cancel
 	if (shouldRevertLanguage) {
 		console.log("reverting language to", originalLanguage.value);
 		setLocale(originalLanguage.value);
 		locale.value = originalLanguage.value;
 		state.language = originalLanguage.value;
+	}
+	// revert theme if cancel
+	if (shouldRevertTheme) {
+		console.log("reverting theme to", originalTheme.value);
+		colorMode.preference = originalTheme.value;
+		state.theme = originalTheme.value;
 	}
 	
 	nextTick(() => {
@@ -265,23 +276,36 @@ function loadStateFromSettings() {
 	}
 }
 
+// update locale and theme on dropdown input
 function handleLanguageChange() {
-	// emidiately switch locale	
 	setLocale(state.language);
 	locale.value = state.language;
 }
 
+function handleThemeChange() {
+	colorMode.preference = state.theme;
+	colorMode.value = state.theme;
+}
+
 onMounted(() => {
+
 	loadStateFromSettings();
 
 	nextTick(async () => {
 		await user.loadSettings();
+		
 		const initialLanguage = user.settings?.language || "ru";
+		const initialTheme = user.settings?.theme || colorMode.value;
+		
 		state.language = initialLanguage;
-		// store init language to revert if cancel in modal
+		state.theme = initialTheme;
+		
 		originalLanguage.value = initialLanguage;
+		originalTheme.value = initialTheme;
+		
 		setLocale(initialLanguage);
 		locale.value = initialLanguage;
+		colorMode.preference = initialTheme;
 		
 		setTimeout(() => {
 			isInitialized.value = true;

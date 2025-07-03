@@ -29,7 +29,7 @@
 								day.isToday,
 							'bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100':
 								!day.isToday,
-							'bg-gray-900 text-white dark:text-gray-300 dark:bg-gray-700!':
+							'bg-gray-400 text-white dark:text-gray-300 dark:bg-gray-700!':
 								day.isSelected,
 						}"
 						@click="modelValueComputed = day.date"

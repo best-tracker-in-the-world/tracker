@@ -33,7 +33,7 @@
 			v-if="!value && isLoaded"
 			:label="$t('dashboard.weight.add')"
 			size="xl"
-			class="increased-click-area w-full hover:animate-none cursor-pointer dark:hover:ring-1 dark:hover:ring-gray-700 rounded-xl text-center mt-auto block bg-gray-800 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
+			class="increased-click-area w-full hover:animate-none cursor-pointer dark:hover:ring-1 dark:hover:ring-gray-700 rounded-xl text-center mt-auto block bg-gray-500 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
 			:class="value === 0 ? 'animate-pulse' : ''"
 			@click="handleClick"
 		/>

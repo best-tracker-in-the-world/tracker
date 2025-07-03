@@ -3,11 +3,11 @@
 		<!-- desktop -->
 		<aside
 			v-if="!isMobile"
-			class="transition-all bg-gray-800 text-white flex flex-col sticky top-0 h-screen outline-1 outline-gray-800"
+			class="transition-all bg-slate-500 dark:bg-gray-800 text-white flex flex-col sticky top-0 h-screen outline-1 dark:outline-gray-800 outline-gray-500/50"
 			:class="isDesktopMenuOpen ? 'w-64' : 'w-16'"
 		>
 			<div
-				class="flex items-center h-16 mx-6 transition-flex"
+				class="flex items-center h-16 mx-6 transition-flex border-b-1 dark:border-gray-500/50 border-gray-400"
 				:class="
 					isDesktopMenuOpen
 						? 'justify-between'
@@ -17,7 +17,7 @@
 				<Transition name="menu-items">
 					<div
 						v-if="isDesktopMenuOpen"
-						class="menu-logo | flex items-center justify-left h-16"
+						class="menu-logo | flex items-center justify-left h-16  "
 					>
 						<h1
 							class="text-xl font-bold flex align-center gap-2"
@@ -30,7 +30,7 @@
 					</div>
 				</Transition>
 				<div
-					class="transition-margin transition-500 h-fit p-1.5 pb-0 rounded-sm hover:bg-gray-900 cursor-pointer"
+					class="transition-margin transition-500 h-fit p-1.5 pb-0 rounded-sm hover:bg-gray-600 dark:hover:bg-gray-900 cursor-pointer"
 					:class="isDesktopMenuOpen ? 'ml-auto' : 'ml-0'"
 				>
 					<UIcon
@@ -41,24 +41,35 @@
 					/>
 				</div>
 			</div>
-			<USeparator color="primary" class="w-4/5 mx-auto opacity-25" />
 			<nav class="flex flex-col p-4 flex-1">
 				<ul class="flex flex-col gap-2 flex-1 justify-start">
 					<li
 						v-for="link in sidebarLinks"
 						:key="link.name"
-						class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto"
+						class="last:mt-auto"
 					>
 						<ULink
 							:href="link.href"
-							class="flex items-center hover:bg-gray-900 p-2 rounded-md"
-							:class="
-								isDesktopMenuOpen ? '': 'px-1'"
+							class="flex items-center hover:bg-gray-600 dark:hover:bg-gray-900 p-2 rounded-md"
+							:class="isDesktopMenuOpen ? '' : 'px-1'"
 						>
-							<UIcon :name="link.icon" class="min-w-6 min-h-6" />
+							<UIcon
+								:name="link.icon"
+								class="min-w-6 min-h-6"
+								:class="
+									link.color
+										? link.color
+										: 'text-red-500'
+								"
+							/>
 							<Transition name="menu-items">
 								<span
 									v-if="isDesktopMenuOpen"
+									:class="
+										link.color
+											? link.color
+											: 'text-red-500'
+									"
 									class="menu-item | ml-2"
 									>{{ link.name }}</span
 								>
@@ -151,27 +162,31 @@ const sidebarLinks = [
 		name: t("menu.dashboard"),
 		href: "/dashboard",
 		icon: "i-heroicons-home",
+		color: "text-gray-100 dark:text-gray-400",
 	},
 	{
 		name: t("menu.settings"),
 		href: "/settings",
 		icon: "i-heroicons-cog-6-tooth",
+		color: "text-gray-100 dark:text-gray-400",
 	},
 	{
 		name: t("menu.stats"),
 		href: "/stats",
 		icon: "i-heroicons-chart-bar",
+		color: "text-gray-100 dark:text-gray-400",
 	},
 	{
 		name: t("menu.food"),
 		href: "/food",
 		icon: "i-fluent-food-apple-24-regular",
+		color: "text-gray-100 dark:text-gray-400",
 	},
 	{
 		name: t("menu.logout"),
 		href: "/logout",
 		icon: "i-heroicons-arrow-right-start-on-rectangle",
-		color: "text-red-500",
+		color: "text-red-500 dark:text-red-500",
 	},
 ];
 </script>
@@ -192,7 +207,7 @@ const sidebarLinks = [
 
 .menu-item,
 .menu-logo {
-	width: 120px;
+	width: 150px;
 	display: flex;
 	overflow: clip;
 	white-space: nowrap;
