@@ -1,7 +1,7 @@
 <template>
 	<div class="w-full h-full">
 		<UForm
-			class="h-screen p-4 gap-2 flex flex-col mb-16"
+			class="relative h-screen p-4 gap-2 flex flex-col mb-16 w-full md:max-w-[600px]"
 			:state="state"
 			:style="isUnsaved ? 'height: calc(100vh + 64px)' : ''"
 		>
@@ -10,6 +10,7 @@
 
 			<div
 				class="ring-1 p-4 py-4 pb-6 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
+				:class="auth.isLoggedAsGuest ? 'disabled':''"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.primary") }}:
@@ -142,13 +143,10 @@
 						class="w-full"
 						size="xl"
 					/>
-				</UFormField>
-			</div>
-
-			<div
+								<div
 				v-if="isUnsaved"
 				ref="saveChanges"
-				class="save-changes left-0 right-0 mb-4 p-4 bg-red-500 rounded-b-xl shadow-xl bg-white dark:bg-gray-800"
+				class="save-changes left-0 right-0 mb-4 p-4 bg-red-500 rounded-b-xl shadow-xl bg-white dark:bg-gray-800 z-10"
 				:class="isMobile ? 'fixed top-0':'top-1/2 absolute'"
 			>
 				<h4 class="mb-4">{{ $t("settings.saveChanges") }}</h4>
@@ -169,6 +167,10 @@
 					/>
 				</div>
 			</div>
+				</UFormField>
+			</div>
+
+
 		</UForm>
 	</div>
 </template>
@@ -326,5 +328,29 @@ definePageMeta({
 		opacity: 0;
 		transform: translateY(-100%);
 	}
+}
+
+.disabled {
+	position: relative;
+}
+
+.disabled::after {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background-color: rgba(65, 65, 65, 0.25);
+	border-radius: 1rem;
+	cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+.disabled::after {
+	background-color: rgba(156, 156, 156, 0.25);
+}
 }
 </style>
