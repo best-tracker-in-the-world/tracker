@@ -39,6 +39,7 @@
 	"dimensions.kcal": "kcal",
 	"dimensions.g": "g",
 
+	"foodlist.addFoodAt": "Add to eaten foot",
 	"foodList.protein": "Proteins",
 	"foodList.carbs": "Carbs",
 	"foodList.fat": "Fat",

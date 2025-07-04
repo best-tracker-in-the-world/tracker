@@ -18,7 +18,8 @@
 						:key="item.name + '-' + index"
 					>
 						<div
-							class="flex justify-between gap-3 p-2 py-4 ring-1 ring-gray-200 pl-4 shadow-sm rounded-2xl items-center"
+							class="flex justify-between gap-3 p-2 py-4 pl-4 items-center"
+							
 						>
 							<p class="block w-1/2 truncate h-fit">
 								{{ item.name.charAt(0).toUpperCase() + item.name.slice(1) }}
@@ -40,6 +41,7 @@
 								@click="openLogDialog(item)"
 							/>
 						</div>
+						<USeparator type="dotted" size="sm"  />
 					</li>
 				</ul>
 			</div>

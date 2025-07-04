@@ -28,7 +28,7 @@
 			</div>
 		</template>
 
-		<div class="h-full flex justify-center" v-auto-animate >
+		<div v-auto-animate class="h-full flex justify-center" >
 			<!-- list of food -->
 			<ul
 				v-if="isLoaded"
