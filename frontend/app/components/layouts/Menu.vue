@@ -17,7 +17,7 @@
 				<Transition name="menu-items">
 					<div
 						v-if="isDesktopMenuOpen"
-						class="menu-logo | flex items-center justify-left h-16  "
+						class="menu-logo | flex items-center justify-left h-16"
 					>
 						<h1
 							class="text-xl font-bold flex align-center gap-2"
@@ -157,7 +157,7 @@ onClickOutside(mobileMenu, () => {
 	}
 });
 
-const sidebarLinks = [
+const sidebarLinks = computed(() => [
 	{
 		name: t("menu.dashboard"),
 		href: "/dashboard",
@@ -188,7 +188,7 @@ const sidebarLinks = [
 		icon: "i-heroicons-arrow-right-start-on-rectangle",
 		color: "text-red-500 dark:text-red-500",
 	},
-];
+]);
 </script>
 
 <style scoped>
