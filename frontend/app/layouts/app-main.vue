@@ -1,5 +1,5 @@
 <template>
-	<div class="flex max-w-screen h-full outline-2 outline-red-500">
+	<div class="flex max-w-screen h-full">
 		<LazyLayoutsMenu />
 		<slot />
 	</div>
