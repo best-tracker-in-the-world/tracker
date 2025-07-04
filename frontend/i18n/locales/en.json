@@ -30,6 +30,10 @@
 	"dashboard.foodList.title": "Food List",
 	"dashboard.foodList.add": "Add food",
 	"dashboard.foodList.empty": "The list of food products for this day is empty",
+	"dashboard.foodList.favorite": "Add to favorites.",
+	"dashboard.foodList.favoriteInfo": "Add food to favorites. In the list of food products it will appear at the beginning.",
+	"dashboard.foodList.addToCurrentDay": "Add to current day.",
+	"dashboard.foodList.addToCurrentDayInfo": "Add to current day. Information about what the food is added to the list initially and with this checkbox you can immediately add to today's day.",
 
 	"dimensions.kg": "kg",
 	"dimensions.kcal": "kcal",
@@ -39,6 +43,9 @@
 	"foodList.carbs": "Carbs",
 	"foodList.fat": "Fat",
 	"foodList.additionalInfo": "Nutrition info",
+	"foodList.error.nameTooShort": "Field cannot be empty",
+	"foodList.error.weightWrong": "from 1 to 5000",
+	"foodList.error.caloricContentWrong": "from 0 to 1000",
 
 	"calendar.monday": "mon",
 	"calendar.tuesday": "tue",
