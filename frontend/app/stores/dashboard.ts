@@ -18,7 +18,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
 			today.getFullYear(),
 			today.getMonth() + 1,
 			today.getDate()
-		)
+		).toString()
 	);
 
 	async function loadAllDays() {
