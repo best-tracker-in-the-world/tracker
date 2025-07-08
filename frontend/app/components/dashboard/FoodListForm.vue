@@ -1,5 +1,6 @@
 <template>
 	<UForm v-auto-animate :state="state" class="w-full flex flex-col gap-4">
+		<DevOnly>id: {{ state.id }}</DevOnly>
 		<!-- NAME -->
 		<UFormField
 			:label="$t('dashboard.foodlist.name')"
@@ -183,6 +184,8 @@ import { UiAdditionalLink } from "#components";
 
 const $emit = defineEmits(["submit"]);
 
+const { latestFoodItemId } = useLatestFoodItemId();
+
 const state = reactive({
 	name: "",
 	weight: 100,
@@ -192,6 +195,7 @@ const state = reactive({
 	fat: null,
 	addToFavorites: false,
 	addToFoodList: true,
+	id: computed(() => latestFoodItemId.value + 1),
 });
 
 const isAdditionalVisible = ref(false);

@@ -1,4 +1,3 @@
-// persistence.ts
 import * as localForage from "localforage";
 import type { dashboardItem } from "@/types/dashboard";
 import type { FoodItem } from "@/types/food";
@@ -47,15 +46,28 @@ export class PersistenceAdapter {
 
 	async saveFoodItem(item: FoodItem): Promise<void> {
 		if (this.isGuest) {
-			console.log("trting to save item", item);
+			console.log("trying to save item", item);
 			const items = await this.loadFoodItems();
+			console.log("items loaded", items);
 			items.push(item);
+			console.log("new item pushed", items);
 			await localForage.setItem(
 				"food-items",
 				JSON.parse(JSON.stringify(items))
 			);
+			console.log("save completed", items);
 		}
 	}
+
+	async getLatestFoodId(): Promise<number> {
+		if (this.isGuest) {
+			const items = await this.loadFoodItems();
+			return items.length > 0 ? items[items.length - 1].id : 0;
+		}
+		return 0;
+	}
+
+
 	async saveUserSettings(settings: UserSettings): Promise<void> {
 		console.log("saving settings...", settings);
 		await localForage.setItem("user-settings", settings);

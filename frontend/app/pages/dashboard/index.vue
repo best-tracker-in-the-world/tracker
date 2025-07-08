@@ -29,7 +29,6 @@
 					:items="selectedDayData?.foodLogs ?? []"
 					:span="isMobile ? 2 : 3"
 					:is-loaded="loadedStatus.foods"
-					@food-submit="handleFoodSubmit"
 				/>
 			</div>
 		</div>
@@ -37,10 +36,10 @@
 </template>
 
 <script setup lang="ts">
-import { CalendarDate } from "@internationalized/date";
 import { useDashboardStore } from "@/stores/dashboard";
-import type { dashboardItem } from "@/types/dashboard";
 import { useSettingsStore } from "~/stores/settings";
+import { CalendarDate } from "@internationalized/date";
+
 
 const currentGoal = useSettingsStore().settings?.currentGoal;
 const { isMobile } = useIsMobile();
@@ -51,16 +50,15 @@ definePageMeta({
 
 const dashboardStore = useDashboardStore();
 
-const today = new Date();
-const selectedDate = ref(
-	new CalendarDate(
-		today.getFullYear(),
-		today.getMonth() + 1,
-		today.getDate()
-	)
-);
-// save initial value to store
-dashboardStore.selectedDate = selectedDate.value.toString();
+	const today = new Date();
+	const selectedDate = ref(
+		new CalendarDate(
+			today.getFullYear(),
+			today.getMonth() + 1,
+			today.getDate()
+		)
+	);
+
 
 const loadedStatus = reactive({
 	weight: false,
@@ -70,6 +68,7 @@ const loadedStatus = reactive({
 
 onMounted(async () => {
 	await dashboardStore.loadAllDays();
+	console.log('dock',selectedDate);
 	// skeleton test
 	setTimeout(() => {
 		loadedStatus.weight = true;
@@ -119,22 +118,7 @@ async function handleWeightSubmit(weight: number) {
 	await dashboardStore.saveDay(day);
 }
 
-// food
 
-async function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
-	const date = dashboardStore.selectedDate;
-	let day = dashboardStore.getDay(date);
-	if (!day) {
-		day = {
-			date,
-			weight: 0,
-			caloricGoal: currentGoal,
-			foodLogs: [],
-		};
-	}
-	day.foodLogs.push(data);
-	await dashboardStore.saveDay(day);
-}
 </script>
 
 <style scoped>

@@ -1,4 +1,3 @@
-<!-- pages/food.vue -->
 <template>
 	<ClientOnly>
 		<div class="p-4 px-2 flex-auto flex flex-col flex-auto">
@@ -19,10 +18,12 @@
 					>
 						<div
 							class="flex justify-between gap-3 p-2 py-4 pl-4 items-center"
-							
 						>
 							<p class="block w-1/2 truncate h-fit">
-								{{ item.name.charAt(0).toUpperCase() + item.name.slice(1) }}
+								{{
+									item.name.charAt(0).toUpperCase() +
+									item.name.slice(1)
+								}}
 							</p>
 							<span
 								class="mr-auto h-fit text-xs opacity-50"
@@ -32,7 +33,11 @@
 							</span>
 							<UIcon
 								name="i-heroicons-heart"
-								:class="[ item.isFavorite ? 'fill-red-500' : 'opacity-25' ]"
+								:class="[
+									item.isFavorite
+										? 'fill-red-500'
+										: 'opacity-25',
+								]"
 								class="w-7 h-7"
 							/>
 							<UButton
@@ -41,27 +46,35 @@
 								@click="openLogDialog(item)"
 							/>
 						</div>
-						<USeparator type="dotted" size="sm"  />
+						<USeparator type="dotted" size="sm" />
 					</li>
 				</ul>
 			</div>
 
-			<UButton class="mt-auto grid items-center" size="xl" @click="isFoodFormModalOpen = true"
+			<UButton
+				class="mt-auto grid items-center"
+				size="xl"
+				@click="isFoodFormModalOpen = true"
 				>{{ $t("dashboard.foodList.add") }}</UButton
 			>
 		</div>
 
 		<!-- add new food modal -->
 		<UiModal v-model="isFoodFormModalOpen">
-			<DashboardFoodListForm @submit="addNewFood" />
+			<DashboardFoodListForm />
 		</UiModal>
 		<!-- add new food modal -->
 		<UiModal
 			v-model="showLogDialog"
 			:title="$t('foodlist.addFoodAt') + ' ' + selectedDate"
 		>
-			<div class="bg-white rounded-lg w-full">
+			<div class="rounded-lg w-full">
 				<h3 class="text-2xl w-full text-center font-semibold mb-4">
+					<DevOnly>
+						<div class="dev-only">
+						id: {{ selectedFood?.id }}
+						</div>
+					</DevOnly>
 					{{ selectedFood?.name }}
 				</h3>
 				<div class="mb-4">
@@ -123,9 +136,9 @@ const logWeight = ref(100);
 const isMobile = useIsMobile();
 
 const selectedDate = computed(() => {
-	let str = dashboardStore.selectedDate.substring(8);
-	str += "." + dashboardStore.selectedDate.substring(5, 7);
-	return str;
+  const date = dashboardStore.selectedDate;
+	// DD-MM format
+  return `${date.year}.${String(date.month).padStart(2, "0")}.${String(date.day).padStart(2, "0")}`;
 });
 
 onMounted(async () => {
@@ -137,11 +150,6 @@ onMounted(async () => {
 function addNewFood(formData: FoodItem) {
 	foodStore.addFoodItem(formData);
 	isFoodFormModalOpen.value = false;
-}
-
-function toggleFavorite(food) {
-	foodStore.toggleFavorite(food);
-	food.isFavorite = !food.isFavorite;
 }
 
 function openLogDialog(food) {
@@ -161,6 +169,6 @@ async function logFood() {
 }
 
 definePageMeta({
-	layout: isMobile? "app-main" : "app-returnable",
+	layout: isMobile ? "app-main" : "app-returnable",
 });
 </script>

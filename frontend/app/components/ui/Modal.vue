@@ -25,11 +25,13 @@
 				</slot>
 				<slot />
 			</div>
-			<!-- <div
-				v-if="props.type !== 'confirm'"
+		</Transition>
+		<Transition name="fade-in">
+			<div
+					v-if="showModal"
 				class="backdrop fixed inset-0 bg-black/50"
 				@click="closeModal"
-			/> -->
+			/>
 		</Transition>
 	</Teleport>
 </template>
@@ -118,11 +120,21 @@ const getPosClasses = (position: string) => {
 <style scoped>
 .slide-up-enter-active,
 .slide-up-leave-active {
-	transition: opacity 0.5s ease;
+	transition: transform 0.35s ease-out;
 }
 
 .slide-up-enter-from,
 .slide-up-leave-to {
-	opacity: 0;
+	transform: translateY(100%);
+}
+
+.fade-in-enter-active,
+.fade-in-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.fade-in-enter-from,
+.fade-in-leave-to {
+  opacity: 0;
 }
 </style>

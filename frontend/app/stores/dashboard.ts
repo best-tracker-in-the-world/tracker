@@ -1,17 +1,25 @@
 // stores/dashboard.ts
 import { defineStore } from "pinia";
+import { CalendarDate } from "@internationalized/date";
 import type { dashboardItem } from "@/types/dashboard";
 import { PersistenceAdapter } from "@/utils/persistence";
 import { useAuthStore } from "~/stores/auth";
+
 
 export const useDashboardStore = defineStore("dashboard", () => {
 	const isGuest = useAuthStore().isLoggedAsGuest;
 	// const isGuest = true;
 	const adapter = new PersistenceAdapter(isGuest);
 
-	// Store all days as a Map keyed by date string
 	const days = ref(new Map<string, dashboardItem>());
-	const selectedDate = ref("");
+	const today = new Date();
+	const selectedDate = ref(
+		new CalendarDate(
+			today.getFullYear(),
+			today.getMonth() + 1,
+			today.getDate()
+		)
+	);
 
 	async function loadAllDays() {
 		const all = await adapter.loadAll();

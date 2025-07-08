@@ -1,4 +1,3 @@
-// stores/food.ts
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { PersistenceAdapter } from "@/utils/persistence";
