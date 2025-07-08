@@ -4,7 +4,10 @@
 		:color="wrapperProps.color"
 		:span="span"
 		:icon="wrapperProps.icon"
-		class="h-full max-w-full"
+		class="wrapper h-full max-w-full"
+		:class="{ 'pressing': isPressed, 'completed': isCompleted }"
+		v-bind="handlers"
+		@dblclick="handleClick"
 	>
 		<USkeleton
 			v-if="!isLoaded"
@@ -12,7 +15,7 @@
 		/>
 		<span
 			v-else
-			class="text-[15vw] md:text-[100px] font-bold text-center flex flex-col justify-center h-full justify-end"
+			class="text-[15vw] md:text-[70px] font-bold text-center flex flex-col justify-center h-full justify-end"
 		>
 			<!-- weight value -->
 			<span
@@ -23,7 +26,7 @@
 					<!-- ?? -->
 					{{ value ?? "??" }}
 				</span>
-				<span class="text-[6vw] md:text-[20px]">{{
+				<span class="text-[6vw] md:text-[16px]">{{
 					$t("dimensions.kg")
 				}}</span>
 			</span>
@@ -100,4 +103,46 @@ const wrapperProps = {
 	color: "gray",
 	icon: "i-heroicons-scale",
 };
+
+const { handlers, isPressed, isCompleted } = useLongPress(() => {
+  isModalOpen.value = true
+})
 </script>
+
+<style scoped>
+.wrapper {
+	transition: all 0.2s ease-in-out;
+	overflow: clip;
+	position: relative;
+	cursor: pointer;
+}
+
+.wrapper.pressing {
+	scale: 0.95;
+}
+
+.wrapper::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 300%;
+	background-color: rgba(0, 0, 0, 0.05);
+	rotate: 0deg;
+	transition: transform .7s linear;
+	transform: translateX(-43%) translateY(100%);
+	filter: blur(25px);
+	rotate: 45deg;
+	transform-origin: 0 center;
+	z-index: 1;
+}
+
+.wrapper.pressing::after {
+	transform: translateX(-43%);
+}
+.wrapper.completed::after {
+	transform: translateX(-43%);
+}
+
+</style>
