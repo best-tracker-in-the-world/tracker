@@ -84,17 +84,17 @@
 		<div v-if="isMobile" class="fixed bottom-4 right-4 z-10">
 			<!-- btn -->
 			<UButton
+				ref="mobileMenuButton"
 				class="rounded-full w-14 h-14 active:scale-90 transition-all"
+				@click="handleMenuClick"
 			>
 				<UIcon
-					ref="mobileMenuButton"
 					:name="
 						isMenuOpen
 							? 'i-heroicons-x-mark'
 							: 'i-heroicons-bars-3'
 					"
 					class="size-10"
-					@click.stop="handleMenuClick"
 				/>
 			</UButton>
 			<!-- menu -->
@@ -103,6 +103,7 @@
 					v-if="isMenuOpen"
 					ref="mobileMenu"
 					class="absolute -top-5 -translate-y-full right-0 slide-in-right"
+					@click.stop
 				>
 					<ul class="flex flex-col gap-2 items-end">
 						<li
@@ -134,27 +135,50 @@
 const { isMobile } = useIsMobile();
 const { t } = useI18n();
 
-const { clear } = useDashboardStore();
-
 const isMenuOpen = ref(false);
 const isMounted = ref(false);
 const isDesktopMenuOpen = ref(true);
+const isButtonClicked = ref(false);
 
 onMounted(() => {
 	isMounted.value = true;
 });
-function handleMenuClick() {
+
+function handleMenuClick(event: Event) {
+	event.stopPropagation();
+	event.preventDefault();
+	
+	isButtonClicked.value = true;
 	isMenuOpen.value = !isMenuOpen.value;
+	
+	// Reset the flag after a short delay
+	setTimeout(() => {
+		isButtonClicked.value = false;
+	}, 100);
 }
 
 const mobileMenu = ref<HTMLElement | null>(null);
 const mobileMenuButton = ref<HTMLElement | null>(null);
 
-onClickOutside(mobileMenu, () => {
-	// close menu if clicked outside and not on menu btn
-	if (isMenuOpen.value && mobileMenuButton.value.$el !== event.target) {
-		isMenuOpen.value = false;
-	}
+// Use document click instead of onClickOutside to have more control
+onMounted(() => {
+	const handleDocumentClick = (event: Event) => {
+		if (!isMenuOpen.value || isButtonClicked.value) return;
+		
+		const menuEl = mobileMenu.value;
+		const buttonEl = mobileMenuButton.value?.$el || mobileMenuButton.value;
+		
+		if (menuEl && !menuEl.contains(event.target as Node) && 
+			buttonEl && !buttonEl.contains(event.target as Node)) {
+			isMenuOpen.value = false;
+		}
+	};
+	
+	document.addEventListener('click', handleDocumentClick);
+	
+	onUnmounted(() => {
+		document.removeEventListener('click', handleDocumentClick);
+	});
 });
 
 const sidebarLinks = computed(() => [
@@ -192,6 +216,9 @@ const sidebarLinks = computed(() => [
 </script>
 
 <style scoped>
+.menu-icon {
+	position: relative;
+}
 .v-enter-active,
 .v-leave-active {
 	transition: transform 0.25s ease-out, opacity 0.4s ease,
