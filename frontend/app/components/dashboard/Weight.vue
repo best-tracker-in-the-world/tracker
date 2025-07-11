@@ -5,10 +5,18 @@
 		:span="span"
 		:icon="wrapperProps.icon"
 		class="wrapper h-full max-w-full"
-		:class="{ 'pressing': isPressed, 'completed': isCompleted }"
+		:class="{ pressing: isPressed, completed: isCompleted }"
 		v-bind="handlers"
 		@dblclick="handleClick"
 	>
+		<template #header>
+			<UIcon
+				v-if="isLoaded"
+				name="i-heroicons-plus"
+				class="h-5 w-5 grid items center translate-x-1 dark:text-gray-400"
+				@click="handleClick"
+			/>
+		</template>
 		<USkeleton
 			v-if="!isLoaded"
 			class="h-[75%] w-[75%] mx-auto rounded-xl bg-gray-900/10 dark:bg-gray-100/10"
@@ -19,7 +27,7 @@
 		>
 			<!-- weight value -->
 			<span
-				class="dark:text-gray-100"
+				class="dark:text-gray-100 my-auto"
 				:class="value ? 'h-fit my-auto' : 'opacity-10'"
 			>
 				<span>
@@ -30,16 +38,8 @@
 					$t("dimensions.kg")
 				}}</span>
 			</span>
-			<!-- add button -->
+
 		</span>
-		<UButton
-			v-if="!value && isLoaded"
-			:label="$t('dashboard.weight.add')"
-			size="xl"
-			class="increased-click-area w-full hover:animate-none cursor-pointer dark:hover:ring-1 dark:hover:ring-gray-700 rounded-xl text-center mt-auto block bg-gray-500 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300"
-			:class="value === 0 ? 'animate-pulse' : ''"
-			@click="handleClick"
-		/>
 
 		<UiModal v-model="isModalOpen" :title="$t('dashboard.weight.add')">
 			<div class="flex flex-col gap-4">
@@ -105,8 +105,8 @@ const wrapperProps = {
 };
 
 const { handlers, isPressed, isCompleted } = useLongPress(() => {
-  isModalOpen.value = true
-})
+	isModalOpen.value = true;
+});
 </script>
 
 <style scoped>
@@ -130,7 +130,7 @@ const { handlers, isPressed, isCompleted } = useLongPress(() => {
 	width: 300%;
 	background-color: rgba(0, 0, 0, 0.05);
 	rotate: 0deg;
-	transition: transform .7s linear;
+	transition: transform 0.7s linear;
 	transform: translateX(-43%) translateY(100%);
 	filter: blur(25px);
 	rotate: 45deg;
@@ -144,5 +144,4 @@ const { handlers, isPressed, isCompleted } = useLongPress(() => {
 .wrapper.completed::after {
 	transform: translateX(-43%);
 }
-
 </style>

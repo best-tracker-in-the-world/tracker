@@ -3,7 +3,7 @@
 		<!-- desktop -->
 		<aside
 			v-if="!isMobile"
-			class="transition-all bg-slate-500 dark:bg-gray-800 text-white flex flex-col sticky top-0 h-screen outline-1 dark:outline-gray-800 outline-gray-500/50"
+			class="transition-all bg-gray-500 dark:bg-gray-800 text-white flex flex-col sticky top-0 h-screen outline-1 dark:outline-gray-800 outline-gray-500/50"
 			:class="isDesktopMenuOpen ? 'w-64' : 'w-16'"
 		>
 			<div

@@ -195,6 +195,7 @@ const state = reactive({
 	fat: null,
 	addToFavorites: false,
 	addToFoodList: true,
+	addedAt: new Date().toISOString().substring(11, 16),
 	id: computed(() => latestFoodItemId.value + 1),
 });
 
