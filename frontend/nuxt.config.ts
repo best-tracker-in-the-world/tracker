@@ -59,4 +59,10 @@ export default defineNuxtConfig({
 			NUXT_PUBLIC_API_URL: process.env.NUXT_PUBLIC_API_URL,
 		},
 	},
+	 icon: {
+    clientBundle: {
+      scan: true,
+    },
+    serverBundle: false,
+  }
 });
