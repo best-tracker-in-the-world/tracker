@@ -1,113 +1,175 @@
 {
-	"error": "Ошибка",
+  "error": "Ошибка",
+  
+  "login": {
+    "login": "Вход",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "error": "Ошибка входа",
+    "alreadyHaveAccount": "Уже зарегистрированы?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "register": "Регистрация",
+    "submit": "Войти",
+    "useGuest": "Гостевой аккаунт",
+    "guestInfo": "При использовании гостевого аккаунта данные будут сохранятся на устройстве и не будут отправлены на сервер. В данном режиме недоступна чать функций. Вы сможете продолжить регистрацию позднее с сохранением введенных данных."
+  },
 
-	"login.login": "Вход",
-	"login.email": "Электронная почта",
-	"login.password": "Пароль",
-	"login.error": "Ошибка входа",
-	"login.alreadyHaveAccount": "Уже зарегистрированы?",
-	"login.dontHaveAccount": "Нет аккаунта?",
-	"login.register": "Регистрация",
-	"login.submit": "Войти",
-	"login.useGuest": "Гостевой аккаунт",
-	"login.guestInfo": "При использовании гостевого аккаунта данные будут сохранятся на устройстве и не будут отправлены на сервер. В данном режиме недоступна чать функций. Вы сможете продолжить регистрацию позднее с сохранением введенных данных.",
+  "register": {
+    "success": "Регистрация успешна",
+    "error": "Ошибка регистрации",
+    "submit": "Зарегистрироваться"
+  },
 
-	"register.success": "Регистрация успешна",
-	"register.error": "Ошибка регистрации",
-	"register.submit": "Зарегистрироваться",
+  "menu": {
+    "logout": "Выход",
+    "dashboard": "Панель управления",
+    "settings": "Настройки",
+    "stats": "Статистика",
+    "food": "Моя еда"
+  },
 
-	"menu.logout": "Выход",
-	"menu.dashboard": "Панель управления",
-	"menu.settings": "Настройки",
-	"menu.stats": "Статистика",
-	"menu.food": "Моя еда",
+  "routes": {
+    "food": "Моя еда",
+    "settings": "Настройки",
+    "stats": "Статистика"
+  },
 
-	"dashboard.weight.add": "Ввести вес",
-	"dashboard.weight.title": "Вес",
-	"dashboard.goal.title": "Цель",
-	"dashboard.caloricContent": "Калорийность",
-	"dashboard.foodlist.name": "Название",
-	"dashboard.foodList.title": "Приемы пищи",
-	"dashboard.foodList.add": "Добавить продукт",
-	"dashboard.foodList.empty": "Список продуктов на этот день пуст",
-	"dashboard.foodList.favorite": "Добавить в избранное.",
-	"dashboard.foodList.favoriteInfo": "Добавить продукт в избранное. В списке продуктов он будет появляться в начале.",
-	"dashboard.foodList.addToCurrentDay": "Добавить в текущий день.",
-	"dashboard.foodList.addToCurrentDayInfo": "Добавить в текущий день. Инфа про то, что продукт добавляется в список изначально а с этим чекбоксом можно сразу добавить в сегодняшний день.",
+  "dashboard": {
+    "weight": {
+      "add": "Ввести вес",
+      "title": "Вес",
+			"placeholder": "Введите вес, кг"
+    },
+    "goal": {
+      "title": "Цель"
+    },
+    "caloricContent": "Калорийность",
+    "foodlist": {
+      "name": "Название"
+    },
+    "foodList": {
+      "title": "Приемы пищи",
+      "add": "Добавить продукт",
+      "empty": "Список продуктов на этот день пуст",
+      "favorite": "Добавить в избранное.",
+      "favoriteInfo": "Добавить продукт в избранное. В списке продуктов он будет появляться в начале.",
+      "addToCurrentDay": "Добавить в текущий день.",
+      "addToCurrentDayInfo": "Добавить в текущий день. Инфа про то, что продукт добавляется в список изначально а с этим чекбоксом можно сразу добавить в сегодняшний день.",
+      "calories": "Калории",
+      "proteins": "Белки",
+      "carbs": "Углеводы",
+      "fat": "Жиры"
+    },
+    "userSettings": {
+      "name": "Имя",
+      "email": "Электронная почта",
+      "password": "Пароль",
+      "theme": "Тема",
+      "language": "Язык",
+      "currentGoal": "Текущая цель",
+      "weight": "Вес",
+      "height": "Рост",
+      "age": "Возраст",
+      "gender": "Пол",
+      "primary": "Основное",
+      "app": "Приложение",
+      "stats": "Для статистики"
+    }
+  },
 
-	"dimensions.kg": "кг",
-	"dimensions.kcal": "ккал",
-	"dimensions.g": "г",
+  "dimensions": {
+    "kg": "кг",
+    "kcal": "ккал",
+    "g": "г"
+  },
 
-	"foodlist.addFoodAt": "Добавить на ",
-	"foodList.protein": "Белки",
-	"foodList.carbs": "Углеводы",
-	"foodList.fat": "Жиры",
-	"foodList.additionalInfo": "Дополнительно (БЖУ)",
-	"foodList.error.nameTooShort": "Не может быть пустым",
-	"foodList.error.weightWrong": "от 1 до 5000",
-	"foodList.error.caloricContentWrong": "от 0 до 1000",
+  "foodlist": {
+    "addFoodAt": "Добавить на "
+  },
 
-	"calendar.monday": "пн",
-	"calendar.tuesday": "вт",
-	"calendar.wednesday": "ср",
-	"calendar.thursday": "чт",
-	"calendar.friday": "пт",
-	"calendar.saturday": "сб",
-	"calendar.sunday": "вс",
-	"calendar.january": "янв",
-	"calendar.february": "фев",
-	"calendar.march": "мар",
-	"calendar.april": "апр",
-	"calendar.may": "мая",
-	"calendar.june": "июня",
-	"calendar.july": "июля",
-	"calendar.august": "авг",
-	"calendar.september": "сен",
-	"calendar.october": "окт",
-	"calendar.november": "ноя",
-	"calendar.december": "дек",
+  "foodList": {
+    "protein": "Белки",
+    "carbs": "Углеводы",
+    "fat": "Жиры",
+    "additionalInfo": "Дополнительно (БЖУ)",
+    "error": {
+      "nameTooShort": "Не может быть пустым",
+      "weightWrong": "от 1 до 5000",
+      "caloricContentWrong": "от 0 до 1000"
+    }
+  },
 
-	"settings.goal.title": "Цель",
-	"settings.weight.title": "Вес",
-	"settings.height.title": "Рост",
-	"settings.age.title": "Возраст",
-	"settings.gender.title": "Пол",
-	"settings.gender.male": "Мужской",
-	"settings.gender.female": "Женский",
-	"settings.goal.submit": "Сохранить",
-	"settings.theme.title": "Тема",
-	"settings.theme.light": "Светлая",
-	"settings.theme.dark": "Тёмная",
+  "calendar": {
+    "monday": "пн",
+    "tuesday": "вт",
+    "wednesday": "ср",
+    "thursday": "чт",
+    "friday": "пт",
+    "saturday": "сб",
+    "sunday": "вс",
+    "january": "янв",
+    "february": "фев",
+    "march": "мар",
+    "april": "апр",
+    "may": "мая",
+    "june": "июня",
+    "july": "июля",
+    "august": "авг",
+    "september": "сен",
+    "october": "окт",
+    "november": "ноя",
+    "december": "дек"
+  },
 
-	"routes.food": "Моя еда",
-	"routes.settings": "Настройки",
-	"routes.stats": "Статистика",
+  "settings": {
+    "goal": {
+      "title": "Цель",
+      "submit": "Сохранить"
+    },
+    "weight": {
+      "title": "Вес"
+    },
+    "height": {
+      "title": "Рост"
+    },
+    "age": {
+      "title": "Возраст"
+    },
+    "gender": {
+      "title": "Пол",
+      "male": "Мужской",
+      "female": "Женский"
+    },
+    "theme": {
+      "title": "Тема",
+      "light": "Светлая",
+      "dark": "Тёмная"
+    },
+    "saveChanges": "Сохранить изменения",
+    "cancel": "Отменить",
+    "save": "Сохранить"
+  },
 
-	"dashboard.userSettings.name": "Имя",
-	"dashboard.userSettings.email": "Электронная почта",
-	"dashboard.userSettings.password": "Пароль",
-	"dashboard.userSettings.theme": "Тема",
-	"dashboard.userSettings.language": "Язык",
-	"dashboard.userSettings.currentGoal": "Текущая цель",
-	"dashboard.userSettings.weight": "Вес",
-	"dashboard.userSettings.height": "Рост",
-	"dashboard.userSettings.age": "Возраст",
-	"dashboard.userSettings.gender": "Пол",
-	"dashboard.userSettings.primary": "Основное",
-	"dashboard.userSettings.app": "Приложение",
-	"dashboard.userSettings.stats": "Для статистики",
+  "themes": {
+    "light": "Светлая",
+    "dark": "Тёмная"
+  },
 
-	"settings.saveChanges": "Сохранить изменения",
-	"settings.cancel": "Отменить",
-	"settings.save": "Сохранить",
+  "languages": {
+    "en": "English",
+    "ru": "Русский"
+  },
 
-	"themes.light": "Светлая",
-	"themes.dark": "Тёмная",
+  "gender": {
+    "male": "Мужской",
+    "female": "Женский"
+  },
 
-	"languages.en": "English",
-	"languages.ru": "Русский",
-
-	"gender.male": "Мужской",
-	"gender.female": "Женский"
+  "validation": {
+    "weight": {
+      "min": "Не может быть меньше 1",
+      "max": "Не может быть больше 300",
+      "required": "Обязательное поле"
+    }
+  }
 }

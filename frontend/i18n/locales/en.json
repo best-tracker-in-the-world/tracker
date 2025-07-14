@@ -1,114 +1,169 @@
 {
-	"error": "Error",
+  "error": "Error",
+  
+  "login": {
+    "login": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "error": "Login error",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "register": "Sign up",
+    "submit": "Log in",
+    "useGuest": "Use guest account",
+    "guestInfo": "Use app without registration, data will be stored locally and will not be sent to the server. In this mode, some features are not available. You can continue the registration later with the saved data."
+  },
 
-	"login.login": "Sign in",
-	"login.email": "Email",
-	"login.password": "Password",
-	"login.error": "Login error",
-	"login.alreadyHaveAccount": "Already have an account?",
-	"login.dontHaveAccount": "Don't have an account?",
-	"login.register": "Sign up",
-	"login.submit": "Log in",
-	"login.useGuest": "Use guest account",
-	"login.guestInfo": "Use app without registration, data will be stored locally and will not be sent to the server. In this mode, some features are not available. You can continue the registration later with the saved data.",
+  "register": {
+    "success": "Registration successful",
+    "error": "Registration error",
+    "submit": "Register"
+  },
 
-	"register.success": "Registration successful",
-	"register.error": "Registration error",
-	"register.submit": "Register",
+  "menu": {
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "stats": "Statistics",
+    "food": "My Food"
+  },
 
-	"menu.logout": "Logout",
-	"menu.dashboard": "Dashboard",
-	"menu.settings": "Settings",
-	"menu.stats": "Statistics",
-	"menu.food": "My Food",
+  "dashboard": {
+    "weight": {
+      "add": "Add",
+      "title": "Weight",
+			"placeholder": "Enter your weight, kg"
+    },
+    "goal": {
+      "title": "Goal"
+    },
+    "caloricContent": "Caloric content",
+    "foodlist": {
+      "name": "Food name"
+    },
+    "foodList": {
+      "title": "Food List",
+      "add": "Add food",
+      "empty": "The list of food products for this day is empty",
+      "favorite": "Add to favorites.",
+      "favoriteInfo": "Add food to favorites. In the list of food products it will appear at the beginning.",
+      "addToCurrentDay": "Add to current day.",
+      "addToCurrentDayInfo": "Add to current day. Information about what the food is added to the list initially and with this checkbox you can immediately add to today's day.",
+      "calories": "Calories",
+      "proteins": "Proteins",
+      "carbs": "Carbs",
+      "fat": "Fat"
+    },
+    "userSettings": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "theme": "Theme",
+      "language": "Language",
+      "currentGoal": "Current goal",
+      "weight": "Weight",
+      "height": "Height",
+      "age": "Age",
+      "gender": "Gender",
+      "primary": "Primary settings",
+      "app": "App settings",
+      "stats": "For Statistics"
+    }
+  },
 
-	"dashboard.weight.add": "Add",
-	"dashboard.weight.title": "Weight",
-	"dashboard.goal.title": "Goal",
-	"dashboard.caloricContent": "Caloric content",
-	"dashboard.foodlist.name": "Food name",
-	"dashboard.foodList.title": "Food List",
-	"dashboard.foodList.add": "Add food",
-	"dashboard.foodList.empty": "The list of food products for this day is empty",
-	"dashboard.foodList.favorite": "Add to favorites.",
-	"dashboard.foodList.favoriteInfo": "Add food to favorites. In the list of food products it will appear at the beginning.",
-	"dashboard.foodList.addToCurrentDay": "Add to current day.",
-	"dashboard.foodList.addToCurrentDayInfo": "Add to current day. Information about what the food is added to the list initially and with this checkbox you can immediately add to today's day.",
+  "dimensions": {
+    "kg": "kg",
+    "kcal": "kcal",
+    "g": "g"
+  },
 
-	"dimensions.kg": "kg",
-	"dimensions.kcal": "kcal",
-	"dimensions.g": "g",
+  "foodlist": {
+    "addFoodAt": "Add for "
+  },
 
-	"foodlist.addFoodAt": "Add for ",
-	"foodList.protein": "Proteins",
-	"foodList.carbs": "Carbs",
-	"foodList.fat": "Fat",
-	"foodList.additionalInfo": "Nutrition info",
-	"foodList.error.nameTooShort": "Field cannot be empty",
-	"foodList.error.weightWrong": "from 1 to 5000",
-	"foodList.error.caloricContentWrong": "from 0 to 1000",
+  "foodList": {
+    "protein": "Proteins",
+    "carbs": "Carbs",
+    "fat": "Fat",
+    "additionalInfo": "Nutrition info",
+    "error": {
+      "nameTooShort": "Field cannot be empty",
+      "weightWrong": "from 1 to 5000",
+      "caloricContentWrong": "from 0 to 1000"
+    }
+  },
 
-	"calendar.monday": "mon",
-	"calendar.tuesday": "tue",
-	"calendar.wednesday": "wed",
-	"calendar.thursday": "thu",
-	"calendar.friday": "fri",
-	"calendar.saturday": "sat",
-	"calendar.sunday": "sun",
+  "calendar": {
+    "monday": "mon",
+    "tuesday": "tue",
+    "wednesday": "wed",
+    "thursday": "thu",
+    "friday": "fri",
+    "saturday": "sat",
+    "sunday": "sun",
+    "january": "Jan",
+    "february": "Feb",
+    "march": "Mar",
+    "april": "Apr",
+    "may": "May",
+    "june": "Jun",
+    "july": "Jul",
+    "august": "Aug",
+    "september": "Sep",
+    "october": "Oct",
+    "november": "Nov",
+    "december": "Dec"
+  },
 
-	"calendar.january": "Jan",
-	"calendar.february": "Feb",
-	"calendar.march": "Mar",
-	"calendar.april": "Apr",
-	"calendar.may": "May",
-	"calendar.june": "Jun",
-	"calendar.july": "Jul",
-	"calendar.august": "Aug",
-	"calendar.september": "Sep",
-	"calendar.october": "Oct",
-	"calendar.november": "Nov",
-	"calendar.december": "Dec",
+  "settings": {
+    "goal": {
+      "title": "Goal",
+      "submit": "Save"
+    },
+    "weight": {
+      "title": "Weight"
+    },
+    "height": {
+      "title": "Height"
+    },
+    "age": {
+      "title": "Age"
+    },
+    "gender": {
+      "title": "Gender",
+      "male": "Male",
+      "female": "Female"
+    },
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "saveChanges": "Save changes",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
 
-	"settings.goal.title": "Goal",
-	"settings.weight.title": "Weight",
-	"settings.height.title": "Height",
-	"settings.age.title": "Age",
-	"settings.gender.title": "Gender",
-	"settings.gender.male": "Male",
-	"settings.gender.female": "Female",
-	"settings.goal.submit": "Save",
-	"settings.theme.title": "Theme",
-	"settings.theme.light": "Light",
-	"settings.theme.dark": "Dark",
+  "themes": {
+    "light": "Light",
+    "dark": "Dark"
+  },
 
-	"dashboard.foodList.calories": "Calories",
-	"dashboard.foodList.proteins": "Proteins",
-	"dashboard.foodList.carbs": "Carbs",
-	"dashboard.foodList.fat": "Fat",
-	"dashboard.userSettings.name": "Name",
-	"dashboard.userSettings.email": "Email",
-	"dashboard.userSettings.password": "Password",
-	"dashboard.userSettings.theme": "Theme",
-	"dashboard.userSettings.language": "Language",
-	"dashboard.userSettings.currentGoal": "Current goal",
-	"dashboard.userSettings.weight": "Weight",
-	"dashboard.userSettings.height": "Height",
-	"dashboard.userSettings.age": "Age",
-	"dashboard.userSettings.gender": "Gender",
-	"dashboard.userSettings.primary": "Primary settings",
-	"dashboard.userSettings.app": "App settings",
-	"dashboard.userSettings.stats": "For Statistics",
+  "languages": {
+    "en": "English",
+    "ru": "Russian"
+  },
 
-	"settings.saveChanges": "Save changes",
-	"settings.cancel": "Cancel",
-	"settings.save": "Save",
+  "gender": {
+    "male": "Male",
+    "female": "Female"
+  },
 
-	"themes.light": "Light",
-	"themes.dark": "Dark",
-
-	"languages.en": "English",
-	"languages.ru": "Russian",
-
-	"gender.male": "Male",
-	"gender.female": "Female"
+  "validation": {
+    "weight": {
+      "min": "Cant be less than 1",
+      "max": "Cant be more than 300",
+      "required": "Required field"
+    }
+  }
 }
