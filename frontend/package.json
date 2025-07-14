@@ -12,6 +12,7 @@
     "lint:fix": "eslint --fix ."
   },
   "dependencies": {
+    "@iconify-json/circle-flags": "^1.2.6",
     "@iconify-json/fluent": "^1.2.26",
     "@iconify-json/lucide": "^1.2.57",
     "@iconify-json/mdi": "^1.2.3",
