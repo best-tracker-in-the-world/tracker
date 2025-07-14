@@ -26,7 +26,8 @@
     "localforage": "^1.10.0",
     "nuxt": "^3.17.3",
     "pinia-plugin-persistedstate": "^4.3.0",
-    "vue3-radial-progress": "^1.1.1"
+    "vue3-radial-progress": "^1.1.1",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@formkit/auto-animate": "^0.8.2",

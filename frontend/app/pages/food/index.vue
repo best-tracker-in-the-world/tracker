@@ -66,7 +66,7 @@
 		<!-- add new food modal -->
 		<UiModal
 			v-model="showLogDialog"
-			:title="$t('foodlist.addFoodAt') + ' ' + selectedDate"
+			:title="$t('foodList.addFoodAt') + ' ' + selectedDate"
 		>
 			<div class="rounded-lg w-full">
 				<h3 class="text-2xl w-full text-center font-semibold mb-4">

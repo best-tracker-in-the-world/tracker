@@ -38,10 +38,8 @@
       "title": "Goal"
     },
     "caloricContent": "Caloric content",
-    "foodlist": {
-      "name": "Food name"
-    },
     "foodList": {
+			"name": "Food name",
       "title": "Food List",
       "add": "Add food",
       "empty": "The list of food products for this day is empty",
@@ -77,21 +75,31 @@
     "g": "g"
   },
 
-  "foodlist": {
-    "addFoodAt": "Add for "
-  },
-
-  "foodList": {
-    "protein": "Proteins",
-    "carbs": "Carbs",
-    "fat": "Fat",
-    "additionalInfo": "Nutrition info",
-    "error": {
-      "nameTooShort": "Field cannot be empty",
-      "weightWrong": "from 1 to 5000",
-      "caloricContentWrong": "from 0 to 1000"
-    }
-  },
+	"foodList": {
+	"addFoodAt": "Add for ",
+	"protein": "Protein",
+	"carbs": "Carbs", 
+	"fat": "Fat",
+	"additionalInfo": "Additional info (Macros)",
+	"error": {
+		"name": {
+			"tooShort": "Cannot be empty",
+			"tooLong": "Character limit exceeded (50)"
+		},
+		"weight": {
+			"tooSmall": "Cannot be less than 1",
+			"tooBig": "Cannot be more than 5000"
+		},
+		"cal": {
+			"tooSmall": "Cannot be less than 1", 
+			"tooBig": "Cannot be more than 900"
+		},
+		"nutrition": {
+			"tooSmall": "Cannot be less than 0", 
+			"tooBig": "Cannot be more than 100"
+		}
+	}
+	},
 
   "calendar": {
     "monday": "mon",

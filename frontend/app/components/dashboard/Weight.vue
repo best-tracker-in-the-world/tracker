@@ -38,36 +38,50 @@
 					$t("dimensions.kg")
 				}}</span>
 			</span>
-
 		</span>
 
 		<UiModal v-model="isModalOpen" :title="$t('dashboard.weight.add')">
-			<div class="flex flex-col gap-4">
-				<UInput
-					ref="inputRef"
-					v-model="formData.weight"
-					size="xl"
-					type="number"
-					color="neutral"
-					:step="0.1"
-				/>
-				<UButton
-					size="xl"
-					class="dark:bg-gray-900 dark:text-gray-300 grid items-center"
-					color="neutral"
-					:label="$t('dashboard.weight.add')"
-					@click="
-						$emit('weightSubmit', formData.weight);
-						isModalOpen = false;
-					"
-				/>
-			</div>
+			<UForm
+				ref="formRef"
+				:schema="schema"
+				:state="formData"
+				@submit="onSubmit"
+			>
+				<div class="flex flex-col gap-4 w-full">
+					<UFormField
+						name="weight"
+						:label="$t('dashboard.weight.title')"
+					>
+						<UInput
+							ref="inputRef"
+							v-model="formData.weight"
+							size="xl"
+							type="number"
+							color="neutral"
+							class="w-full"
+							:step="0.1"
+							:placeholder="$t('dashboard.weight.placeholder')"
+						/>
+					</UFormField>
+					
+					<UButton
+						size="xl"
+						type="submit"
+						class="dark:bg-gray-900 dark:text-gray-300 grid items-center"
+						color="neutral"
+						:label="$t('dashboard.weight.add')"
+						:loading="isSubmitting"
+					/>
+				</div>
+			</UForm>
 		</UiModal>
 	</DashboardTileWrapper>
 </template>
 
 <script setup lang="ts">
-import type { dashboardItem } from "@/types/dashboard";
+import { z } from 'zod';
+import type { FormSubmitEvent } from '#ui/types';
+
 const { t } = useI18n();
 
 interface Props {
@@ -82,21 +96,61 @@ withDefaults(defineProps<Props>(), {
 	value: null,
 });
 
+const emit = defineEmits<{
+	weightSubmit: [weight: number];
+}>();
+
+const schema = z.object({
+	weight: z.coerce.number()
+		.min(1, t('validation.weight.min'))
+		.max(300, t('validation.weight.max'))
+		.refine(val => val > 0, {
+			message: t('validation.weight.required')
+		})
+});
+
+type Schema = z.output<typeof schema>;
+
 const formData = reactive({
-	weight: 90 as dashboardItem["weight"],
+	weight: undefined as number | undefined,
 });
 
 const isModalOpen = ref(false);
-
+const isSubmitting = ref(false);
+const formRef = ref();
 const inputRef = ref<ComponentPublicInstance | null>(null);
 
 const handleClick = () => {
 	isModalOpen.value = true;
+	formData.weight = undefined;
 	nextTick(() => {
 		if (!inputRef.value) return;
 		inputRef.value.$el.querySelector("input").focus();
 	});
 };
+
+const onSubmit = async (event: FormSubmitEvent<Schema>) => {
+	isSubmitting.value = true;
+	
+	try {
+		emit('weightSubmit', event.data.weight);
+		isModalOpen.value = false;
+		formData.weight = undefined;
+	} catch (error) {
+		console.error('Error submitting weight:', error);
+	} finally {
+		isSubmitting.value = false;
+	}
+};
+
+watch((isModalOpen), (value) => {
+		if(value) {
+			nextTick(() => {
+				if (!inputRef.value) return;
+				inputRef.value.$el.querySelector("input").focus();
+			})
+		}
+})
 
 const wrapperProps = {
 	title: t("dashboard.weight.title"),
