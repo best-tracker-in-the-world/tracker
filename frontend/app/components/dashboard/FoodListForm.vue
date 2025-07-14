@@ -7,9 +7,9 @@
 		class="w-full flex flex-col gap-4"
 		@submit="onSubmit"
 	>
-		<DevOnly>
-			<div class="dev-only">id: {{ computedId }}</div>
-		</DevOnly>
+		<UiDev>
+			id: {{ computedId }}
+		</UiDev>
 
 		<!-- NAME -->
 		<UFormField
@@ -121,7 +121,6 @@
 </template>
 
 <script setup lang="ts">
-import { UiAdditionalLink } from "#components";
 import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 
@@ -165,8 +164,6 @@ const schema = z.object({
 		.max(100, t("foodList.error.nutrition.tooBig"))
 		.nullable()
 		.optional(),
-	addToFavorites: z.boolean().optional(),
-	addToFoodList: z.boolean().optional(),
 	addedAt: z.string().optional(),
 	id: z.number().optional(),
 });
@@ -180,8 +177,6 @@ const state = reactive({
 	protein: null as number | null,
 	carbs: null as number | null,
 	fat: null as number | null,
-	addToFavorites: false,
-	addToFoodList: true,
 	addedAt: new Date().toISOString().substring(11, 16),
 });
 
@@ -218,8 +213,6 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 			carbs: null,
 			fat: null,
 			isFavorite: false,
-			addToFavorites: false,
-			addToFoodList: true,
 			addedAt: new Date().toISOString().substring(11, 16),
 		});
 

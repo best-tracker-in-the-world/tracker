@@ -5,8 +5,8 @@
 
 			<div v-if="!foodItems.length" class="grid items-center">
 				<p class="text-center">
-					{{ $t("Your food list is empty") }} <br />
-					{{ $t("Start by adding some food") }}
+					{{ $t("foodList.info.empty") }} <br />
+					{{ $t("foodList.info.addSome") }}
 				</p>
 			</div>
 
@@ -59,22 +59,20 @@
 			>
 		</div>
 
-		<!-- add new food modal -->
+		<!-- add new food TO LIST -->
 		<UiModal v-model="isFoodFormModalOpen">
-			<DashboardFoodListForm />
+			<DashboardFoodListForm @submit="handleFoodSubmit" />
 		</UiModal>
-		<!-- add new food modal -->
+		<!-- add new food TO CURRENT DAY from list -->
 		<UiModal
 			v-model="showLogDialog"
 			:title="$t('foodList.addFoodAt') + ' ' + selectedDate"
 		>
 			<div class="rounded-lg w-full">
 				<h3 class="text-2xl w-full text-center font-semibold mb-4">
-					<DevOnly>
-						<div class="dev-only">
+					<UiDev>
 						id: {{ selectedFood?.id }}
-						</div>
-					</DevOnly>
+					</UiDev>
 					{{ selectedFood?.name }}
 				</h3>
 				<div class="mb-4">
@@ -124,6 +122,7 @@
 import { useFoodStore } from "@/stores/food";
 import { ref, onMounted } from "vue";
 import type { FoodItem } from "@/types/food";
+import { LazyUSlideover } from "#components";
 
 const foodStore = useFoodStore();
 const dashboardStore = useDashboardStore();
@@ -136,16 +135,22 @@ const logWeight = ref(100);
 const isMobile = useIsMobile();
 
 const selectedDate = computed(() => {
-  const date = dashboardStore.selectedDate;
-	// DD-MM format
-  return `${date.year}.${String(date.month).padStart(2, "0")}.${String(date.day).padStart(2, "0")}`;
-});
-
+	const dateString = dashboardStore.selectedDate;
+	let [year, month, day] = dateString.split("-");
+	year = year.slice(2);	
+	return `${day}.${month}.${year}`
+})
 onMounted(async () => {
 	await foodStore.loadFoodItems();
 	foodItems.value = foodStore.foodItems;
 	favorites.value = foodStore.favorites;
+
+	console.log('cock', dashboardStore.selectedDate)
 });
+
+function handleFoodSubmit(data: FoodItem) {
+	addNewFood(data);
+}
 
 function addNewFood(formData: FoodItem) {
 	foodStore.addFoodItem(formData);
