@@ -14,10 +14,6 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@vite-pwa/nuxt",
 	],
-	icon: {
-		provider: "iconify",
-		collections: ["heroicons", "mdi", "lucide", "circle-flags"],
-	},
 	// pwa: {
 	// 	manifest: {
 	// 		name: "Tracker App",
@@ -63,10 +59,12 @@ export default defineNuxtConfig({
 			NUXT_PUBLIC_API_URL: process.env.NUXT_PUBLIC_API_URL,
 		},
 	},
-	 icon: {
-    clientBundle: {
-      scan: true,
-    },
-    serverBundle: false,
-  }
+	icon: {
+		clientBundle: {
+			scan: true,
+		},
+		serverBundle: false,
+		provider: "iconify",
+		collections: ["heroicons", "mdi", "lucide", "circle-flags"],
+	},
 });
