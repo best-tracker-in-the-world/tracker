@@ -8,7 +8,7 @@
 		@submit="onSubmit"
 	>
 		<DevOnly>
-			<div class=".dev-only">id: {{ state.id }}</div>
+			<div class="dev-only">id: {{ state.id }}</div>
 		</DevOnly>
 
 		<!-- NAME -->
@@ -105,62 +105,7 @@
 			</template>
 		</UCollapsible>
 
-		<!-- checkboxes -->
-		<div id="checkboxes" class="flex flex-col gap-2 w-fit mt-2">
-			<!-- add to favorites -->
-			<div class="flex gap-2 w-fit align-center">
-				<UFormField name="addToFavorites">
-					<UCheckbox
-						v-model="state.addToFavorites"
-						:label="$t('dashboard.foodList.favorite')"
-						class="w-full"
-					/>
-				</UFormField>
-				<UPopover portal="#checkboxes" placement="top">
-					<template #content>
-						<p
-							class="p-4 bg-white w-[300px] text-center text-sm"
-						>
-							{{ $t("dashboard.foodList.favoriteInfo") }}
-						</p>
-					</template>
-					<UIcon
-						size="24"
-						class="opacity-50"
-						name="i-heroicons-question-mark-circle"
-					/>
-				</UPopover>
-			</div>
-
-			<!-- addToFoodList -->
-			<div class="flex gap-2 w-fit align-center items-center">
-				<UFormField name="addToFoodList">
-					<UCheckbox
-						v-model="state.addToFoodList"
-						:label="$t('dashboard.foodList.addToCurrentDay')"
-						class="w-full h-fit"
-					/>
-				</UFormField>
-				<UPopover portal="#checkboxes" placement="top">
-					<template #content>
-						<p
-							class="p-4 bg-white w-[300px] text-center text-sm"
-						>
-							{{
-								$t(
-									"dashboard.foodList.addToCurrentDayInfo"
-								)
-							}}
-						</p>
-					</template>
-					<UIcon
-						size="24"
-						class="opacity-50"
-						name="i-heroicons-question-mark-circle"
-					/>
-				</UPopover>
-			</div>
-		</div>
+		<!-- checkboxes was here -->
 
 		<!-- SUBMIT -->
 		<UButton

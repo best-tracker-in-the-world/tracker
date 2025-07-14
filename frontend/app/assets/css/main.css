@@ -79,10 +79,11 @@ input[type="number"] {
 	outline: 1px dashed red;
 	outline-offset: 2px;
 	display: inline;
-	padding: 4px;
+	padding: 4px 8px;
 	font-size: 14px;
 	border-radius: 4px;
 	position: relative;
+	width: fit-content;
 }
 .dev-only::after {
 	content: 'Dev only';
