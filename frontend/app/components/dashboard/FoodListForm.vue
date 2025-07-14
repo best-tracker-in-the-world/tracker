@@ -8,7 +8,7 @@
 		@submit="onSubmit"
 	>
 		<DevOnly>
-			<div class="dev-only">id: {{ state.id }}</div>
+			<div class="dev-only">id: {{ computedId }}</div>
 		</DevOnly>
 
 		<!-- NAME -->
@@ -183,8 +183,9 @@ const state = reactive({
 	addToFavorites: false,
 	addToFoodList: true,
 	addedAt: new Date().toISOString().substring(11, 16),
-	id: computed(() => latestFoodItemId.value + 1),
 });
+
+const computedId = computed(() => latestFoodItemId.value + 1);
 
 const isAdditionalVisible = ref(false);
 const isSubmitting = ref(false);
@@ -204,7 +205,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 		const formData = {
 			...event.data,
 			addedAt: state.addedAt,
-			id: state.id,
+			id: computedId.value,
 		};
 
 		emit("submit", formData);
