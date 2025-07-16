@@ -71,74 +71,82 @@
 											: 'text-red-500'
 									"
 									class="menu-item | ml-2"
-									>{{ link.name }}</span
-								>
+									>{{ $t(link.name) }}
+								</span>
 							</Transition>
 						</ULink>
 					</li>
 				</ul>
 			</nav>
 		</aside>
-
 		<!-- mobile -->
-		<div v-if="isMobile" class="fixed bottom-4 right-4 z-10">
-			<!-- btn -->
-			<UButton
-				ref="mobileMenuButton"
-				class="rounded-full w-14 h-14 active:scale-90 transition-all"
-				@click="handleMenuClick"
+		<template v-if="isMobile">
+			<!-- hamburger menu -->
+			<div
+				v-if="!useBottonNavigationBar"
+				class="fixed bottom-4 right-4 z-10"
 			>
-				<UIcon
-					:name="
-						isMenuOpen
-							? 'i-heroicons-x-mark'
-							: 'i-heroicons-bars-3'
-					"
-					class="size-10"
-				/>
-			</UButton>
-			<!-- menu -->
-			<Transition>
-				<nav
-					v-if="isMenuOpen"
-					ref="mobileMenu"
-					class="absolute -top-5 -translate-y-full right-0 slide-in-right"
-					@click.stop
+				<!-- btn -->
+				<UButton
+					ref="mobileMenuButton"
+					class="rounded-full w-14 h-14 active:scale-90 transition-all"
+					@click="handleMenuClick"
 				>
-					<ul class="flex flex-col gap-2 items-end">
-						<li
-							v-for="link in sidebarLinks"
-							:key="link.name"
-							class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto bg-white rounded-md"
-						>
-							<ULink
-								:href="link.href"
-								class="w-fit flex items-center gap-4 flex justify-end hover:bg-gray-900 dark:hover:bg-gray-800 dark:bg-gray-700 p-2 rounded-md ring-1 shadow-md ring-gray-200 dark:ring-gray-600"
+					<UIcon
+						:name="
+							isMenuOpen
+								? 'i-heroicons-x-mark'
+								: 'i-heroicons-bars-3'
+						"
+						class="size-10"
+					/>
+				</UButton>
+				<!-- menu -->
+				<Transition>
+					<nav
+						v-if="isMenuOpen"
+						ref="mobileMenu"
+						class="absolute -top-5 -translate-y-full right-0 slide-in-right"
+						@click.stop
+					>
+						<ul class="flex flex-col gap-2 items-end">
+							<li
+								v-for="link in sidebarLinks"
+								:key="link.name"
+								class="text-gray-300 *:hover:text-white last:*:text-red-500 last:mt-auto bg-white rounded-md"
 							>
-								<span
-									class="ml-2 no-wrap whitespace-nowrap"
-									>{{ link.name }}</span
+								<ULink
+									:href="link.href"
+									class="w-fit flex items-center gap-4 flex justify-end hover:bg-gray-900 dark:hover:bg-gray-800 dark:bg-gray-700 p-2 rounded-md ring-1 shadow-md ring-gray-200 dark:ring-gray-600"
 								>
-								<UIcon
-									:name="link.icon"
-									class="w-6 h-6"
-								/>
-							</ULink>
-						</li>
-					</ul>
-				</nav>
-			</Transition>
-		</div>
+									<span
+										class="ml-2 no-wrap whitespace-nowrap"
+										>{{ $t(link.name) }}</span
+									>
+									<UIcon
+										:name="link.icon"
+										class="w-6 h-6"
+									/>
+								</ULink>
+							</li>
+						</ul>
+					</nav>
+				</Transition>
+			</div>
+			<!-- mobile - navigation bar -->
+			<LayoutsBottomNavigationBar v-else />
+		</template>
 	</div>
 </template>
 <script setup lang="ts">
+import routes from "./routes.json";
 const { isMobile } = useIsMobile();
-const { t } = useI18n();
 
 const isMenuOpen = ref(false);
 const isMounted = ref(false);
 const isDesktopMenuOpen = ref(true);
 const isButtonClicked = ref(false);
+const { useBottonNavigationBar } = useSettingsStore();
 
 onMounted(() => {
 	isMounted.value = true;
@@ -147,10 +155,10 @@ onMounted(() => {
 function handleMenuClick(event: Event) {
 	event.stopPropagation();
 	event.preventDefault();
-	
+
 	isButtonClicked.value = true;
 	isMenuOpen.value = !isMenuOpen.value;
-	
+
 	// Reset the flag after a short delay
 	setTimeout(() => {
 		isButtonClicked.value = false;
@@ -164,55 +172,29 @@ const mobileMenuButton = ref<HTMLElement | null>(null);
 onMounted(() => {
 	const handleDocumentClick = (event: Event) => {
 		if (!isMenuOpen.value || isButtonClicked.value) return;
-		
+
 		const menuEl = mobileMenu.value;
-		const buttonEl = mobileMenuButton.value?.$el || mobileMenuButton.value;
-		
-		if (menuEl && !menuEl.contains(event.target as Node) && 
-			buttonEl && !buttonEl.contains(event.target as Node)) {
+		const buttonEl =
+			mobileMenuButton.value?.$el || mobileMenuButton.value;
+
+		if (
+			menuEl &&
+			!menuEl.contains(event.target as Node) &&
+			buttonEl &&
+			!buttonEl.contains(event.target as Node)
+		) {
 			isMenuOpen.value = false;
 		}
 	};
-	
-	document.addEventListener('click', handleDocumentClick);
-	
+
+	document.addEventListener("click", handleDocumentClick);
+
 	onUnmounted(() => {
-		document.removeEventListener('click', handleDocumentClick);
+		document.removeEventListener("click", handleDocumentClick);
 	});
 });
 
-const sidebarLinks = computed(() => [
-	{
-		name: t("menu.dashboard"),
-		href: "/dashboard",
-		icon: "i-heroicons-home",
-		color: "text-gray-100 dark:text-gray-400",
-	},
-	{
-		name: t("menu.settings"),
-		href: "/settings",
-		icon: "i-heroicons-cog-6-tooth",
-		color: "text-gray-100 dark:text-gray-400",
-	},
-	{
-		name: t("menu.stats"),
-		href: "/stats",
-		icon: "i-heroicons-chart-bar",
-		color: "text-gray-100 dark:text-gray-400",
-	},
-	{
-		name: t("menu.food"),
-		href: "/food",
-		icon: "i-fluent-food-apple-24-regular",
-		color: "text-gray-100 dark:text-gray-400",
-	},
-	{
-		name: t("menu.logout"),
-		href: "/logout",
-		icon: "i-heroicons-arrow-right-start-on-rectangle",
-		color: "text-red-500 dark:text-red-500",
-	},
-]);
+const sidebarLinks = routes;
 </script>
 
 <style scoped>

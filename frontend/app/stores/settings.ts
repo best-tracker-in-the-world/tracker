@@ -6,6 +6,9 @@ export const useSettingsStore = defineStore("settings", () => {
 	const isGuest = useAuthStore().isLoggedAsGuest;
 	const adapter = new PersistenceAdapter(isGuest);
 
+	// select between old hamburger menu and bottom navigation bar
+	const useBottonNavigationBar = true
+
 	const settings = ref<UserSettings | null>(null);
 
 	async function loadSettings() {
@@ -20,5 +23,6 @@ export const useSettingsStore = defineStore("settings", () => {
 		settings,
 		loadSettings,
 		saveSettings,
+		useBottonNavigationBar,
 	};
 });

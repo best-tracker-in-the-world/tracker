@@ -68,13 +68,12 @@ const loadedStatus = reactive({
 
 onMounted(async () => {
 	await dashboardStore.loadAllDays();
-	console.log('dock',selectedDate);
 	// skeleton test
 	setTimeout(() => {
 		loadedStatus.weight = true;
 		loadedStatus.goal = true;
 		loadedStatus.foods = true;
-	}, 1000);
+	}, 100);
 });
 
 // sync store's and component's date

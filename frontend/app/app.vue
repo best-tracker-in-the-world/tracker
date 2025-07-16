@@ -1,4 +1,5 @@
 <template>
+	<main :class="{'pb-36' : useBottonNavigationBar}">
 	<UApp>
 		<ColorScheme>
 			<VitePwaManifest />
@@ -7,11 +8,13 @@
 			</NuxtLayout>
 		</ColorScheme>
 	</UApp>
+	</main>
 </template>
 
 <script setup lang="ts">
 const colorMode = useColorMode();
 const settings = useSettingsStore();
+const { useBottonNavigationBar } = useSettingsStore()
 
 watch(
 	() => settings.settings?.theme,
@@ -32,7 +35,6 @@ onMounted(async () => {
 			);
 			colorMode.value = settings.settings?.theme;
 		}
-		console.log("colorMode", colorMode.value);
 	} catch (error) {
 		console.log(error);
 	}

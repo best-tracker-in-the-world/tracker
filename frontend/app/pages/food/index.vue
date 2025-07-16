@@ -144,8 +144,6 @@ onMounted(async () => {
 	await foodStore.loadFoodItems();
 	foodItems.value = foodStore.foodItems;
 	favorites.value = foodStore.favorites;
-
-	console.log('cock', dashboardStore.selectedDate)
 });
 
 function handleFoodSubmit(data: FoodItem) {

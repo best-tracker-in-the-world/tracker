@@ -1,0 +1,32 @@
+[
+	{
+		"name": "menu.dashboard",
+		"href": "/dashboard",
+		"icon": "i-heroicons-home",
+		"color": "text-gray-100 dark:text-gray-400"
+	},
+	{
+		"name": "menu.stats",
+		"href": "/stats",
+		"icon": "i-heroicons-chart-bar",
+		"color": "text-gray-100 dark:text-gray-400"
+	},
+	{
+		"name": "menu.food",
+		"href": "/food",
+		"icon": "i-fluent-food-apple-24-regular",
+		"color": "text-gray-100 dark:text-gray-400"
+	},
+	{
+		"name": "menu.settings",
+		"href": "/settings",
+		"icon": "i-heroicons-cog-6-tooth",
+		"color": "text-gray-100 dark:text-gray-400"
+	},
+	{
+		"name": "menu.logout",
+		"href": "/logout",
+		"icon": "i-heroicons-arrow-right-start-on-rectangle",
+		"color": "text-red-500 dark:text-red-500"
+	}
+]

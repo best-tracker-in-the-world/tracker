@@ -30,11 +30,12 @@ console.log('route', route.fullPath)
 
 const auth = useAuthStore();
 
-if(!auth.isLogged) {
-	navigateTo("/login");
-}
 
 onMounted(async () => {
 	auth.initFromLocalStorage();
+	if(!auth.isLogged) {
+	navigateTo("/login");
+}
+
 });
 </script>
