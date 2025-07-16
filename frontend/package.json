@@ -39,9 +39,10 @@
     "@vite-pwa/nuxt": "^1.0.1",
     "@vueuse/nuxt": "^13.2.0",
     "eslint": "^9.26.0",
+    "nuxt-echarts": "^0.3.3",
     "typescript": "^5.8.3"
   },
-    "overrides": {
+  "overrides": {
     "zod": "^4.0.5"
   }
 }

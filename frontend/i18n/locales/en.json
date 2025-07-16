@@ -177,5 +177,10 @@
 			"max": "Cant be more than 300",
 			"required": "Required field"
 		}
+	},
+	"stats": {
+		"week": "Week",
+		"month": "Month",
+		"year": "Year"
 	}
 }
