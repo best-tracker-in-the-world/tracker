@@ -1,13 +1,80 @@
 <template>
-	<div class="flex flex-col items-center justify-center gap-4 h-screen">
-		<h1 class="font-bold text-2xl">Langing page will be here soon 😷</h1>
-		<div class="flex gap-4">
-			<ULink href="/login">
-				<UButton>Login</UButton>
-			</ULink>
-			<ULink href="/register">
-				<UButton>Register</UButton>
-			</ULink>
+	<!-- Hero -->
+	<section
+		class="min-h-screen flex flex-col justify-center items-center text-center p-6 bg-gradient-to-br from-green-700 to-emerald-500">
+		<h1 class="text-4xl md:text-6xl font-bold mb-4">Easy.FoodLog</h1>
+		<p class="text-xl max-w-xl mb-6 text-white/90">Простое и интуитивное приложение с минималистичным вводом еды,
+			рецептов и контролем прогресса</p>
+		<a href="/login"
+			class="bg-white text-green-800 font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition">
+			Попробовать прямо сейчас
+		</a>
+	</section>
+
+	<!-- Examples -->
+	<section class="py-12 bg-gray-900 text-center">
+		<h2 class="text-2xl font-semibold mb-6">Посмотри, как это просто</h2>
+		<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+			<img src="/img/mobile/dashboard-init.png" alt="Скрин 1" class="rounded-xl shadow-md">
+			<img src="/img/mobile/add-food.png" alt="Скрин 3" class="rounded-xl shadow-md">
+			<img src="/img/mobile/dashboard-after-add-food.png" alt="Скрин 2" class="rounded-xl shadow-md">
 		</div>
-	</div>
+	</section>
+
+	<!-- Особенности -->
+	<section class="py-16 px-6 bg-gray-800">
+		<div class="max-w-4xl mx-auto text-center">
+			<h2 class="text-3xl font-bold mb-10">Почему Easy.FoodLog?</h2>
+			<div class="grid md:grid-cols-3 gap-8">
+				<div>
+					<h3 class="text-xl font-semibold mb-2 text-green-300">🍏 2‑кликовый ввод</h3>
+					<p class="text-white/80">Добавляйте продукты и блюда без лишних шагов</p>
+				</div>
+				<div>
+					<h3 class="text-xl font-semibold mb-2 text-green-300">📋 Рецепты</h3>
+					<p class="text-white/80">Сохраняйте свои любимые рецепты, чтобы использовать снова</p>
+				</div>
+				<div>
+					<h3 class="text-xl font-semibold mb-2 text-green-300">📊 Прогресс</h3>
+					<p class="text-white/80">Минималистичный прогресс без перегрузки цифрами</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section id="start" class="py-6 text-center from-green-700">
+		<h2 class="text-3xl font-bold mb-6">Попробуй прямо сейчас</h2>
+		<a href="/login" class="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition">
+			Перейти к приложению
+		</a>
+		<p class="text-xl mt-4 text-gray-600">Бесплатно. Без регистрации. Прямо в браузере.</p>
+	</section>
+
+	<!-- Контактная форма -->
+	<section id="form" class="py-16 px-6 bg-gray-800">
+		<div class="max-w-xl mx-auto">
+			<h2 class="text-3xl font-bold mb-6 text-center text-white">Хочешь узнать о запуске?</h2>
+			<form class="bg-gray-800 shadow-md rounded-xl p-6 space-y-4">
+				<input type="text" placeholder="Ваше имя"
+					class="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 p-3 rounded-xl"
+					required>
+				<input type="email" placeholder="Email для уведомлений"
+					class="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 p-3 rounded-xl"
+					required>
+				<textarea placeholder="Комментарий или пожелание (необязательно)"
+					class="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 p-3 rounded-xl"
+					rows="4"></textarea>
+				<button type="submit"
+					class="w-full bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition">
+					Отправить
+				</button>
+			</form>
+		</div>
+	</section>
+
+	<!-- Футер -->
+	<footer class="py-6 text-center text-sm text-gray-400 bg-gray-800">
+		© 2025 Easy.FoodLog — минималистичное питание, просто и удобно
+	</footer>
 </template>
