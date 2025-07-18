@@ -1,7 +1,7 @@
 <template>
 	<ClientOnly>
 		<DashboardTileWrapper :span="2" :color="'white'">
-			<div class="flex flex-col gap-4" v-auto-animate>
+			<div v-auto-animate class="flex flex-col gap-4" >
 				<div
 					class="flex items-center gap-2 align-center justify-end"
 					@click="isDatePickerVisible = !isDatePickerVisible"
@@ -41,9 +41,9 @@
 				<UCalendar
 					v-show="isDatePickerVisible"
 					v-model="modelValueComputed"
+					v-auto-animate
 					class=""
 					:locale="'ru'"
-					v-auto-animate
 				/>
 			</div>
 		</DashboardTileWrapper>

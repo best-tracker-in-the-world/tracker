@@ -85,8 +85,8 @@
 						:label="$t('dashboard.weight.title')"
 					>
 						<UInput
-							class="w-full"
 							v-model="logWeight"
+							class="w-full"
 							type="number"
 							min="1"
 							required
@@ -122,7 +122,6 @@
 import { useFoodStore } from "@/stores/food";
 import { ref, onMounted } from "vue";
 import type { FoodItem } from "@/types/food";
-import { LazyUSlideover } from "#components";
 
 const foodStore = useFoodStore();
 const dashboardStore = useDashboardStore();
