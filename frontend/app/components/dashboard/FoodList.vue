@@ -36,7 +36,7 @@
 				>
 					<!-- default view -->
 					<div
-						class="food-item-content | items-center px-4 gap-2"
+						class="food-item-content | items-center gap-2"
 					>
 						<div
 							class="overflow-clip max-w-[50vw] flex flex-col"
