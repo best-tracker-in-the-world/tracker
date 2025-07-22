@@ -12,122 +12,89 @@
 		<!-- controls -->
 
 		<template #header>
-			<div>
-				<UButton
-					v-if="!isEditing && items.length"
-					icon="i-heroicons-plus"
-					@click="isModalOpen = true"
-				/>
-				<div v-if="isEditing">
-					<UButton
-						class="pointer-events-auto"
-						icon="i-heroicons-check"
-						@click="isEditing = false"
-					/>
-				</div>
-			</div>
+			<UIcon
+				v-if="isLoaded"
+				name="i-heroicons-plus"
+				class="h-5 w-5 outline grid items center translate-x-1 dark:text-gray-400 cursor-pointer"
+				variant="ghost"
+				@click="isModalOpen = true"
+			/>
 		</template>
 
-		<div v-auto-animate class="h-full flex justify-center w-full" >
+		<div v-auto-animate class="h-full flex justify-center w-full">
 			<!-- list of food -->
 			<ul
 				v-if="isLoaded"
 				v-auto-animate
-				class="py-3 pointer-events-auto w-full"
+				class="py-4 pointer-events-auto w-full flex flex-col gap-2"
 			>
 				<li
 					v-for="(item, index) in items"
 					:key="'food-' + index"
 					v-auto-animate
-					class="py-1 w-full min-w-full"
+					class="py-2 rounded-md dark:bg-gray-900/50 mx-4"
 				>
 					<!-- default view -->
 					<div
-						v-if="!isEditing"
-						class="flex justify-between text-gray-300 px-4 gap-2"
+						class="food-item-content | items-center gap-2"
 					>
-						<div class="overflow-clip max-w-[50vw]">
-							<span class="truncate">{{ item.name }}</span>
-						</div>
-						<span>
-							<span class="font-light text-gray-800 dark:text-gray-100 mr-1"
-								>{{
-									item.caloricContent *
-									(item.weight / 100)
-								}}
-							</span>
-							<span class="text-gray-300 font-bold"
-								>{{ t("dimensions.kcal") }}.</span
-							></span
+						<div
+							class="overflow-clip max-w-[50vw] flex flex-col"
 						>
+							<span
+								class="truncate font-semibold dark:text-gray-100 text-md"
+								>{{ item.name }}</span
+							>
+							<span
+								class="text-gray-400 dark:text-gray-600 text-xs"
+								>{{ item.addedAt }}</span
+							>
+						</div>
+
+						<span
+							class="font-light text-[10px] ring-1 w-fit ml-auto h-fit ring-slate-300 dark:ring-gray-600 dark:text-gray-400 px-2 py-1 font-semibold rounded-md font-mono text-gray-800 dark:text-gray-100 mr-1"
+							>{{ item.weight }}
+							{{ t("dimensions.g") }}
+						</span>
+						<span
+							class="font-light text-[10px] whitespace-nowrap w-fit h-fit ml-auto bg-gray-200 dark:bg-gray-700 px-2 py-1 font-semibold rounded-md font-mono text-gray-800 dark:text-gray-300 mr-1"
+							>{{
+								item.caloricContent *
+								(item.weight / 100)
+							}}
+							{{ t("dimensions.kcal") }}
+						</span>
+
+						<UDropdownMenu
+							:items="[
+								[
+									{
+										label: 'Duplicate',
+										icon: 'i-lucide-copy',
+										onSelect: () =>
+											addMoreOfItem(item),
+									},
+									{
+										label: 'Delete',
+										icon: 'i-lucide-trash',
+										onSelect: () =>
+											removeItem(index),
+									},
+								],
+							]"
+							:ui="{
+								content: 'w-48',
+							}"
+						>
+							<UButton
+								icon="i-mdi-dots-horizontal"
+								color="neutral"
+								variant="ghost"
+							/>
+						</UDropdownMenu>
 					</div>
 					<!-- edit view -->
-					<div
-						v-else
-						class="flex gap-2 p-4 w-full max-w-full justify-between bg-linear-to-t from-slate-100/50 to-white rounded-md overflow-clip"
-					>
-						<div class="flex flex-col w-full">
-							<!-- top -->
-							<div class="edit-item-top">
-								<div class="max-w-full truncate mr-4">
-									<p
-										class="truncate text-xl font-semibold text-gray-700"
-									>
-										{{ item.name }}
-									</p>
-								</div>
-								<div
-									class="whitespace-nowrap max-w-fit"
-								>
-									{{ item.weight }}
-									<span class="opacity-50">{{
-										t("dimensions.g")
-									}}</span>
-								</div>
-								<div
-									class="whitespace-nowrap max-w-fit"
-								>
-									{{ item.caloricContent }}
-									<span class="opacity-50">{{
-										t("dimensions.kcal")
-									}}</span>
-								</div>
-							</div>
-							<!-- bottom -->
-							<div class="edit-item-bottom">
-								<span>
-									<span
-										>{{ t("foodList.protein") }} :
-									</span>
-									<span>{{ item.protein }}</span>
-								</span>
-								<span>
-									<span
-										>{{ t("foodList.carbs") }} :
-									</span>
-									<span>{{ item.carbs }}</span>
-								</span>
-								<span>
-									<span
-										>{{ t("foodList.fat") }} :
-									</span>
-									<span>{{ item.fat }}</span>
-								</span>
-							</div>
-						</div>
-						<!-- edit buttons -->
-						<div class="grid grid-rows-2 gap-2">
-							<UButton
-								icon="i-heroicons-x-mark"
-								class="bg-gray-800"
-								@click="removeItem(index)"
-							/>
-							<UButton 
-								icon="i-heroicons-plus" 
-								@click="addMoreOfItem(item)"
-							/>
-						</div>
-					</div>
+	
 				</li>
 			</ul>
 			<!-- skeleton till loaded -->
@@ -147,14 +114,6 @@
 				<p class="opacity-50 dark:text-gray-400 text-center">
 					{{ $t("dashboard.foodList.empty") }}
 				</p>
-				<UButton
-					color="neutral"
-					class="increased-click-area w-full rounded-xl text-center mt-auto block bg-gray-500 hover:bg-gray-900 dark:bg-gray-900 dark:text-gray-300 hover:animate-none cursor-pointer hover:ring-1 hover:ring-gray-700 max-w-[250px]"
-					size="xl"
-					:label="$t('dashboard.foodList.add')"
-					:class="items.length === 0 ? 'animate-pulse' : ''"
-					@click="isModalOpen = true"
-				/>
 			</div>
 		</div>
 
@@ -190,6 +149,7 @@ interface Props {
 		protein: number | null;
 		carbs: number | null;
 		fat: number | null;
+		addedAt: string;
 	}>;
 }
 
@@ -256,9 +216,9 @@ async function handleFoodSubmit(data: dashboardItem["foodLogs"][0]) {
 		createdAt: new Date().toISOString(),
 		updatedAt: new Date().toISOString(),
 	};
-	
+
 	await foodStore.addFoodItem(foodItem);
-	
+
 	// close modal
 	isModalOpen.value = false;
 }
@@ -273,6 +233,22 @@ async function removeItem(index: number) {
 	}
 }
 
+const editMenuItems = ref<DropdownMenuItem[][]>([
+	[
+		{
+			label: "Dublicate",
+			icon: "i-lucide-user",
+			onselect: () => {
+				addMoreOfItem(item);
+			},
+		},
+		{
+			label: "Delete",
+			icon: "i-lucide-credit-card",
+		},
+	],
+]);
+
 async function addMoreOfItem(item: any) {
 	const date = dashboardStore.selectedDate;
 	let day = dashboardStore.getDay(date);
@@ -284,7 +260,7 @@ async function addMoreOfItem(item: any) {
 			foodLogs: [],
 		};
 	}
-	
+
 	// Add another serving of the same item
 	day.foodLogs.push({ ...item });
 	await dashboardStore.saveDay(day);
@@ -312,5 +288,10 @@ async function addMoreOfItem(item: any) {
 	display: grid;
 	grid-template-columns: 5fr 1fr;
 	gap: 8px;
+}
+
+.food-item-content {
+	display: grid;
+	grid-template-columns: 5fr 60px 70px 30px;
 }
 </style>

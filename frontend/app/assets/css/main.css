@@ -74,23 +74,3 @@ input[type="number"] {
 	-moz-appearance: textfield;
 	appearance: textfield;
 }
-
-.dev-only {
-	outline: 1px dashed red;
-	outline-offset: 2px;
-	display: inline;
-	padding: 4px;
-	font-size: 14px;
-	border-radius: 4px;
-	position: relative;
-}
-.dev-only::after {
-	content: 'Dev only';
-	position: absolute;
-	font-size: 8px;
-	white-space: nowrap;
-	top: -16px;
-	left: 0;
-	color: red;
-	opacity: .75;
-}

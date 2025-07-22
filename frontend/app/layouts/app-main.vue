@@ -12,7 +12,12 @@ import { useAuthStore } from "@/stores/auth";
 
 const auth = useAuthStore();
 
+
+
 onMounted(async () => {
 	auth.initFromLocalStorage();
+	if(!auth.isLogged) {
+	navigateTo("/login");
+}
 });
 </script>

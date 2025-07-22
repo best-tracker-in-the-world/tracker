@@ -10,7 +10,7 @@
 			v-if="!isLoaded"
 			class="h-[75%] w-[75%] mx-auto rounded-xl bg-gray-900/10"
 		/>
-		<div v-else class="flex flex-col h-full pt-10">
+		<div v-else class="flex flex-col items-center align-center h-full pt-2">
 			<RadialProgress
 				class="rotate-180 mx-auto"
 				:diameter="wrapperWidth / 1.5"
@@ -28,7 +28,7 @@
 				"
 			/>
 
-			<span class="mt-auto mb-1 flex justify-center gap-2 dark:text-gray-500 text-2xl font-bold">
+			<span class="mt-auto mb-1 flex justify-center gap-2 dark:text-gray-500 text-md text-gray-500 font-bold">
 				<span>{{ current }} </span> / <span> {{ max }}</span>
 			</span>
 		</div>
@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
 const wrapperProps = {
 	title: t("dashboard.goal.title"),
 	color: "gray",
-	icon: "i-heroicons-chart-pie",
+	icon: "i-heroicons-clock",
 };
 
 onMounted(() => {

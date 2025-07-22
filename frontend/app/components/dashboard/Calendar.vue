@@ -23,19 +23,19 @@
 					<li
 						v-for="(day, index) in selectedWeek"
 						:key="index"
-						class="flex flex-col items-center outline-2 outline-gray-200 dark:outline-gray-700 flex-1 rounded-xl py-2 transition-colors duration-150 cursor-pointer"
+						class="flex flex-col items-center flex-1 rounded-md py-2 transition-all duration-150 cursor-pointer"
 						:class="{
-							'outline-dashed outline-gray-500 dark:outline-gray-400! dark:bg-gray-900':
-								day.isToday,
-							'bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100':
+							'today-chip | outline outline-green-500/50 ':
+								day.isToday && !day.isSelected,
+							'':
 								!day.isToday,
-							'bg-gray-400 text-white dark:text-gray-300 dark:bg-gray-700!':
+							'bg-green-500 text-gray-950 ':
 								day.isSelected,
 						}"
 						@click="modelValueComputed = day.date"
 					>
-						<span class="capitalize">{{ day.name }}</span>
-						<span>{{ day.day }}</span>
+						<span class="capitalize text-xs mb-1">{{ day.name }}</span>
+						<span class="text-xl">{{ day.day }}</span>
 					</li>
 				</ul>
 				<UCalendar
@@ -150,3 +150,23 @@ watch(modelValueComputed, () => {
 	isDatePickerVisible.value = false;
 });
 </script>
+
+<style scoped>
+
+.today-chip {
+	position: relative;
+}
+
+.today-chip::after {
+	transition: all 300ms ease;
+	content: "";
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 100%;
+	background-color: #00C16A;
+	bottom: 0;
+	transform: translateY(50%);
+}
+
+</style>

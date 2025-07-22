@@ -1,10 +1,10 @@
 <template>
 	<ClientOnly>
-		<div class="flex flex-col gap-2 w-screen h-fit p-2 mb-[100px] md:mb-0">
-			<DashboardCalendar v-model="selectedDate as any" />
+		<div class="flex flex-col gap-3 w-screen h-fit p-3 mb-[100px] md:mb-0">
+			<DashboardCalendar v-model="selectedDate" />
 			<!-- dashboard body wrap -->
 			<div
-				class="grid grid-cols-2 md:desktop-grid gap-2"
+				class="grid grid-cols-2 md:desktop-grid gap-3"
 				:class="isMobile ? '' : 'grid-container'"
 			>
 				<!-- 1. WEIGHT -->
@@ -68,13 +68,12 @@ const loadedStatus = reactive({
 
 onMounted(async () => {
 	await dashboardStore.loadAllDays();
-	console.log('dock',selectedDate);
 	// skeleton test
 	setTimeout(() => {
 		loadedStatus.weight = true;
 		loadedStatus.goal = true;
 		loadedStatus.foods = true;
-	}, 1000);
+	}, 100);
 });
 
 // sync store's and component's date

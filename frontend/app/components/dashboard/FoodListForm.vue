@@ -1,15 +1,21 @@
 <template>
-	<UForm v-auto-animate :state="state" class="w-full flex flex-col gap-4">
-		<DevOnly>id: {{ state.id }}</DevOnly>
+	<UForm
+		ref="formRef"
+		v-auto-animate
+		:schema="schema"
+		:state="state"
+		class="w-full flex flex-col gap-4"
+		@submit="onSubmit"
+	>
+		<UiDev>
+			id: {{ computedId }}
+		</UiDev>
+
 		<!-- NAME -->
 		<UFormField
-			:label="$t('dashboard.foodlist.name')"
+			name="name"
+			:label="$t('dashboard.foodList.name')"
 			required
-			:error="
-				!state.name.length && !isFocused
-					? $t('foodList.error.nameTooShort')
-					: ''
-			"
 		>
 			<UInput
 				ref="nameInputRef"
@@ -17,24 +23,17 @@
 				type="text"
 				class="w-full"
 				size="xl"
-				@focus="isFocused = true"
-				@blur="isFocused = false"
 			/>
 		</UFormField>
 
 		<!-- WEIGHT -->
-
 		<UFormField
+			name="weight"
 			:label="
 				$t('dashboard.weight.title') +
 				', ' +
 				$t('dimensions.g') +
 				'.'
-			"
-			:error="
-				state.weight > 0 && state.weight < 5000
-					? ''
-					: $t('foodList.error.weightWrong')
 			"
 			required
 		>
@@ -47,18 +46,13 @@
 		</UFormField>
 
 		<!-- CALORIC CONTENT -->
-
 		<UFormField
+			name="caloricContent"
 			:label="
 				$t('dashboard.caloricContent') +
 				', ' +
 				$t('dimensions.kcal') +
 				'.'
-			"
-			:error="
-				state.caloricContent < 1000
-					? ''
-					: $t('foodList.error.caloricContentWrong')
 			"
 			required
 		>
@@ -71,7 +65,6 @@
 		</UFormField>
 
 		<!-- NUTRIENTS -->
-
 		<UCollapsible>
 			<UiAdditionalLink
 				v-model="isAdditionalVisible"
@@ -81,23 +74,29 @@
 			/>
 			<template #content>
 				<div class="flex gap-4 mb-2">
-					<UFormField :label="$t('foodList.protein')">
+					<UFormField
+						name="protein"
+						:label="$t('foodList.protein')"
+					>
 						<UInput
 							v-model="state.protein"
+							type="number"
 							class="w-full"
 							size="xl"
 						/>
 					</UFormField>
-					<UFormField :label="$t('foodList.carbs')">
+					<UFormField name="carbs" :label="$t('foodList.carbs')">
 						<UInput
 							v-model="state.carbs"
+							type="number"
 							class="w-full"
 							size="xl"
 						/>
 					</UFormField>
-					<UFormField :label="$t('foodList.fat')">
+					<UFormField name="fat" :label="$t('foodList.fat')">
 						<UInput
 							v-model="state.fat"
+							type="number"
 							class="w-full"
 							size="xl"
 						/>
@@ -106,73 +105,15 @@
 			</template>
 		</UCollapsible>
 
-		<!-- checkboxes -->
-
-		<div id="checkboxes" class="flex flex-col gap-2 w-fit mt-2">
-			<!-- add to favorites -->
-			<div class="flex gap-2 w-fit align-center">
-				<UCheckbox
-					v-model="state.addToFavorites"
-					:label="$t('dashboard.foodList.favorite')"
-					class="w-full"
-				/>
-				<UPopover portal="#checkboxes" placement="top">
-					<template #content>
-						<p
-							class="p-4 bg-white w-[300px] text-center text-sm"
-						>
-							{{ $t("dashboard.foodList.favoriteInfo") }}
-						</p>
-					</template>
-
-					<UIcon
-						size="24"
-						class="opacity-50"
-						name="i-heroicons-question-mark-circle"
-					/>
-				</UPopover>
-			</div>
-
-			<!-- addToFoodList -->
-			<div class="flex gap-2 w-fit align-center items-center">
-				<UCheckbox
-					v-model="state.addToFoodList"
-					:label="$t('dashboard.foodList.addToCurrentDay')"
-					class="w-full h-fit"
-				/>
-				<UPopover portal="#checkboxes" placement="top">
-					<template #content>
-						<p
-							class="p-4 bg-white w-[300px] text-center text-sm"
-						>
-							{{
-								$t(
-									"dashboard.foodList.addToCurrentDayInfo"
-								)
-							}}
-						</p>
-					</template>
-
-					<UIcon
-						size="24"
-						class="opacity-50"
-						name="i-heroicons-question-mark-circle"
-					/>
-				</UPopover>
-			</div>
-		</div>
+		<!-- checkboxes was here -->
 
 		<!-- SUBMIT -->
-
 		<UButton
-			:loading="false"
+			:loading="isSubmitting"
 			type="submit"
 			color="info"
 			class="w-full items-center grid mt-8"
-			:class="isValid ? '' : 'opacity-25'"
 			size="xl"
-			:disabled="!isValid"
-			@click="handleSumbit"
 		>
 			{{ $t("dashboard.foodList.add") }}
 		</UButton>
@@ -180,38 +121,71 @@
 </template>
 
 <script setup lang="ts">
-import { UiAdditionalLink } from "#components";
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
 
-const $emit = defineEmits(["submit"]);
+const { t } = useI18n();
+
+const emit = defineEmits<{
+	submit: [data: any];
+}>();
 
 const { latestFoodItemId } = useLatestFoodItemId();
+
+// zod schema
+const schema = z.object({
+	name: z
+		.string()
+		.min(1, t("foodList.error.name.tooShort"))
+		.max(50, t("foodList.error.name.tooLong")),
+	weight: z.coerce
+		.number()
+		.min(1, t("foodList.error.weight.tooSmall"))
+		.max(5000, t("foodList.error.weight.tooBig")),
+	caloricContent: z.coerce
+		.number()
+		.min(1, t("foodList.error.cal.tooSmall"))
+		.max(900, t("foodList.error.cal.tooBig")),
+	protein: z.coerce
+		.number()
+		.min(0, t("foodList.error.nutrition.tooSmall"))
+		.max(100, t("foodList.error.nutrition.tooBig"))
+		.nullable()
+		.optional(),
+	carbs: z.coerce
+		.number()
+		.min(0, t("foodList.error.nutrition.tooSmall"))
+		.max(100, t("foodList.error.nutrition.tooBig"))
+		.nullable()
+		.optional(),
+	fat: z.coerce
+		.number()
+		.min(0, t("foodList.error.nutrition.tooSmall"))
+		.max(100, t("foodList.error.nutrition.tooBig"))
+		.nullable()
+		.optional(),
+	addedAt: z.string().optional(),
+	id: z.number().optional(),
+});
+
+type Schema = z.output<typeof schema>;
 
 const state = reactive({
 	name: "",
 	weight: 100,
 	caloricContent: 0,
-	protein: null,
-	carbs: null,
-	fat: null,
-	addToFavorites: false,
-	addToFoodList: true,
-	id: computed(() => latestFoodItemId.value + 1),
+	protein: null as number | null,
+	carbs: null as number | null,
+	fat: null as number | null,
+	addedAt: new Date().toISOString().substring(11, 16),
 });
+
+const computedId = computed(() => latestFoodItemId.value + 1);
 
 const isAdditionalVisible = ref(false);
-
+const isSubmitting = ref(false);
 const nameInputRef = ref<ComponentPublicInstance | null>(null);
-
-const isFocused = ref(false);
-
-const isValid = computed(() => {
-	return (
-		state.name.length > 0 &&
-		state.caloricContent > 0 &&
-		state.weight > 0 &&
-		state.weight < 5000
-	);
-});
+const formRef = ref();
 
 onMounted(() => {
 	if (nameInputRef.value) {
@@ -219,8 +193,38 @@ onMounted(() => {
 	}
 });
 
-const handleSumbit = (e: Event) => {
-	e.preventDefault();
-	$emit("submit", state);
+const onSubmit = async (event: FormSubmitEvent<Schema>) => {
+	isSubmitting.value = true;
+
+	try {
+		const formData = {
+			...event.data,
+			addedAt: state.addedAt,
+			id: computedId.value,
+		};
+
+		emit("submit", formData);
+
+		Object.assign(state, {
+			name: "",
+			weight: 100,
+			caloricContent: 0,
+			protein: null,
+			carbs: null,
+			fat: null,
+			isFavorite: false,
+			addedAt: new Date().toISOString().substring(11, 16),
+		});
+
+		nextTick(() => {
+			if (nameInputRef.value) {
+				nameInputRef.value.$el.querySelector("input").focus();
+			}
+		});
+	} catch (error) {
+		console.error("Error submitting food item:", error);
+	} finally {
+		isSubmitting.value = false;
+	}
 };
 </script>
