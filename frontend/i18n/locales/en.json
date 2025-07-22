@@ -192,6 +192,14 @@
 		}
 	},
 	"stats": {
+		"weight": {
+			"title": "Weight",
+			"unit": "kg"
+		},
+		"calories": {
+			"title": "Calories",
+			"unit": "kcal"
+		},
 		"week": "Week",
 		"month": "Month",
 		"year": "Year"

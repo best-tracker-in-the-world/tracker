@@ -4,12 +4,14 @@
 			<div class="max-w-[80%] mx-auto">
 				<UTabs v-model="currentTab" :items="tabs" />
 			</div>
-			<div class="w-full h-[400px]">
+			<div class="w-full h-[400px] mt-2">
 				<VChart
 					:option="weightOptions"
 					autoresize
 					class="w-full h-full"
 				/>
+			</div>
+			<div class="w-full h-[400px] mt-4">
 				<VChart
 					:option="caloriesOptions"
 					autoresize
@@ -53,10 +55,20 @@ const actualWeightsData = ref<(number | null)[]>();
 const interpolatedWeightsData = ref<(number | null)[]>();
 const goalData = ref<number[]>();
 const chartLabels = ref<string[]>();
+const caloriesData = ref<number[]>([]);
+const actualCaloriesData = ref<(number | null)[]>();
+const calorieGoalData = ref<number[]>();
 
 const weightOptions = computed(() => ({
 	width: "80%",
 	height: "auto",
+	title: {
+		text: t("stats.weight.title") + ', '+ t("stats.weight.unit") || "Weight",
+		left: "center",
+		textStyle: {
+			fontSize: 16,
+		},
+	},
 	xAxis: {
 		type: "category",
 		data:
@@ -105,26 +117,6 @@ const weightOptions = computed(() => ({
 				color: "rgba(0, 193, 106, 0.2)",
 			},
 		},
-		// idea: show missing weight as dashed
-		// line taken from next available weight
-		// ...(interpolatedWeightsData.value && interpolatedWeightsData.value.some(w => w !== null) ? [{
-		//   name: "interpolated ddd",
-		//   type: "line",
-		//   symbol: "circle",
-		//   symbolSize: 4,
-		//   smooth: 0.3,
-		//   data: interpolatedWeightsData.value,
-		//   lineStyle: {
-		//     color: "#00c16a",
-		//     width: 2,
-		//     type: "dashed",
-		//   },
-		//   itemStyle: {
-		//     color: "#00c16a",
-		//     borderColor: "#ffffff",
-		//     borderWidth: 1,
-		//   },
-		// }] : []),
 		{
 			name: "weight goal",
 			type: "line",
@@ -155,12 +147,122 @@ const weightOptions = computed(() => ({
 										]
 									} kg`,
 									label: {
-										show: true,
+										show: false,
 										position: "right",
 										formatter: t(
 											"settings.goal.title"
 										),
 										color: "rgba(255, 0, 0, 0.5)",
+										fontSize: 12,
+									},
+								},
+						  ]
+						: [],
+			},
+		},
+	],
+}));
+
+const caloriesOptions = computed(() => ({
+	width: "80%",
+	height: "auto",
+	title: {
+		text: t("stats.calories.title") + ', '+ t("stats.calories.unit") || "Calories",
+		left: "center",
+		textStyle: {
+			fontSize: 16,
+		},
+	},
+	xAxis: {
+		type: "category",
+		data:
+			chartLabels.value ||
+			shortDays.map((day) => t(`calendar.${day}`)),
+		axisLabel: {
+			formatter: function(value : string) {
+				return value.replace(' ', '\n');
+			},
+			align: 'center',
+			verticalAlign: 'top',
+			margin: 15,
+			fontSize: 11,
+		},
+	},
+	yAxis: {
+		type: "value",
+		min: Math.min(
+			...(actualCaloriesData.value?.filter((c): c is number => c !== null && c > 0) || [0]),
+			...(calorieGoalData.value?.filter((c) => c > 0) || [0])
+		) - 200,
+		max: Math.max(
+			...(actualCaloriesData.value?.filter((c): c is number => c !== null && c > 0) || [2000]),
+			...(calorieGoalData.value?.filter((c) => c > 0) || [2000])
+		) + 200,
+		axisLabel: {
+			formatter: "{value}",
+		},
+		axisPointer: {
+			snap: true,
+		},
+	},
+	series: [
+		// calories eaten
+		{
+			name: "calories eaten",
+			type: "line",
+			symbol: "circle",
+			symbolSize: 6,
+			smooth: 0.3,
+			data: actualCaloriesData.value || caloriesData.value,
+			lineStyle: {
+				color: "#ff6b35",
+				width: 2,
+			},
+			itemStyle: {
+				color: "#ff6b35",
+			},
+			areaStyle: {
+				color: "rgba(255, 107, 53, 0.2)",
+			},
+		},
+		// calorie goal
+		{
+			name: "calorie goal",
+			type: "line",
+			data: calorieGoalData.value,
+			lineStyle: {
+				color: "rgba(0, 123, 255, 0.5)",
+				type: "dashed",
+				width: 2,
+			},
+			symbol: "none",
+			markPoint: {
+				symbol: "true",
+				itemStyle: {
+					color: "transparent",
+				},
+				data:
+					calorieGoalData.value && calorieGoalData.value.length > 0
+						? [
+								{
+									coord: [
+										calorieGoalData.value.length - 1,
+										calorieGoalData.value[
+											calorieGoalData.value.length - 1
+										],
+									],
+									value: `${
+										calorieGoalData.value[
+											calorieGoalData.value.length - 1
+										]
+									} kcal`,
+									label: {
+										show: false,
+										position: "right",
+										formatter: t(
+											"settings.calorie_goal"
+										) || "Calorie Goal",
+										color: "rgba(0, 123, 255, 0.5)",
 										fontSize: 12,
 									},
 								},
@@ -194,6 +296,13 @@ const findNextAvailableWeight = (
 	return null;
 };
 
+const calculateTotalCalories = (foodLogs: any[]): number => {
+	if (!foodLogs || foodLogs.length === 0) return 0;
+	return foodLogs.reduce((total, log) => {
+		return total + (log.caloricContent || 0);
+	}, 0);
+};
+
 const generateDateRange = (endDateString: string, days: number) => {
 	const endDate = new Date(endDateString);
 	const dates: string[] = [];
@@ -201,6 +310,8 @@ const generateDateRange = (endDateString: string, days: number) => {
 	const weights: number[] = [];
 	const actualWeights: (number | null)[] = [];
 	const interpolatedWeights: (number | null)[] = [];
+	const calories: number[] = [];
+	const actualCalories: (number | null)[] = [];
 
 	for (let i = days - 1; i >= 0; i--) {
 		const currentDate = new Date(endDate);
@@ -248,9 +359,21 @@ const generateDateRange = (endDateString: string, days: number) => {
 				interpolatedWeights.push(null);
 			}
 		}
+
+		const totalCalories = dayData?.[1].foodLogs 
+			? calculateTotalCalories(dayData[1].foodLogs)
+			: 0;
+		
+		calories.push(totalCalories);
+		
+		if (totalCalories > 0) {
+			actualCalories.push(totalCalories);
+		} else {
+			actualCalories.push(null);
+		}
 	}
 
-	return { dates, labels, weights, actualWeights, interpolatedWeights };
+	return { dates, labels, weights, actualWeights, interpolatedWeights, calories, actualCalories };
 };
 
 const updateChartData = () => {
@@ -271,9 +394,9 @@ const updateChartData = () => {
 			periodDays = 7;
 	}
 
-	const { weights, labels, actualWeights, interpolatedWeights } =
+	const { weights, labels, actualWeights, interpolatedWeights, calories, actualCalories } =
 		generateDateRange(today!, periodDays);
-
+	//weight
 	weightsData.value = weights;
 	actualWeightsData.value = actualWeights;
 	interpolatedWeightsData.value = interpolatedWeights;
@@ -282,6 +405,17 @@ const updateChartData = () => {
 	goalData.value = [];
 	for (let i = 0; i < periodDays; i++) {
 		goalData.value.push(userSettings.settings?.weight || 0);
+	}
+	// calories
+	caloriesData.value = calories;
+	actualCaloriesData.value = actualCalories;
+
+	calorieGoalData.value = [];
+	for (let i = 0; i < periodDays; i++) {
+		const calorieGoal = userSettings.settings?.currentGoal || 
+			dashboard.days.get(labels[i])?.caloricGoal || 
+			2000;
+		calorieGoalData.value.push(calorieGoal);
 	}
 };
 
