@@ -1,83 +1,147 @@
 <template>
-	<div v-if="isMounted">
+	<div
+		v-if="isMounted" 
+		class="transition-all"
+		:class="{
+      '!mr-0': isMobile,
+      'mr-64': isDesktopMenuOpen,
+      'mr-16': !isDesktopMenuOpen,
+    }"
+		>
 		<!-- desktop -->
 		<aside
 			v-if="!isMobile"
-			class="transition-all bg-gray-500 dark:bg-gray-800 text-white flex flex-col sticky top-0 h-screen outline-1 dark:outline-gray-800 outline-gray-500/50"
+			class="group/sidebar flex flex-col h-screen fixed left-0 top-0 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-lg dark:shadow-gray-900/20"
 			:class="isDesktopMenuOpen ? 'w-64' : 'w-16'"
 		>
+			<!-- Header Section -->
 			<div
-				class="flex items-center h-16 mx-6 transition-flex border-b-1 dark:border-gray-500/50 border-gray-400"
-				:class="
-					isDesktopMenuOpen
-						? 'justify-between'
-						: 'justify-center'
-				"
+				class="flex items-center h-16 px-4 border-b border-gray-200 dark:border-gray-800"
 			>
-				<Transition name="menu-items">
-					<div
-						v-if="isDesktopMenuOpen"
-						class="menu-logo | flex items-center justify-left h-16"
+				<div class="flex items-center justify-between w-full">
+					<!-- Logo -->
+					<Transition
+						name="fade-slide"
+						enter-active-class="transition-all duration-300 ease-out"
+						enter-from-class="opacity-0 translate-x-2"
+						enter-to-class="opacity-100 translate-x-0"
+						leave-active-class="transition-all duration-200 ease-in"
+						leave-from-class="opacity-100 translate-x-0"
+						leave-to-class="opacity-0 -translate-x-2"
 					>
-						<h1
-							class="text-xl font-bold flex align-center gap-2"
+						<div
+							v-if="isDesktopMenuOpen"
+							class="flex items-center space-x-3"
 						>
-							<UIcon
-								:name="'i-heroicons-fire'"
-								class="w-6 h-6"
-							/>LOGO
-						</h1>
-					</div>
-				</Transition>
-				<div
-					class="transition-margin transition-500 h-fit p-1.5 pb-0 rounded-sm hover:bg-gray-600 dark:hover:bg-gray-900 cursor-pointer"
-					:class="isDesktopMenuOpen ? 'ml-auto' : 'ml-0'"
-				>
-					<UIcon
-						class="w-6 h-6 transition-all opacity-50 hover:opacity-100"
-						:class="isDesktopMenuOpen ? '' : 'rotate-180'"
-						:name="'i-heroicons-arrow-left-circle'"
+							<div
+								class="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-green-600"
+							>
+								<UIcon
+									name="i-heroicons-scale"
+									class="w-5 h-5 text-white"
+								/>
+							</div>
+							<h1
+								class="text-lg font-semibold text-gray-900 dark:text-white"
+							>
+								{{ $t('menu.title') }}
+							</h1>
+						</div>
+					</Transition>
+
+					<!-- Toggle Button -->
+					<UButton
+						variant="ghost"
+						size="sm"
+						square
+						class="ml-auto shrink-0 hover:bg-gray-100 dark:hover:bg-gray-800"
+						:class="{ 'ml-0': !isDesktopMenuOpen }"
 						@click="isDesktopMenuOpen = !isDesktopMenuOpen"
-					/>
+					>
+						<UIcon
+							name="i-heroicons-chevron-left"
+							class="w-4 h-4 transition-transform duration-300 text-gray-500 dark:text-gray-400"
+							:class="{ 'rotate-180': !isDesktopMenuOpen }"
+						/>
+					</UButton>
 				</div>
 			</div>
-			<nav class="flex flex-col p-4 flex-1">
-				<ul class="flex flex-col gap-2 flex-1 justify-start">
+
+			<!-- Navigation -->
+			<nav class="flex-1 px-3 py-4 overflow-y-auto">
+				<ul class="flex flex-col space-y-1 min-h-full">
 					<li
-						v-for="link in sidebarLinks"
+						v-for="(link, index) in sidebarLinks"
 						:key="link.name"
-						class="last:mt-auto"
+						:class="{ 'mt-auto': link.isBottomItem }"
 					>
-						<ULink
-							:href="link.href"
-							class="flex items-center hover:bg-gray-600 dark:hover:bg-gray-900 p-2 rounded-md"
-							:class="isDesktopMenuOpen ? '' : 'px-1'"
+						<UTooltip
+							:text="$t(link.name)"
+							:disabled="isDesktopMenuOpen"
+							:popper="{ placement: 'right' }"
 						>
-							<UIcon
-								:name="link.icon"
-								class="min-w-6 min-h-6"
-								:class="
-									link.color
-										? link.color
-										: 'text-red-500'
-								"
-							/>
-							<Transition name="menu-items">
-								<span
-									v-if="isDesktopMenuOpen"
-									:class="
-										link.color
-											? link.color
-											: 'text-red-500'
-									"
-									class="menu-item | ml-2"
-									>{{ $t(link.name) }}
-								</span>
-							</Transition>
-						</ULink>
+							<ULink
+								:href="link.href"
+								class="group/item relative flex items-center w-full px-2 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:ring-1 hover:ring-gray-300 dark:hover:ring-gray-700"
+								:class="{
+									'justify-center':
+										!isDesktopMenuOpen,
+								}"
+								active-class="bg-green-100 dark:bg-green-900 dark:text-green-400"
+							>
+								<!-- Icon -->
+								<UIcon
+									:name="link.icon"
+									class="w-5 h-5 shrink-0 transition-colors duration-200"
+									:class="[
+										link.color ||
+											'text-gray-500 dark:text-gray-400 group-hover/item:text-gray-700 dark:group-hover/item:text-gray-300',
+									]"
+								/>
+
+								<!-- Label -->
+								<Transition
+									name="fade-slide"
+									enter-active-class="transition-all duration-300 ease-out delay-75"
+									enter-from-class="opacity-0 translate-x-2"
+									enter-to-class="opacity-100 translate-x-0"
+									leave-active-class="transition-all duration-200 ease-in"
+									leave-from-class="opacity-100 translate-x-0"
+									leave-to-class="opacity-0 -translate-x-2"
+								>
+									<span
+										v-if="isDesktopMenuOpen"
+										class="ml-3 truncate"
+									>
+										{{ $t(link.name) }}
+									</span>
+								</Transition>
+							</ULink>
+						</UTooltip>
 					</li>
 				</ul>
 			</nav>
+
+			<Transition
+				name="fade"
+				enter-active-class="transition-opacity duration-300 delay-150"
+				leave-active-class="transition-opacity duration-200"
+			>
+				<div
+					v-if="!isDesktopMenuOpen"
+					class="absolute top-4 left-1/2 transform -translate-x-1/2"
+				>
+					<div
+						class="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-green-600 cursor-pointer"
+					>
+						<UIcon
+							name="i-heroicons-scale"
+							class="w-5 h-5 text-white"
+							@click="isDesktopMenuOpen = true"
+						/>
+					</div>
+				</div>
+			</Transition>
 		</aside>
 		<!-- mobile -->
 		<template v-if="isMobile">
@@ -159,7 +223,6 @@ function handleMenuClick(event: Event) {
 	isButtonClicked.value = true;
 	isMenuOpen.value = !isMenuOpen.value;
 
-	// Reset the flag after a short delay
 	setTimeout(() => {
 		isButtonClicked.value = false;
 	}, 100);
@@ -168,7 +231,6 @@ function handleMenuClick(event: Event) {
 const mobileMenu = ref<HTMLElement | null>(null);
 const mobileMenuButton = ref<HTMLElement | null>(null);
 
-// Use document click instead of onClickOutside to have more control
 onMounted(() => {
 	const handleDocumentClick = (event: Event) => {
 		if (!isMenuOpen.value || isButtonClicked.value) return;

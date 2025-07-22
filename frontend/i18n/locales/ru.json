@@ -21,6 +21,7 @@
 	},
 
 	"menu": {
+		"title": "Tracker",
 		"logout": "Выход",
 		"dashboard": "Дашборд",
 		"settings": "Настройки",
