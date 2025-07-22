@@ -88,7 +88,7 @@ export class PersistenceAdapter {
 					email: "example@email.com",
 					password: "**********",
 					language: "ru",
-					currentGoal: 2000,
+					currentGoal: 2500,
 					weight: null,
 					height: null,
 					age: null,
