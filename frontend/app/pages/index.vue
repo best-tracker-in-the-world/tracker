@@ -5,7 +5,7 @@
 		<h1 class="text-4xl md:text-6xl font-bold mb-4">Easy.FoodLog</h1>
 		<p class="text-xl max-w-xl mb-6 text-white/90">Простое и интуитивное приложение с минималистичным вводом еды,
 			рецептов и контролем прогресса</p>
-		<a href="/login"
+		<a href="/Login"
 			class="bg-white text-green-800 font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition">
 			Попробовать прямо сейчас
 		</a>
