@@ -119,18 +119,39 @@
 		"friday": "пт",
 		"saturday": "сб",
 		"sunday": "вс",
-		"january": "янв",
-		"february": "фев",
-		"march": "мар",
-		"april": "апр",
-		"may": "мая",
-		"june": "июня",
-		"july": "июля",
-		"august": "авг",
-		"september": "сен",
-		"october": "окт",
-		"november": "ноя",
-		"december": "дек"
+
+		"mon": "пн",
+		"tue": "вт",
+		"wed": "ср",
+		"thu": "чт",
+		"fri": "пт",
+		"sat": "сб",
+		"sun": "вс",
+
+		"january": "январь",
+		"february": "февраль",
+		"march": "март",
+		"april": "апрель",
+		"may": "май",
+		"june": "июнь",
+		"july": "июль",
+		"august": "август",
+		"september": "сентябрь",
+		"october": "октябрь",
+		"november": "ноябрь",
+		"december": "декабрь",
+
+		"jan": "янв",
+		"feb": "фев",
+		"mar": "мар",
+		"apr": "апр",
+		"jun": "июня",
+		"jul": "июля",
+		"aug": "авг",
+		"sep": "сен",
+		"oct": "окт",
+		"nov": "ноя",
+		"dec": "дек"
 	},
 
 	"settings": {
@@ -183,5 +204,18 @@
 			"max": "Не может быть больше 300",
 			"required": "Обязательное поле"
 		}
+	},
+	"stats": {
+		"weight": {
+			"title": "Вес",
+			"unit": "кг"
+		},
+		"calories": {
+			"title": "Калории",
+			"unit": "ккал"
+		},
+		"week": "Неделя",
+		"month": "Месяц",
+		"year": "Год"
 	}
 }
