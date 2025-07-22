@@ -60,7 +60,7 @@ const actualCaloriesData = ref<(number | null)[]>();
 const calorieGoalData = ref<number[]>();
 
 const weightOptions = computed(() => ({
-	width: "80%",
+	width: "85%",
 	height: "auto",
 	title: {
 		text: t("stats.weight.title") + ', '+ t("stats.weight.unit") || "Weight",
