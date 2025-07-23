@@ -1,6 +1,6 @@
 <template>
 	<ClientOnly>
-		<div class="p-4 px-2 flex-auto flex flex-col flex-auto">
+		<div class="p-4 px-2 flex-auto flex flex-col flex-auto max-w-screen">
 			<!-- Food list -->
 
 			<div v-if="!foodItems.length" class="grid items-center">
