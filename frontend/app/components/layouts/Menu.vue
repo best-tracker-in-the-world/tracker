@@ -170,7 +170,7 @@
 					<nav
 						v-if="isMenuOpen"
 						ref="mobileMenu"
-						class="absolute -top-5 -translate-y-full right-0 slide-in-right"
+						class="absolute top-5 -translate-y-full right-0 slide-in-right"
 						@click.stop
 					>
 						<ul class="flex flex-col gap-2 items-end">
@@ -210,7 +210,8 @@ const isMenuOpen = ref(false);
 const isMounted = ref(false);
 const isButtonClicked = ref(false);
 const settingsStore = useSettingsStore();
-const { useBottonNavigationBar, isDesktopMenuOpen } = storeToRefs(settingsStore);
+const { isDesktopMenuOpen } = storeToRefs(settingsStore);
+const { useBottonNavigationBar } = settingsStore;
 
 
 

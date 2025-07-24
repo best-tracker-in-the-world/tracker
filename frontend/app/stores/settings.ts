@@ -8,7 +8,7 @@ export const useSettingsStore = defineStore("settings", () => {
 	const isDesktopMenuOpen = ref(true);
 
 	// select between old hamburger menu and bottom navigation bar
-	const useBottonNavigationBar = true
+	const useBottonNavigationBar = true;
 
 	const settings = ref<UserSettings | null>(null);
 

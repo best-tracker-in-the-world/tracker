@@ -10,7 +10,7 @@
 			<div
 				class="h-14 p-4 border-b border-gray-200 dark:border-gray-800 font-bold shadow-xs bg-white dark:bg-gray-900 z-10 flex items-center justify-between"
 				:class="{ 
-					'fixed top-0': isMobile,
+					'fixed top-0 w-full': isMobile,
 
 					 }"
 			>
