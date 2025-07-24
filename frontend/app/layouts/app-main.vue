@@ -3,7 +3,7 @@
 		<LazyLayoutsMenu />
 		<div 
 		:class="{ 
-				'pt-14': isMobile,
+				'pt-14 w-full': isMobile,
 				'w-[calc(100%-256px)]': !isMobile && isDesktopMenuOpen,
 				'w-[calc(100%-64px)]': !isMobile && !isDesktopMenuOpen,
 			}">
