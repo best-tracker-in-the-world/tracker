@@ -115,6 +115,14 @@
 		"saturday": "sat",
 		"sunday": "sun",
 
+		"mon": "mon",
+		"tue": "tue",
+		"wed": "wed",
+		"thu": "thu",
+		"fri": "fri",
+		"sat": "sat",
+		"sun": "sun",
+
 		"january": "January",
 		"february": "February",
 		"march": "March",
