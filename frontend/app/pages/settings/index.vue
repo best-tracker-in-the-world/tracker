@@ -1,16 +1,16 @@
 <template>
 	<div class="w-full h-full">
 		<UForm
-			class="relative h-screen p-4 gap-2 flex flex-col mb-16 w-full md:max-w-[600px]"
+			class="relative h-screen gap-2 flex flex-col mb-16 w-full md:max-w-[600px]"
 			:state="state"
 			:style="isUnsaved ? 'height: calc(100vh + 64px)' : ''"
 		>
 			<!-- PRIMARY -->
 			<!-- NAME, EMAIL, PASSWORD -->
 
-			<div
-				class="ring-1 p-4 py-4 pb-6 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
-				:class="auth.isLoggedAsGuest ? 'disabled':''"
+			<!-- <div
+				class="p-4 py-4 pb-6 flex flex-col gap-4"
+				:class="auth.isLoggedAsGuest ? 'disabled' : ''"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.primary") }}:
@@ -41,13 +41,13 @@
 						:disabled="auth.isLoggedAsGuest"
 					/>
 				</UFormField>
-			</div>
+			</div> -->
 
 			<!-- APP -->
 			<!-- LANGUAGE, THEME -->
 
 			<div
-				class="ring-1 p-4 py-4 pb-6 my-8 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
+				class="p-4 py-4 pb-6 my-8 rounded-2xl flex flex-col gap-4"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.app") }}:
@@ -86,7 +86,7 @@
 			<!-- CURRENT GOAL, WEIGHT, HEIGHT, AGE, GENDER -->
 
 			<div
-				class="ring-1 p-4 py-4 pb-6 ring-gray-100 dark:ring-gray-600 rounded-2xl flex flex-col gap-4"
+				class="p-4 py-4 pb-6 rounded-2xl flex flex-col gap-4"
 			>
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.stats") }}:
@@ -143,34 +143,28 @@
 						class="w-full"
 						size="xl"
 					/>
-								<div
-				v-if="isUnsaved"
-				ref="saveChanges"
-				class="save-changes left-0 right-0 mb-4 p-4 bg-red-500 rounded-b-xl shadow-xl bg-white dark:bg-gray-800 z-10"
-				:class="isMobile ? 'fixed top-0':'top-1/2 absolute'"
-			>
-				<h4 class="mb-4">{{ $t("settings.saveChanges") }}</h4>
-				<div class="flex gap-2">
-					<UButton
-						:label="$t('settings.cancel')"
-						class="w-full grid items-center mt-auto"
-						size="xl"
-						variant="outline"
-						@click="handleCancelSave()"
-					/>
-					<UButton
-						:label="$t('settings.save')"
-						class="w-full grid items-center mt-auto"
-						size="xl"
-						variant="solid"
-						@click="handleSettingsSave()"
-					/>
-				</div>
-			</div>
+					<Teleport v-if="teleportTarget" to="#header-button-teleport" >
+						<Transition name="slide-down">
+						<div v-if="isUnsaved" ref="saveChanges" class="">
+							<div class="flex gap-2">
+								<UButton
+									:label="$t('settings.cancel')"
+									class="items-center mt-auto"
+									variant="outline"
+									@click="handleCancelSave()"
+								/>
+								<UButton
+									:label="$t('settings.save')"
+									class="items-center mt-auto bg-green-500"
+									variant="solid"
+									@click="handleSettingsSave()"
+								/>
+							</div>
+						</div>
+						</Transition> 
+					</Teleport>
 				</UFormField>
 			</div>
-
-
 		</UForm>
 	</div>
 </template>
@@ -208,11 +202,17 @@ const isMobile = useIsMobile();
 const originalLanguage = ref<"ru" | "en">("ru");
 const originalTheme = ref<"light" | "dark">("light");
 
-watch(state, () => {
-	if (isInitialized.value) {
-		isUnsaved.value = true;
-	}
-}, { deep: true });
+const teleportTarget = ref(false);
+
+watch(
+	state,
+	() => {
+		if (isInitialized.value) {
+			isUnsaved.value = true;
+		}
+	},
+	{ deep: true }
+);
 
 function handleSettingsSave() {
 	console.log("saving settings...", { ...state });
@@ -222,7 +222,7 @@ function handleSettingsSave() {
 		gender: state.gender as "male" | "female" | null,
 	};
 	user.saveSettings(settings);
-	
+
 	originalLanguage.value = state.language;
 	originalTheme.value = state.theme;
 	isUnsaved.value = false;
@@ -234,10 +234,10 @@ async function handleCancelSave() {
 	const currentTheme = state.theme;
 	const shouldRevertLanguage = originalLanguage.value !== currentLanguage;
 	const shouldRevertTheme = originalTheme.value !== currentTheme;
-	
+
 	await user.loadSettings();
 	loadStateFromSettings();
-	
+
 	// revert language if cancel
 	if (shouldRevertLanguage) {
 		console.log("reverting language to", originalLanguage.value);
@@ -251,7 +251,7 @@ async function handleCancelSave() {
 		colorMode.preference = originalTheme.value;
 		state.theme = originalTheme.value;
 	}
-	
+
 	nextTick(() => {
 		saveChanges.value?.classList.add("slide-out-top");
 		setTimeout(() => {
@@ -290,34 +290,35 @@ function handleThemeChange() {
 }
 
 onMounted(() => {
-
 	loadStateFromSettings();
 
 	nextTick(async () => {
 		await user.loadSettings();
-		
+
 		const initialLanguage = user.settings?.language || "ru";
 		const initialTheme = user.settings?.theme || colorMode.value;
-		
+
 		state.language = initialLanguage;
 		state.theme = initialTheme;
-		
+
 		originalLanguage.value = initialLanguage;
 		originalTheme.value = initialTheme;
-		
+
 		setLocale(initialLanguage);
 		locale.value = initialLanguage;
 		colorMode.preference = initialTheme;
-		
+
 		setTimeout(() => {
 			isInitialized.value = true;
 			console.log("isInitialized", isInitialized.value);
 		}, 250);
+
+		teleportTarget.value = !!document.getElementById('header-button-teleport')
 	});
 });
 
 definePageMeta({
-	layout: isMobile? "app-main" : "app-returnable",
+	layout: isMobile ? "app-main" : "app-returnable",
 });
 </script>
 
@@ -335,7 +336,7 @@ definePageMeta({
 }
 
 .disabled::after {
-	content: '';
+	content: "";
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -349,8 +350,19 @@ definePageMeta({
 }
 
 @media (prefers-color-scheme: dark) {
-.disabled::after {
-	background-color: rgba(156, 156, 156, 0.25);
+	.disabled::after {
+		background-color: rgba(156, 156, 156, 0.25);
+	}
 }
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: transform .5s ease, opacity .5s linear;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(-100%);
+	opacity: 0;
 }
 </style>

@@ -11,7 +11,7 @@
 		<!-- desktop -->
 		<aside
 			v-if="!isMobile"
-			class="group/sidebar flex flex-col h-screen fixed left-0 top-0 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-lg dark:shadow-gray-900/20"
+			class="group/sidebar flex flex-col h-screen fixed left-0 top-0 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 dark:shadow-gray-900/20"
 			:class="isDesktopMenuOpen ? 'w-64' : 'w-16'"
 		>
 			<!-- Header Section -->
@@ -56,7 +56,7 @@
 						square
 						class="ml-auto shrink-0 hover:bg-gray-100 dark:hover:bg-gray-800"
 						:class="{ 'ml-0': !isDesktopMenuOpen }"
-						@click="isDesktopMenuOpen = !isDesktopMenuOpen"
+						@click="isDesktopMenuOpen = false"
 					>
 						<UIcon
 							name="i-heroicons-chevron-left"
@@ -208,9 +208,11 @@ const { isMobile } = useIsMobile();
 
 const isMenuOpen = ref(false);
 const isMounted = ref(false);
-const isDesktopMenuOpen = ref(true);
 const isButtonClicked = ref(false);
-const { useBottonNavigationBar } = useSettingsStore();
+const settingsStore = useSettingsStore();
+const { useBottonNavigationBar, isDesktopMenuOpen } = storeToRefs(settingsStore);
+
+
 
 onMounted(() => {
 	isMounted.value = true;
