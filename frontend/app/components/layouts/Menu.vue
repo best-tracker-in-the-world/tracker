@@ -11,7 +11,7 @@
 		<!-- desktop -->
 		<aside
 			v-if="!isMobile"
-			class="group/sidebar flex flex-col h-screen fixed left-0 top-0 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 dark:shadow-gray-900/20"
+			class="group/sidebar flex flex-col h-screen fixed left-0 top-0 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 dark:shadow-gray-900/20 z-10"
 			:class="isDesktopMenuOpen ? 'w-64' : 'w-16'"
 		>
 			<!-- Header Section -->
