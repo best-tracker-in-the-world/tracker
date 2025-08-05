@@ -130,11 +130,11 @@ const weightOptions = computed(() => ({
 				show: weightAreLabelsVisible.value,
 				position: "top",
 				color: "#333", 
-				fontSize: 10,
+				fontSize: 12,
 				fontWeight: "bold",
 				backgroundColor: "rgba(255,255,255,0.9)", 
 				borderRadius: 4,
-				padding: [4, 6],
+				padding: [4, 6, 2, 6],
 				formatter: "{c}",
 				border: "1px solid #aaa",
 				borderColor: "#00c16a",
@@ -259,13 +259,13 @@ const caloriesOptions = computed(() => ({
 			label: {
 				show: calAreLabelsVisible.value,
 				position: "top",
-				color: "#333", // label text color
-				fontSize: 12,
+				color: "#333",
+				fontSize: 10,
 				fontWeight: "bold",
-				backgroundColor: "rgba(255,255,255,0.9)", // optional background
+				backgroundColor: "rgba(255,255,255,0.9)",
 				borderRadius: 4,
-				padding: [4, 6], // top/bottom, left/right
-				formatter: "{c}", // or custom format
+				padding: [4, 6, 2, 6], 
+				formatter: "{c}",
 				border: "1px solid #aaa",
 				borderColor: "#ff6b35",
 				borderWidth: 1,
