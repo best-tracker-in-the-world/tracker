@@ -57,7 +57,12 @@
 			"calories": "Калории",
 			"proteins": "Белки",
 			"carbs": "Углеводы",
-			"fat": "Жиры"
+			"fat": "Жиры",
+			"additional": {
+				"dublicate": "Дублировать",
+				"edit": "Редактировать",
+				"delete": "Удалить"
+			}
 		},
 		"userSettings": {
 			"name": "Имя",

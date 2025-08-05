@@ -51,7 +51,12 @@
 			"calories": "Calories",
 			"proteins": "Proteins",
 			"carbs": "Carbs",
-			"fat": "Fat"
+			"fat": "Fat",
+			"additional": {
+				"dublicate": "Dublicate",
+				"edit": "Edit",
+				"delete": "Delete"
+			}
 		},
 		"userSettings": {
 			"name": "Name",

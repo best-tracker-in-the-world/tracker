@@ -69,13 +69,13 @@
 							:items="[
 								[
 									{
-										label: 'Duplicate',
+										label: $t(`dashboard.foodList.additional.dublicate`),
 										icon: 'i-lucide-copy',
 										onSelect: () =>
 											addMoreOfItem(item),
 									},
 									{
-										label: 'Delete',
+										label: $t(`dashboard.foodList.additional.delete`),
 										icon: 'i-lucide-trash',
 										onSelect: () =>
 											removeItem(index),
@@ -236,14 +236,14 @@ async function removeItem(index: number) {
 const editMenuItems = ref<DropdownMenuItem[][]>([
 	[
 		{
-			label: "Dublicate",
+			label: t("dashboard.foodList.additional.dublicate"),
 			icon: "i-lucide-user",
 			onselect: () => {
 				addMoreOfItem(item);
 			},
 		},
 		{
-			label: "Delete",
+			label: t("dashboard.foodList.additional.delete"),
 			icon: "i-lucide-credit-card",
 		},
 	],
