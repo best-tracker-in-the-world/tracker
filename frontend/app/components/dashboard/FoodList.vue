@@ -7,7 +7,6 @@
 		:icon="wrapperProps.icon"
 		:is-selected="isEditing"
 		class="p-0! *:first:px-4 *:first:pt-4"
-		@dblclick="isEditing = true"
 	>
 		<!-- controls -->
 
@@ -154,13 +153,6 @@ interface Props {
 }
 
 const wrapper = ref<HTMLElement | null>(null);
-onClickOutside(wrapper, () => {
-	if (isEditing.value) {
-		isEditing.value = false;
-	}
-});
-
-const isEditing = ref(false);
 
 const props = withDefaults(defineProps<Props>(), {
 	isLoaded: false,
@@ -233,21 +225,6 @@ async function removeItem(index: number) {
 	}
 }
 
-const editMenuItems = ref<DropdownMenuItem[][]>([
-	[
-		{
-			label: t("dashboard.foodList.additional.dublicate"),
-			icon: "i-lucide-user",
-			onselect: () => {
-				addMoreOfItem(item);
-			},
-		},
-		{
-			label: t("dashboard.foodList.additional.delete"),
-			icon: "i-lucide-credit-card",
-		},
-	],
-]);
 
 async function addMoreOfItem(item: any) {
 	const date = dashboardStore.selectedDate;
