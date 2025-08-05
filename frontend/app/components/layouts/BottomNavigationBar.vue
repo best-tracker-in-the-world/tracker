@@ -2,7 +2,7 @@
 	<nav
 		class="top-shadow | p-4 fixed bottom-0 w-screen z-1 bg-white dark:bg-gray-900"
 	>
-		<ul class="flex justify-between items-center mx-auto max-w-[300px]">
+		<ul class="flex justify-between items-center mx-auto px-2">
 			<template v-for="(route, index) in routes" :key="route.name">
 				<!-- hide logout btn -->
 

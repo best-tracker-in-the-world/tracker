@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="tile-wrapper flex flex-col gap-2 p-4 rounded-md dark:to-gray-800 dark:bg-gray-950 transition-all dark:inset-shadow-xl dark:inset-shadow-red-500 light:ring-1 light:ring-gray-400/30"
+		class="tile-wrapper | flex flex-col gap-2 p-4 rounded-md dark:to-gray-800 dark:bg-gray-950 transition-all dark:inset-shadow-xl dark:inset-shadow-red-500 light:ring-1 light:ring-gray-400/30 max-w-full"
 		:class="`
 		from-${color}-200 
 		text-${color}-900 

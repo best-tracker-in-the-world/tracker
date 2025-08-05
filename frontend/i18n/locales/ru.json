@@ -23,7 +23,7 @@
 	"menu": {
 		"title": "Tracker",
 		"logout": "Выход",
-		"dashboard": "Дашборд",
+		"dashboard": "Главная",
 		"settings": "Настройки",
 		"stats": "Статистика",
 		"food": "Моя еда"

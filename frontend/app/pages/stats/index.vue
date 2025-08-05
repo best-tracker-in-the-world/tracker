@@ -4,14 +4,14 @@
 			<div class="max-w-[80%] mx-auto">
 				<UTabs v-model="currentTab" :items="tabs" />
 			</div>
-			<div class="w-full h-[400px] mt-2">
+			<div class="w-full h-[350px] mt-2">
 				<VChart
 					:option="weightOptions"
 					autoresize
 					class="w-full h-full"
 				/>
 			</div>
-			<div class="w-full h-[400px] mt-4">
+			<div class="w-full h-[350px] mt-4">
 				<VChart
 					:option="caloriesOptions"
 					autoresize

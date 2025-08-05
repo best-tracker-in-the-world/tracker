@@ -1,5 +1,5 @@
 <template>
-	<main :class="{'pb-36' : useBottonNavigationBar}">
+	<main :class="{'pb-20' : useBottonNavigationBar}">
 	<UApp>
 		<ColorScheme>
 			<VitePwaManifest />

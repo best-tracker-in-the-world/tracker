@@ -1,7 +1,7 @@
 <template>
-	<div class="w-full h-full">
+	<div class="w-full">
 		<UForm
-			class="relative h-screen gap-2 flex flex-col mb-16 w-full md:max-w-[600px]"
+			class="relative gap-2 flex flex-col w-full md:max-w-[600px]"
 			:state="state"
 			:style="isUnsaved ? 'height: calc(100vh + 64px)' : ''"
 		>
