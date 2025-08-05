@@ -17,9 +17,8 @@
 </template>
 
 <script setup lang="ts">
-const { label } = withDefaults(defineProps<{ label?: string }>(), {
-	label: "Additional",
-});
+const { label = "Additional" } = defineProps<{ label?: string }>();
+
 
 const isToggled = defineModel<boolean>();
 
