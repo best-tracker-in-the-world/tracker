@@ -18,6 +18,8 @@ export default defineNuxtConfig({
 			"yandex-metrika-module-nuxt3",
 			{
 				id: "103603627",
+				trackHash: true,
+				webvisor: true,
 			},
 		],
 	],
