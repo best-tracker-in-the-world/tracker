@@ -28,6 +28,7 @@
     "nuxt": "^3.17.3",
     "pinia-plugin-persistedstate": "^4.3.0",
     "vue3-radial-progress": "^1.1.1",
+    "yandex-metrika-module-nuxt3": "^1.5.3",
     "zod": "^4.0.5"
   },
   "devDependencies": {

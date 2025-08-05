@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 				 "@vueuse/nuxt",
 				 "@vite-pwa/nuxt",
 				 "nuxt-echarts",
+				 "yandex-metrika-module-nuxt3",
 				],
 				// pwa: {
 				// 	manifest: {
@@ -38,7 +39,9 @@ export default defineNuxtConfig({
 				// 	},
 				// },
 				css: ["~/assets/css/main.css"],
-
+				yandexMetrika: {
+								id: "103603627",
+				},
 				future: {
 								compatibilityVersion: 4,
 				},
