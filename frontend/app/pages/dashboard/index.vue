@@ -1,7 +1,7 @@
 <template>
 	<ClientOnly>
-		<div class="flex flex-col gap-3 max-w-full w-full h-fit p-3 md:mb-0">
-			<DashboardCalendar v-model="selectedDate" />
+		<div class="flex flex-col gap-3 w-full max-w-full h-fit p-3 md:mb-0">
+			<DashboardCalendar class="max-w-full overflow-hidden" v-model="selectedDate" />
 			<!-- dashboard body wrap -->
 			<div
 				class="grid grid-cols-2 md:desktop-grid gap-3 max-w-screen"

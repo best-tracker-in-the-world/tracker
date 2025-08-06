@@ -1,7 +1,9 @@
 <template>
 	<ClientOnly>
 		<DashboardTileWrapper :span="2" :color="'white'">
-			<div class="flex flex-col gap-4" v-auto-animate>
+			<div
+				class="flex flex-col gap-4 w-full max-w-full overflow-scroll scroll-hidden"
+			>
 				<div
 					class="flex items-center gap-2 align-center justify-end"
 					@click="isDatePickerVisible = !isDatePickerVisible"
@@ -19,31 +21,35 @@
 						/>
 					</div>
 				</div>
-				<ul class="flex justify-between gap-2">
-					<li
-						v-for="(day, index) in selectedWeek"
-						:key="index"
-						class="flex flex-col items-center flex-1 rounded-md py-2 transition-all duration-150 cursor-pointer"
-						:class="{
-							'today-chip | outline outline-green-500/50 ':
-								day.isToday && !day.isSelected,
-							'':
-								!day.isToday,
-							'bg-green-500 text-gray-950 ':
-								day.isSelected,
-						}"
-						@click="modelValueComputed = day.date"
-					>
-						<span class="capitalize text-xs mb-1">{{ day.name }}</span>
-						<span class="text-xl">{{ day.day }}</span>
-					</li>
-				</ul>
+				<div
+					class="week-calendar | max-w-[100%] w-full max-w-full overflow-scroll scroll-hidden py-1"
+				>
+					<ul class="flex gap-2">
+						<li
+							v-for="(day, index) in selectedWeek"
+							:ref="day.isToday ? 'todayRef' : null"
+							:key="index"
+							class="min-w-[48px] flex flex-col items-center rounded-md py-2 cursor-pointer"
+							:class="{
+								'today-chip | outline outline-green-500/50':
+									day.isToday && !day.isSelected,
+								'selected-chip | bg-green-500 text-gray-950':
+									day.isSelected,
+							}"
+							@click="modelValueComputed = day.date"
+						>
+							<span class="capitalize text-xs mb-1">{{
+								day.name
+							}}</span>
+							<span class="text-xl">{{ day.day }}</span>
+						</li>
+					</ul>
+				</div>
 				<UCalendar
 					v-show="isDatePickerVisible"
 					v-model="modelValueComputed"
-					class=""
 					:locale="'ru'"
-					v-auto-animate
+					@update:model-value="selectFromCalendar = true"
 				/>
 			</div>
 		</DashboardTileWrapper>
@@ -53,15 +59,19 @@
 <script setup lang="ts">
 import { CalendarDate } from "@internationalized/date";
 
-const vAutoAnimate = useAutoAnimate();
-
 const props = defineProps<{
 	modelValue: CalendarDate;
 }>();
 
+const weekBaseDate = ref<CalendarDate>(props.modelValue);
+
 const emit = defineEmits<{
 	(e: "update:modelValue", value: CalendarDate): void;
 }>();
+
+const selectFromCalendar = ref(false);
+
+const todayRef = ref<HTMLElement | null>(null);
 
 const modelValueComputed = computed({
 	get: () => props.modelValue,
@@ -71,6 +81,26 @@ const modelValueComputed = computed({
 		}
 		if (isDatePickerVisible.value) isDatePickerVisible.value = false;
 	},
+});
+
+watch(modelValueComputed, (newVal) => {
+	if (!selectFromCalendar.value) return;
+
+	weekBaseDate.value = newVal;
+	selectFromCalendar.value = false;
+
+	nextTick(() => {
+		setTimeout(() => {
+			const selectedChip = document.querySelector(".selected-chip");
+			if (selectedChip) {
+				selectedChip.scrollIntoView({
+					inline: "start",
+					block: "nearest",
+					behavior: "smooth",
+				});
+			}
+		}, 100);
+	});
 });
 
 const isDatePickerVisible = ref(false);
@@ -107,7 +137,7 @@ const headerDate = computed(() => {
 });
 
 const selectedWeek = computed(() => {
-	if (!modelValueComputed.value) return [];
+	if (!weekBaseDate.value) return [];
 
 	const now = new Date();
 	const today = new CalendarDate(
@@ -116,15 +146,13 @@ const selectedWeek = computed(() => {
 		now.getDate()
 	);
 
-	const dayOfWeek = modelValueComputed.value.toDate().getDay();
+	const dayOfWeek = weekBaseDate.value.toDate().getDay();
 	const diffToMonday = (dayOfWeek + 6) % 7;
-	const startOfWeek = modelValueComputed.value.subtract({
-		days: diffToMonday,
-	});
+	const currentMonday = weekBaseDate.value.subtract({ days: diffToMonday });
 
-	return Array.from({ length: 7 }).map((_, i) => {
-		const day = startOfWeek.add({ days: i });
-		const weekdayIndex = (day.toDate().getDay() + 6) % 7;
+	return Array.from({ length: 14 }).map((_, i) => {
+		const day = currentMonday.subtract({ days: 7 }).add({ days: i });
+		const weekdayIndex = (day.toDate().getDay() + 7) % 7;
 
 		const isToday =
 			day.day === today.day &&
@@ -149,10 +177,22 @@ const selectedWeek = computed(() => {
 watch(modelValueComputed, () => {
 	isDatePickerVisible.value = false;
 });
+
+onMounted(async () => {
+	await nextTick();
+
+	setTimeout(() => {
+		if (todayRef.value) {
+			todayRef.value[0].scrollIntoView({
+				inline: "start",
+				block: "nearest",
+			});
+		}
+	}, 50);
+});
 </script>
 
 <style scoped>
-
 .today-chip {
 	position: relative;
 }
@@ -164,9 +204,16 @@ watch(modelValueComputed, () => {
 	width: 7px;
 	height: 7px;
 	border-radius: 100%;
-	background-color: #00C16A;
+	background-color: #00c16a;
 	bottom: 0;
 	transform: translateY(50%);
 }
 
+.week-calendar {
+	opacity: 1;
+	transition: opacity 300ms linear;
+	@starting-style {
+		opacity: 0;
+	}
+}
 </style>

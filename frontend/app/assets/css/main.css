@@ -74,3 +74,18 @@ input[type="number"] {
 	-moz-appearance: textfield;
 	appearance: textfield;
 }
+
+/* Hide scrollbar in all browsers */
+
+/* For Firefox */
+.scroll-hidden {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  overflow: auto;
+}
+
+/* For Chrome, Safari and Edge */
+.scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge */
+}
+
