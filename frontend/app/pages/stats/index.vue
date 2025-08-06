@@ -64,8 +64,8 @@ const chartLabels = ref<string[]>();
 const caloriesData = ref<number[]>([]);
 const actualCaloriesData = ref<(number | null)[]>();
 const calorieGoalData = ref<number[]>();
-const weightAreLabelsVisible = ref<boolean>(false);
-const calAreLabelsVisible = ref<boolean>(false);
+const weightAreLabelsVisible = ref<boolean>(true);
+const calAreLabelsVisible = ref<boolean>(true);
 
 const weightOptions = computed(() => ({
 	width: "85%",
