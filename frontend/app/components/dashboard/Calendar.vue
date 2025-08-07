@@ -150,9 +150,9 @@ const selectedWeek = computed(() => {
 	const diffToMonday = (dayOfWeek + 6) % 7;
 	const currentMonday = weekBaseDate.value.subtract({ days: diffToMonday });
 
-	return Array.from({ length: 14 }).map((_, i) => {
-		const day = currentMonday.subtract({ days: 7 }).add({ days: i });
-		const weekdayIndex = (day.toDate().getDay() + 7) % 7;
+	return Array.from({ length: 24 }).map((_, i) => {
+		const day = currentMonday.subtract({ days: 12 }).add({ days: i });
+		const weekdayIndex = (day.toDate().getDay() + 6) % 7;
 
 		const isToday =
 			day.day === today.day &&
