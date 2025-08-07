@@ -46,9 +46,7 @@
 			<!-- APP -->
 			<!-- LANGUAGE, THEME -->
 
-			<div
-				class="p-4 py-4 pb-6 my-8 rounded-2xl flex flex-col gap-4"
-			>
+			<div class="p-4 py-4 pb-6 my-8 rounded-2xl flex flex-col gap-4">
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.app") }}:
 				</h2>
@@ -85,9 +83,7 @@
 			<!-- STATS -->
 			<!-- CURRENT GOAL, WEIGHT, HEIGHT, AGE, GENDER -->
 
-			<div
-				class="p-4 py-4 pb-6 rounded-2xl flex flex-col gap-4"
-			>
+			<div class="p-4 py-4 pb-6 rounded-2xl flex flex-col gap-4">
 				<h2 class="mb-4 text-md">
 					{{ $t("dashboard.userSettings.stats") }}:
 				</h2>
@@ -143,25 +139,32 @@
 						class="w-full"
 						size="xl"
 					/>
-					<Teleport v-if="teleportTarget" to="#header-button-teleport" >
+					<Teleport
+						v-if="teleportTarget"
+						to="#header-button-teleport"
+					>
 						<Transition name="slide-down">
-						<div v-if="isUnsaved" ref="saveChanges" class="">
-							<div class="flex gap-2">
-								<UButton
-									:label="$t('settings.cancel')"
-									class="items-center mt-auto"
-									variant="outline"
-									@click="handleCancelSave()"
-								/>
-								<UButton
-									:label="$t('settings.save')"
-									class="items-center mt-auto bg-green-500"
-									variant="solid"
-									@click="handleSettingsSave()"
-								/>
+							<div
+								v-if="isUnsaved"
+								ref="saveChanges"
+								class=""
+							>
+								<div class="flex gap-2">
+									<UButton
+										:label="$t('settings.cancel')"
+										class="items-center mt-auto"
+										variant="outline"
+										@click="handleCancelSave()"
+									/>
+									<UButton
+										:label="$t('settings.save')"
+										class="items-center mt-auto bg-green-500"
+										variant="solid"
+										@click="handleSettingsSave()"
+									/>
+								</div>
 							</div>
-						</div>
-						</Transition> 
+						</Transition>
 					</Teleport>
 				</UFormField>
 			</div>
@@ -285,8 +288,15 @@ function handleLanguageChange() {
 }
 
 function handleThemeChange() {
-	colorMode.preference = state.theme;
-	colorMode.value = state.theme;
+	if(!document.startViewTransition) {
+		colorMode.preference = state.theme;
+		colorMode.value = state.theme;
+		return
+	}
+	document.startViewTransition(() => {
+		colorMode.preference = state.theme;
+		colorMode.value = state.theme;
+	});
 }
 
 onMounted(() => {
@@ -313,7 +323,9 @@ onMounted(() => {
 			console.log("isInitialized", isInitialized.value);
 		}, 250);
 
-		teleportTarget.value = !!document.getElementById('header-button-teleport')
+		teleportTarget.value = !!document.getElementById(
+			"header-button-teleport"
+		);
 	});
 });
 
@@ -357,12 +369,12 @@ definePageMeta({
 
 .slide-down-enter-active,
 .slide-down-leave-active {
-  transition: transform .5s ease, opacity .5s linear;
+	transition: transform 0.5s ease, opacity 0.5s linear;
 }
 
 .slide-down-enter-from,
 .slide-down-leave-to {
-  transform: translateY(-100%);
+	transform: translateY(-100%);
 	opacity: 0;
 }
 </style>

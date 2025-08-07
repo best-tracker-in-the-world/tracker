@@ -89,3 +89,19 @@ input[type="number"] {
   display: none; /* Chrome/Safari/Edge */
 }
 
+::view-transition-old(root) {
+	animation-delay: 700ms;
+}
+::view-transition-new(root) {
+	animation: cirlce-in 700ms;
+}
+
+@keyframes cirlce-in {
+	0% {
+		clip-path: circle(0% at 10% 22%);
+	}
+	100% {
+		clip-path: circle(100% at 50% 50%);
+	}
+	
+}
